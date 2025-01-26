@@ -21,7 +21,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            Get Started
+            <a href="http://locahost:5173/#/login">Get Started</a>
           </button>
         </div>
 
@@ -39,7 +39,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            Get Started
+            <a href="http://locahost:5173/#/login">Get Started</a>
           </button>
         </div>
       </div>
