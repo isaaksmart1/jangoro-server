@@ -5,14 +5,28 @@ import type { User } from "~/models/user.server";
 
 const DEFAULT_REDIRECT = "/";
 
-export const ROUTES = {
-  login: "http://localhost:5173/#/login",
-  legal: "/legal",
+export const URL = {
+  app: "http://localhost:5173",
+};
+
+const LINKS = {
+  login: "#/login",
+  legal: "legal",
   register: "#",
-  notes: "/notes",
-  products: "/products",
-  company: "/company",
-  roadmap: "/roadmap",
+  notes: "notes",
+  products: "products",
+  company: "company",
+  roadmap: "roadmap",
+};
+
+export const ROUTES = {
+  login: `${URL.app}/${LINKS.login}`,
+  legal: `/${LINKS.legal}`,
+  register: `/${LINKS.register}`,
+  notes: `/${LINKS.notes}`,
+  products: `/${LINKS.products}`,
+  company: `/${LINKS.company}`,
+  roadmap: `/${LINKS.roadmap}`,
 };
 
 /**

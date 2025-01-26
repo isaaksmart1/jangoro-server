@@ -20,7 +20,7 @@ routes.post("/register", register);
 
 // Accounts API
 routes.get("/user/reset-password", forgotPasswordLimiter, resetPassword);
-routes.get("/user/:username", getUser);
+routes.get("/user/:email", getUser);
 routes.get("/user/id/:id", getUserById);
 routes.post("/user/update", authenticateToken, updateUser);
 routes.post("/user/update/password", updatePassword);
@@ -44,8 +44,8 @@ function defaultRoute(req, res) {
     data: dt.toISOString(),
     aws: {
       region: "eu-west-2",
-      accessKeyId: "AKIA6FYDLCFVIYKGYZVX", // Replace with your AWS access key ID
-      secretAccessKey: "wpiWF25Fu5xXkWpkzfdW4vti4DpU4BGmuAMGgWKM", // Replace with your AWS secret access key
+      accessKeyId: "AKIA6FYDLCFVAJ6V2D37", // Replace with your AWS access key ID
+      secretAccessKey: "9g+bpaZLFKHt8H5DyQgkb6mjbUqD2PL4COFuC+nk", // Replace with your AWS secret access key
     },
   });
 }
@@ -60,9 +60,9 @@ function healthCheck(req, res) {
 }
 
 function login(req, res) {
-  const { username, password } = req.query;
+  const { email, password } = req.query;
   account
-    .authenticate(username, password)
+    .authenticate(email, password)
     .then((response) => {
       res.status(200).send(response);
     })
@@ -101,9 +101,9 @@ function resetPassword(req, res) {
 }
 
 function getUser(req, res) {
-  const { username } = req.params;
+  const { email } = req.params;
   account
-    .getUser(username)
+    .getUser(email)
     .then((response) => {
       res.status(200).send(response);
     })

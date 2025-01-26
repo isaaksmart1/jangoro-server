@@ -7,8 +7,8 @@ const { developmentMode } = require("../middleware/helpers");
 // Configure AWS with your credentials and desired region
 AWS.config.update({
   region: "eu-west-2",
-  accessKeyId: "AKIA6FYDLCFVIYKGYZVX",
-  secretAccessKey: "wpiWF25Fu5xXkWpkzfdW4vti4DpU4BGmuAMGgWKM",
+  accessKeyId: "AKIA6FYDLCFVAJ6V2D37",
+  secretAccessKey: "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",
 });
 
 // Cloud watch logs instance
@@ -33,18 +33,18 @@ function hash(password) {
 const userSchema = (id, data) => {
   const schema = {
     id: { S: id },
-    avatar: { S: data.avatar },
-    status: { S: data.status },
-    username: { S: data.username },
-    email: { S: data.email },
-    fullName: { S: data.firstName },
-    password: { S: hash(data.password) },
-    street: { S: data.street },
-    city: { S: data.city },
-    zip: { S: data.zip },
-    subscription: { S: data.subscription },
-    dateJoined: { S: data.dateJoined },
-    acceptTerms: { S: data.acceptTerms },
+    avatar: { S: data.avatar || "" },
+    status: { S: data.status || "" },
+    username: { S: data.username || "" },
+    email: { S: data.email || "" },
+    fullName: { S: data.firstName || "" },
+    password: { S: hash(data.password) || "" },
+    street: { S: data.street || "" },
+    city: { S: data.city || "" },
+    zip: { S: data.zip || "" },
+    subscription: { S: data.subscription || "" },
+    dateJoined: { S: data.dateJoined || "" },
+    acceptTerms: { S: data.acceptTerms || "" },
   };
   return schema;
 };

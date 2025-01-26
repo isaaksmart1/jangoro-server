@@ -1,4 +1,5 @@
 import React from "react";
+import { ROUTES } from "~/utils/utils";
 
 const PricingTable = () => {
   return (
@@ -21,7 +22,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href="http://localhost:5173/#/login">Get Started</a>
+            <a href={ROUTES.login}>Get Started</a>
           </button>
         </div>
 
@@ -39,7 +40,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href="http://localhost:5173/#/login">Get Started</a>
+            <a href={ROUTES.login}>Get Started</a>
           </button>
         </div>
       </div>

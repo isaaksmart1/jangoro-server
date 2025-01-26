@@ -70,15 +70,6 @@ const authenticate = async (email, password) => {
 };
 
 const register = async (data) => {
-  // const codes = await getAllCodes();
-  // const code = codes[codes.findIndex((code) => code.code.N === data.code)];
-  // try {
-  //   if (code) deleteCodes(code.code.N);
-  // } catch (err) {
-  //   Log(`Verification code not found, ${err}`, accountStream);
-  //   throw "Verification code not found";
-  // }
-
   const query = {
     TableName: db.usersTable,
     IndexName: "email-index",
