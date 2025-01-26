@@ -2,8 +2,6 @@ const {
   cloudwatchlogs,
   logGroupName,
   accountStream,
-  ideaStream,
-  llmStream,
 } = require("../config/database");
 
 function Log(message, logStreamName) {
@@ -28,6 +26,4 @@ function Log(message, logStreamName) {
 module.exports = {
   Log,
   accountStream,
-  ideaStream,
-  llmStream,
 };
