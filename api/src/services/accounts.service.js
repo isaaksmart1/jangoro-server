@@ -8,7 +8,7 @@ const config = require("../config.json");
 const sendEmail = require("../middleware/send-email");
 const { env, developmentMode } = require("../middleware/helpers");
 const { Log, accountStream } = require("./logger.service");
-const { cancelSubscriptionsAndDeleteCustomer } = require("./payment.service");
+const { cancelSubscriptionsAndDeleteCustomer } = require("./payments.service");
 
 // periodicallyDeleteCodes();
 

@@ -7,7 +7,6 @@ const {
   STRIPE_MONTHLY_MEMBERSHIP_PRICE_ID,
 } = require("../config/stripe");
 const membershipIDs = require("../config/stripe-membership-ids.json");
-const { retryPayment } = require("./data.service");
 const stripe = Stripe(STRIPE_SECRET_KEY);
 const fs = require("fs");
 
@@ -96,6 +95,83 @@ const createSubscription = async (payload) => {
   }
 };
 
+const webhook = async (req) => {
+  let event = stripe.webhooks.constructEvent(
+    req.body,
+    req.headers["stripe-signature"],
+    STRIPE_WEBHOOK_KEY
+  );
+
+  const paymentIntent = event.data.object;
+  const customerId = paymentIntent.customer;
+
+  // Check if the event has already been processed
+  if (processedEventIds.has(customerId)) {
+    return { received: true };
+  }
+
+  try {
+    switch (event.type) {
+      case "invoice.payment_failed":
+        await retryPayment(event, stripe);
+        break;
+      case "payment_intent.payment_failed":
+        await retryPayment(event, stripe);
+        break;
+      case "payment_intent.succeeded":
+        await subscribe(event);
+        break;
+      default:
+        // Unexpected event type
+        throw "Unknown event type";
+    }
+
+    // Mark the event as processed
+    processedEventIds.add(customerId);
+
+    return { received: true };
+  } catch (err) {
+    throw `Server Error: ${err.message}`;
+  }
+};
+
+const createPaymentIntent = async (req, res) => {
+  const { amount, currency } = req.body; // Amount and currency sent from the frontend
+
+  try {
+    // Create a PaymentIntent with the amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount, // Amount in cents (e.g., 5000 = $50.00)
+      currency,
+      payment_method_types: ["card"], // Can add more types if necessary
+    });
+
+    // Send client secret to the frontend
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.error("Error creating PaymentIntent:", error);
+    res.status(500).json({
+      error: "An error occurred while creating the PaymentIntent.",
+    });
+  }
+};
+
+const getSetupIntent = async (req, res) => {
+  const { customerId } = req.body;
+
+  try {
+    const setupIntent = await stripe.setupIntents.create({
+      customer: customerId,
+    });
+    res.json({ clientSecret: setupIntent.client_secret });
+  } catch (error) {
+    console.error("Error creating Setup Intent:", error);
+    res.status(500).json({ error: "Failed to create Setup Intent" });
+  }
+};
+
 const makePayment = async (
   account,
   bankName,
@@ -146,6 +222,22 @@ const makePayment = async (
   }
 };
 
+async function retryPayment(event, stripe) {
+  const invoice = event.data.object;
+  const subscriptionId = invoice.subscription;
+  const username = invoice.customer.metadata.username;
+  // Retry logic here (e.g., retry after 3 days)
+  setTimeout(async () => {
+    try {
+      await stripe.invoices.pay(invoice.id);
+    } catch (error) {
+      // If retry fails, notify the user to pay manually
+      console.log(subscriptionId);
+      console.log(username);
+    }
+  }, 3 * 24 * 60 * 60 * 1000); // Retry in 3 days
+}
+
 async function cancelSubscriptionsAndDeleteCustomer(email) {
   try {
     // Find the customer by email
@@ -183,46 +275,6 @@ async function cancelSubscriptionsAndDeleteCustomer(email) {
     return error;
   }
 }
-
-const webhook = async (req) => {
-  let event = stripe.webhooks.constructEvent(
-    req.body,
-    req.headers["stripe-signature"],
-    STRIPE_WEBHOOK_KEY
-  );
-
-  const paymentIntent = event.data.object;
-  const customerId = paymentIntent.customer;
-
-  // Check if the event has already been processed
-  if (processedEventIds.has(customerId)) {
-    return { received: true };
-  }
-
-  try {
-    switch (event.type) {
-      case "invoice.payment_failed":
-        await retryPayment(event, stripe);
-        break;
-      case "payment_intent.payment_failed":
-        await retryPayment(event, stripe);
-        break;
-      case "payment_intent.succeeded":
-        await subscribe(event);
-        break;
-      default:
-        // Unexpected event type
-        throw "Unknown event type";
-    }
-
-    // Mark the event as processed
-    processedEventIds.add(customerId);
-
-    return { received: true };
-  } catch (err) {
-    throw `Server Error: ${err.message}`;
-  }
-};
 
 async function subscribe(event) {
   const paymentIntent = event.data.object;
@@ -282,43 +334,6 @@ async function subscribe(event) {
     );
   }
 }
-
-const createPaymentIntent = async (req, res) => {
-  const { amount, currency } = req.body; // Amount and currency sent from the frontend
-
-  try {
-    // Create a PaymentIntent with the amount and currency
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount, // Amount in cents (e.g., 5000 = $50.00)
-      currency,
-      payment_method_types: ["card"], // Can add more types if necessary
-    });
-
-    // Send client secret to the frontend
-    res.json({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (error) {
-    console.error("Error creating PaymentIntent:", error);
-    res.status(500).json({
-      error: "An error occurred while creating the PaymentIntent.",
-    });
-  }
-};
-
-const getSetupIntent = async (req, res) => {
-  const { customerId } = req.body;
-
-  try {
-    const setupIntent = await stripe.setupIntents.create({
-      customer: customerId,
-    });
-    res.json({ clientSecret: setupIntent.client_secret });
-  } catch (error) {
-    console.error("Error creating Setup Intent:", error);
-    res.status(500).json({ error: "Failed to create Setup Intent" });
-  }
-};
 
 module.exports = {
   createStripeAccount,

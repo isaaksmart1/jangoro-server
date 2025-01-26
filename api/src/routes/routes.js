@@ -6,7 +6,7 @@ var {
   authenticateToken,
 } = require("../middleware/auth");
 var account = require("../services/accounts.service");
-var { webhook, createSubscription } = require("../services/payment.service");
+var { webhook, createSubscription } = require("../services/payments.service");
 const {
   getSetupIntent,
   createPaymentIntent,
@@ -151,6 +151,18 @@ function refreshToken(req, res) {
       refreshToken: newRefreshToken,
     });
   });
+}
+
+function updatePassword(req, res) {
+  const data = req.body;
+  account
+    .updatePassword(data)
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
 }
 
 function deactivate(req, res) {
