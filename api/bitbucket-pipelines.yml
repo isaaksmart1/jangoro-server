@@ -1,4 +1,4 @@
-image: idearify/idearify-backend:latest
+image: openended/openended-backend:latest
 
 definitions:
   services:
@@ -43,26 +43,26 @@ pipelines:
           name: Build, Tag and Push the Dev Docker image
           script:
             - echo "Logging in to Docker registry"
-            - echo "JV,2rEsC_w7mGq~" | docker login --username idearify --password-stdin
+            - echo "JV,2rEsC_w7mGq~" | docker login --username openended --password-stdin
             - docker system prune -af
             - echo "Building Docker image"
-            - docker build -t idearify-backend:latest .
+            - docker build -t openended-backend:latest .
             - echo "Tagging Docker image"
-            - docker tag idearify-backend:latest idearify/idearify-backend
+            - docker tag openended-backend:latest openended/openended-backend
             - docker images
             - echo "Pushing Docker image to registry"
-            - docker push idearify/idearify-backend
+            - docker push openended/openended-backend
     stage:
       - step:
           name: Build, Tag and Push the Stage Docker image
           script:
             - echo "Logging in to Docker registry"
-            - echo "JV,2rEsC_w7mGq~" | docker login --username idearify --password-stdin
+            - echo "JV,2rEsC_w7mGq~" | docker login --username openended --password-stdin
             - docker system prune -af
             - echo "Building Docker image"
-            - docker build -t idearify-backend:stage-10 .
+            - docker build -t openended-backend:stage-10 .
             - echo "Tagging Docker image"
-            - docker tag idearify-backend:stage-10 idearify/idearify-backend:stage-10
+            - docker tag openended-backend:stage-10 openended/openended-backend:stage-10
             - docker images
             - echo "Pushing Docker image to registry"
-            - docker push idearify/idearify-backend:stage-10
+            - docker push openended/openended-backend:stage-10

@@ -1,5 +1,5 @@
 apps:
-  - name: 'idearify-api'
+  - name: 'openended-api'
     script: './src/server.js'
     instances: max
     autorestart: true

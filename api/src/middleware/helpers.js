@@ -1,5 +1,9 @@
 const developmentMode = true;
 
+const URL = {
+  app: "http://localhost:5173",
+};
+
 function env() {
   const command = arguments[0];
   if (typeof command !== "string") {
@@ -23,4 +27,5 @@ module.exports = {
   developmentMode,
   checkEmailDomain,
   env,
+  URL,
 };

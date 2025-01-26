@@ -55,7 +55,7 @@ export async function login(
   password: User["password"],
 ) {
   const response = await fetch(
-    `${process.env.IDEARIFY_API_URL}/login?username=${encodeURIComponent(
+    `${process.env.OE_API_URL}/login?username=${encodeURIComponent(
       username,
     )}&password=${encodeURIComponent(password)}`,
   );

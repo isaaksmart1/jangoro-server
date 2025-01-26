@@ -9,6 +9,7 @@ const {
 const membershipIDs = require("../config/stripe-membership-ids.json");
 const stripe = Stripe(STRIPE_SECRET_KEY);
 const fs = require("fs");
+const { URL } = require("../middleware/helpers");
 
 // In-memory storage for processed event IDs (use persistent storage in production)
 const processedEventIds = new Set();
@@ -135,26 +136,30 @@ const webhook = async (req) => {
   }
 };
 
-const createPaymentIntent = async (req, res) => {
-  const { amount, currency } = req.body; // Amount and currency sent from the frontend
-
+const createPaymentIntent = async (params) => {
   try {
-    // Create a PaymentIntent with the amount and currency
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount, // Amount in cents (e.g., 5000 = $50.00)
-      currency,
-      payment_method_types: ["card"], // Can add more types if necessary
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Sign Up Fee",
+            },
+            unit_amount: params.amount
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${URL.app}/#/login`,
+      cancel_url: `${URL.app}/#/login`,
     });
 
-    // Send client secret to the frontend
-    res.json({
-      clientSecret: paymentIntent.client_secret,
-    });
+    return { id: session.id };
   } catch (error) {
-    console.error("Error creating PaymentIntent:", error);
-    res.status(500).json({
-      error: "An error occurred while creating the PaymentIntent.",
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -169,6 +174,22 @@ const getSetupIntent = async (req, res) => {
   } catch (error) {
     console.error("Error creating Setup Intent:", error);
     res.status(500).json({ error: "Failed to create Setup Intent" });
+  }
+};
+
+const createCustomer = async (params) => {
+  const { email, username, subscription } = params;
+  try {
+    // Metadata
+    const metadata = {
+      username,
+      subscription_price: subscription,
+    };
+
+    let customer = await findOrCreateCustomer(email, metadata);
+    return customer;
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -340,6 +361,7 @@ module.exports = {
   createSubscription,
   cancelSubscriptionsAndDeleteCustomer,
   createPaymentIntent,
+  createCustomer,
   getSetupIntent,
   makePayment,
   webhook,

@@ -111,13 +111,18 @@ const register = async (data) => {
     Item: schema,
   };
 
+  const newData = {
+    id: schema.id.S,
+    password: schema.password.S,
+  };
+
   try {
     if (developmentMode) {
-      return createUser(params);
+      return createUser(newData, params);
     } else {
       const valid = env("checkEmailDomain", data.email, organisation);
       if (valid) {
-        return createUser(params);
+        return createUser(newData, params);
       } else {
         Log(`Invalid student email address, ${data.email}`, accountStream);
         throw `Invalid student email address`;
@@ -183,6 +188,40 @@ const getUser = async (email) => {
     } else {
       Log(`User not found, ${email}`, accountStream);
       throw "User not found.";
+    }
+  } catch (err) {
+    Log(err, accountStream);
+    throw err;
+  }
+};
+
+const getUsers = async (email) => {
+  const params = {
+    TableName: db.usersTable,
+    IndexName: "email-index", // Your GSI name
+    KeyConditionExpression: "email = :email",
+    ExpressionAttributeValues: {
+      ":email": { S: email },
+    },
+  };
+
+  try {
+    const result = await db.dynamodb.query(params).promise();
+
+    if (result.Items) {
+      let accounts = null;
+      if (result.Items.length > 0) {
+        accounts = result.Items.map((item) =>
+          db.AWS.DynamoDB.Converter.unmarshall(item)
+        );
+      } else {
+        Log(`Users not found, ${email}`, accountStream);
+        throw "Users not found.";
+      }
+      return accounts;
+    } else {
+      Log(`Users not found, ${email}`, accountStream);
+      throw "Users not found.";
     }
   } catch (err) {
     Log(err, accountStream);
@@ -402,11 +441,26 @@ function hash(password) {
   return bcrypt.hashSync(password, 10);
 }
 
-async function createUser(params) {
+async function createUser(data, params) {
   try {
     await db.dynamodb.putItem(params).promise();
+
+    // Delete duplicates
+    accounts = await getUsers(params.Item.email.S);
+    if (accounts.length > 1) {
+      const latestObject = accounts.reduce((latest, current) => {
+        return new Date(current.dt) > new Date(latest.dt) ? current : latest;
+      }, accounts[0]);
+      const relics = accounts.filter((obj) => obj !== latestObject);
+      relics.forEach((account) => deactivate(account));
+    }
+
     Log("You are now registered.", accountStream);
-    return "You are now registered.";
+    return {
+      id: data.id,
+      password: data.password,
+      message: "You are now registered.",
+    };
   } catch (error) {
     Log(error, accountStream);
   }

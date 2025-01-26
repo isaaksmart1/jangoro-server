@@ -6,7 +6,7 @@ var {
   authenticateToken,
 } = require("../middleware/auth");
 var account = require("../services/accounts.service");
-var { webhook, createSubscription } = require("../services/payments.service");
+var { webhook, createSubscription, createCustomer } = require("../services/payments.service");
 const {
   getSetupIntent,
   createPaymentIntent,
@@ -22,7 +22,7 @@ routes.post("/register", register);
 routes.get("/user/reset-password", forgotPasswordLimiter, resetPassword);
 routes.get("/user/:email", getUser);
 routes.get("/user/id/:id", getUserById);
-routes.post("/user/update", authenticateToken, updateUser);
+routes.post("/user/update", updateUser);
 routes.post("/user/update/password", updatePassword);
 routes.post("/user/deactivate", authenticateToken, deactivate);
 routes.post("/user/refresh-token", refreshToken);
@@ -34,7 +34,7 @@ routes.post(
   paymentsWebhook
 );
 routes.post("/create-subscription", paymentsSubscription);
-routes.post("/create-account", createStripeAccount);
+routes.post("/create-stripe-account", createStripeAccount);
 routes.post("/create-payment-intent", pay);
 routes.post("/get-setup-intent", updateCardDetails);
 
@@ -75,8 +75,8 @@ function register(req, res) {
   const data = req.body;
   account
     .register(data)
-    .then((result) => {
-      res.status(200).send({ msg: result });
+    .then((response) => {
+      res.status(200).send(response);
     })
     .catch((err) => {
       res.status(500).send(err);
@@ -197,7 +197,7 @@ function paymentsSubscription(req, res) {
 }
 
 function createStripeAccount(req, res) {
-  createStripeAccount(req.body)
+  createCustomer(req.body)
     .then((response) => {
       res.send(response);
     })

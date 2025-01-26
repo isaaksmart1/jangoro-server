@@ -44,6 +44,7 @@ const userSchema = (id, data) => {
     zip: { S: data.zip || "" },
     subscription: { S: data.subscription || "" },
     dateJoined: { S: data.dateJoined || "" },
+    dt: { S: data.dt || "" },
     acceptTerms: { S: data.acceptTerms || "" },
   };
   return schema;
