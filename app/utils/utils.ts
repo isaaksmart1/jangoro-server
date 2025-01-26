@@ -6,7 +6,7 @@ import type { User } from "~/models/user.server";
 const DEFAULT_REDIRECT = "/";
 
 export const ROUTES = {
-  login: "#",
+  login: "http://localhost:5173/#/login",
   legal: "/legal",
   register: "#",
   notes: "/notes",

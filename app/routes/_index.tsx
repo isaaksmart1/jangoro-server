@@ -15,6 +15,7 @@ import SignUpForm from "~/components/signUpForm";
 import TechUsed from "~/components/techUsed";
 import { createBetaUser } from "~/models/beta.server";
 import { useOptionalUser } from "~/utils/utils";
+import PricingTable from "~/components/artifacts/pricing";
 
 export const meta: MetaFunction = () => [{ title: "OpenEnded" }];
 
@@ -58,20 +59,22 @@ export default function Index() {
         />
         {/* <TechUsed /> */}
         <Section
-          title="AI Assistant"
-          description="Upload source material. Ask questions about your idea to our in-built AI chatbot. Formulate new ideas through having a virtual conversation and receive insightful responses."
+          title="AI Summarizing and Sentiment Analysis"
+          description="Upload survey responses or feedback data. Engage with our in-built AI chatbot to summarize responses, extract key insights, and analyze sentiment."
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
         />
         {/* <Demo /> */}
         <Section
-          title="Safeguard your ideas"
-          description=" Lock your idea from public view and setup digital signature authorization to control who sees your idea."
+          title="Pricing"
+          description=""
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
-        />
+        >
+          <PricingTable />
+        </Section>
         <Section
           title="Join our growing community"
           description=""
