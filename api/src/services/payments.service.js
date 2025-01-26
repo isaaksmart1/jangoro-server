@@ -135,7 +135,6 @@ const webhook = async (req) => {
     throw `Server Error: ${err.message}`;
   }
 };
-
 const createPaymentIntent = async (params) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -152,7 +151,10 @@ const createPaymentIntent = async (params) => {
           quantity: 1,
         },
       ],
-      mode: "payment",
+      mode: "subscription", // Use 'subscription' instead of 'payment'
+      subscription_data: {
+        trial_period_days: 1, // 1 day free trial
+      },
       success_url: `${URL.app}/#/login`,
       cancel_url: `${URL.app}/#/login`,
     });
