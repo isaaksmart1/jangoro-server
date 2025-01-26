@@ -91,10 +91,7 @@ const register = async (data) => {
   let account = await db.dynamodb.query(query).promise();
 
   if (account.Items.length > 0) {
-    Log(
-      `User with that email already exists, ${data.email}`,
-      accountStream
-    );
+    Log(`User with that email already exists, ${data.email}`, accountStream);
     throw "User with that email already exists.";
   }
 
@@ -156,9 +153,7 @@ const resetPassword = async (data) => {
   if (account.Items.length > 0) {
     let user = db.AWS.DynamoDB.Converter.unmarshall(account.Items[0]);
 
-    if (
-      user.email.toLowerCase() === data.email.toLowerCase()
-    ) {
+    if (user.email.toLowerCase() === data.email.toLowerCase()) {
       return user.id;
     } else {
       Log(`User details incorrect`, accountStream);
@@ -430,8 +425,6 @@ module.exports = {
   authenticate,
   register,
   resetPassword,
-  validateEmail,
-  validateUser,
   getUser,
   getUserById,
   updateUser,
