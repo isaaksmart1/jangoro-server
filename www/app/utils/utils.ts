@@ -14,9 +14,7 @@ const LINKS = {
   legal: "legal",
   register: "#",
   notes: "notes",
-  products: "products",
   company: "company",
-  roadmap: "roadmap",
 };
 
 export const ROUTES = {
@@ -24,9 +22,7 @@ export const ROUTES = {
   legal: `/${LINKS.legal}`,
   register: `/${LINKS.register}`,
   notes: `/${LINKS.notes}`,
-  products: `/${LINKS.products}`,
   company: `/${LINKS.company}`,
-  roadmap: `/${LINKS.roadmap}`,
 };
 
 /**

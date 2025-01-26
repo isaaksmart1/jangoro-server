@@ -36,9 +36,6 @@ export default function Footer({}) {
               <li className="text-oe-white my-1">
                 <Link to={`${ROUTES.company}`}>About Us</Link>
               </li>
-              <li className="text-oe-white my-1">Careers</li>
-              <li className="text-oe-white my-1">Help Center</li>
-              <li className="text-oe-white my-1">Resources</li>
             </ul>
           </div>
 
@@ -51,20 +48,12 @@ export default function Footer({}) {
             </h1>
             <ul>
               <li className="text-oe-white my-1">
-                <Link to={`${ROUTES.legal}#community-guidelines`}>
-                  Community Guidelines
-                </Link>
-              </li>
-              <li className="text-oe-white my-1">
                 <Link to={`${ROUTES.legal}#privacy-policy`}>
                   Privacy Policy
                 </Link>
               </li>
               <li className="text-oe-white my-1">
                 <Link to={`${ROUTES.legal}#terms`}>Terms and Conditions</Link>
-              </li>
-              <li className="text-oe-white my-1">
-                <Link to={`${ROUTES.legal}#ad-policy`}>Ad Policy</Link>
               </li>
               <li className="text-oe-white my-1">
                 <Link to={`${ROUTES.legal}#cookie-policy`}>Cookie Policy</Link>
@@ -85,9 +74,6 @@ export default function Footer({}) {
               </li>
               <li className="text-oe-white my-1">
                 <a href="mailto:support@openended.com">support@openended.com</a>
-              </li>
-              <li className="text-oe-white my-1">
-                <a href="mailto:press@openended.com">press@openended.com</a>
               </li>
             </ul>
           </div>
@@ -119,12 +105,6 @@ export default function Footer({}) {
                 </a>
               </li>
             </ul>
-            <h1
-              className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-oe-accent my-6"
-              aria-expanded="false"
-            >
-              Join our Newsletter
-            </h1>
           </div>
         </div>
       </nav>

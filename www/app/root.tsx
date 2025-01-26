@@ -99,12 +99,6 @@ export default function App() {
                   name: "Legal",
                   item: "https://openended.com/legal",
                 },
-                {
-                  "@type": "ListItem",
-                  position: 3,
-                  name: "Roadmap",
-                  item: "https://openended.com/roadmap",
-                },
               ],
             }),
           }}
