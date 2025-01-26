@@ -147,7 +147,7 @@ const createPaymentIntent = async (params) => {
             product_data: {
               name: "Sign Up Fee",
             },
-            unit_amount: params.amount
+            unit_amount: params.amount,
           },
           quantity: 1,
         },
@@ -163,14 +163,14 @@ const createPaymentIntent = async (params) => {
   }
 };
 
-const getSetupIntent = async (req, res) => {
-  const { customerId } = req.body;
+const getSetupIntent = async (params) => {
+  const { customerId } = params;
 
   try {
     const setupIntent = await stripe.setupIntents.create({
       customer: customerId,
     });
-    res.json({ clientSecret: setupIntent.client_secret });
+    return { clientSecret: setupIntent.client_secret };
   } catch (error) {
     console.error("Error creating Setup Intent:", error);
     res.status(500).json({ error: "Failed to create Setup Intent" });
@@ -190,6 +190,30 @@ const createCustomer = async (params) => {
     return customer;
   } catch (err) {
     console.log(err);
+  }
+};
+
+const transactions = async (params) => {
+  const { customerId } = params;
+
+  try {
+    // Retrieve charges for the customer
+    const charges = await stripe.charges.list({
+      customer: customerId,
+      limit: 10, // Adjust the limit as needed
+    });
+
+    // Return charge data
+    return {
+      success: true,
+      transactions: charges.data,
+    };
+  } catch (error) {
+    console.error("Error fetching transactions:", error.message);
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };
 
@@ -363,6 +387,7 @@ module.exports = {
   createPaymentIntent,
   createCustomer,
   getSetupIntent,
+  transactions,
   makePayment,
   webhook,
 };

@@ -6,7 +6,12 @@ var {
   authenticateToken,
 } = require("../middleware/auth");
 var account = require("../services/accounts.service");
-var { webhook, createSubscription, createCustomer } = require("../services/payments.service");
+var {
+  webhook,
+  createSubscription,
+  createCustomer,
+  transactions,
+} = require("../services/payments.service");
 const {
   getSetupIntent,
   createPaymentIntent,
@@ -37,6 +42,7 @@ routes.post("/create-subscription", paymentsSubscription);
 routes.post("/create-stripe-account", createStripeAccount);
 routes.post("/create-payment-intent", pay);
 routes.post("/get-setup-intent", updateCardDetails);
+routes.get("/get-transactions", getTransactions);
 
 function defaultRoute(req, res) {
   const dt = new Date();
@@ -223,6 +229,16 @@ function updateCardDetails(req, res) {
     })
     .catch((err) => {
       res.status(400).send(err);
+    });
+}
+
+function getTransactions(req, res) {
+  transactions(req.query)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
     });
 }
 
