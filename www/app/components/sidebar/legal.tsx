@@ -15,12 +15,6 @@ export const Legal = ({}) => {
       >
         Privacy Policy
       </a>
-      <a
-        href={`${ROUTES.legal}#community-guidelines`}
-        className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray hover:bg-gray-50"
-      >
-        Community Guidelines
-      </a>
     </div>
   );
 };

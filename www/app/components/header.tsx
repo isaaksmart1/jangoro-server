@@ -45,7 +45,7 @@ export default function Header({ user }) {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
-              stroke="#2b4425"
+              stroke="#fff"
               aria-hidden="true"
             >
               <path

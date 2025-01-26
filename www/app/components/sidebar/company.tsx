@@ -9,24 +9,6 @@ export const Company = ({}) => {
       >
         About Us
       </a>
-      {/* <a
-        href="#"
-        className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray hover:bg-gray-50"
-      >
-        Careers
-      </a> */}
-      <a
-        href="#"
-        className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray hover:bg-gray-50"
-      >
-        Help Center
-      </a>
-      <a
-        href="#"
-        className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray hover:bg-gray-50"
-      >
-        Resources
-      </a>
     </div>
   );
 };
