@@ -1,0 +1,55 @@
+image: idearify/idearify-backend:latest
+
+options:
+  docker: true
+
+pipelines:
+  # default:
+    # - parallel:
+      # - step:
+      #     name: Code linting
+      #     script:
+      #       - echo "Running lint..."
+      #       - npm install eslint
+      #       - npx eslint .
+      # - step:  
+      #     name: Build
+      #     script:
+      #       - echo "Running build..."
+      #       - npm install
+      #       - npm run build
+      # - step:  
+      #     name: Test
+      #     script:
+      #       - echo "Running tests..."
+      #       - npm install
+      #       - npm run test
+  branches:
+    dev:
+      - step:
+          name: Build, Tag and Push the Dev Docker image
+          script:
+            - echo "Logging in to Docker registry"
+            - echo "huddl35mart!" | docker login --username idearify --password-stdin
+            - docker system prune -af
+            - echo "Building Docker image"
+            - docker build -t idearify-backend:latest .
+            - echo "Tagging Docker image"
+            - docker tag idearify-backend:latest idearify/idearify-backend
+            - docker images
+            - echo "Pushing Docker image to registry"
+            - docker push idearify/idearify-backend
+    stage:
+      - step:
+          name: Build, Tag and Push the Stage Docker image
+          script:
+            - echo "Logging in to Docker registry"
+            - echo "huddl35mart!" | docker login --username idearify --password-stdin
+            - docker system prune -af
+            - echo "Building Docker image"
+            - docker build -t idearify-backend:stage .
+            - echo "Tagging Docker image"
+            - docker tag idearify-backend:stage idearify/idearify-backend:stage
+            - docker images
+            - echo "Pushing Docker image to registry"
+            - docker push idearify/idearify-backend:stage

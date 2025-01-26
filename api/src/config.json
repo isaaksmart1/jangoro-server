@@ -1,0 +1,17 @@
+{
+  "secret": "dWbzyoHqsPUyA542sP4lqGQsUzFhTQ7No1cKuOLlEQKoODUD0LjhxjUPyUJDuocq",
+  "refreshSecret": "ALjkaL43dKAyA542sP4lqGQsUzFhTQ7NoALahLKAKHalKHAlkahjALKja",
+  "emailFrom": "team@huddl.so",
+  "smtpOptions": {
+    "host": "smtp-mail.outlook.com",
+    "secureConnection": false,
+    "tls": {
+      "ciphers": "SSLv3"
+    },
+    "port": 587,
+    "auth": {
+      "user": "huddlapp@outlook.com",
+      "pass": "Kickass1962!"
+    }
+  }
+}

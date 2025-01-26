@@ -1,0 +1,217 @@
+var express = require("express");
+const jwt = require("jsonwebtoken");
+var config = require("../config.json");
+var {
+  forgotPasswordLimiter,
+  authenticateToken,
+} = require("../middleware/auth");
+var account = require("../services/accounts.service");
+var { webhook, createSubscription } = require("../services/payment.service");
+const {
+  getSetupIntent,
+  createPaymentIntent,
+} = require("../services/payments.service");
+var routes = express();
+
+routes.get("/", defaultRoute);
+routes.get("/index", healthCheck);
+routes.get("/login", login);
+routes.post("/register", register);
+
+// Accounts API
+routes.get("/user/reset-password", forgotPasswordLimiter, resetPassword);
+routes.get("/user/:username", getUser);
+routes.get("/user/id/:id", getUserById);
+routes.post("/user/update", authenticateToken, updateUser);
+routes.post("/user/update/password", updatePassword);
+routes.post("/user/deactivate", authenticateToken, deactivate);
+routes.post("/user/refresh-token", refreshToken);
+
+// Payments API
+routes.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  paymentsWebhook
+);
+routes.post("/create-subscription", paymentsSubscription);
+routes.post("/create-account", createStripeAccount);
+routes.post("/create-payment-intent", pay);
+routes.post("/get-setup-intent", updateCardDetails);
+
+function defaultRoute(req, res) {
+  const dt = new Date();
+  res.send({
+    data: dt.toISOString(),
+    aws: {
+      region: "eu-west-2",
+      accessKeyId: "AKIA6FYDLCFVIYKGYZVX", // Replace with your AWS access key ID
+      secretAccessKey: "wpiWF25Fu5xXkWpkzfdW4vti4DpU4BGmuAMGgWKM", // Replace with your AWS secret access key
+    },
+  });
+}
+
+function healthCheck(req, res) {
+  const systemDown = false;
+  if (systemDown) {
+    res.sendStatus(500);
+  } else {
+    res.sendStatus(200);
+  }
+}
+
+function login(req, res) {
+  const { username, password } = req.query;
+  account
+    .authenticate(username, password)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function register(req, res) {
+  const data = req.body;
+  account
+    .register(data)
+    .then((result) => {
+      res.status(200).send({ msg: result });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function resetPassword(req, res) {
+  const { username, email, answer } = req.query;
+  const params = {
+    username,
+    email,
+    securityAnswer: answer,
+  };
+  account
+    .resetPassword(params)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function getUser(req, res) {
+  const { username } = req.params;
+  account
+    .getUser(username)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function getUserById(req, res) {
+  const { id } = req.params;
+  account
+    .getUserById(id)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function updateUser(req, res) {
+  const data = req.body;
+  account
+    .updateUser(data)
+    .then((status) => {
+      res.status(200).send(status);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function refreshToken(req, res) {
+  const refreshToken = req.headers["x-refresh-token"];
+  if (!refreshToken) return res.sendStatus(401); // Unauthorized
+
+  jwt.verify(refreshToken, config.refreshSecret, (err, user) => {
+    if (err) return res.sendStatus(403); // Forbidden
+
+    const newAccessToken = account.generateJwtToken(user);
+    const newRefreshToken = account.generateRefreshToken(user);
+
+    res.json({
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    });
+  });
+}
+
+function deactivate(req, res) {
+  account
+    .deactivate(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function paymentsWebhook(req, res) {
+  webhook(req)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function paymentsSubscription(req, res) {
+  createSubscription(req.body)
+    .then((subscription) => {
+      res.send(subscription);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function createStripeAccount(req, res) {
+  createStripeAccount(req.body)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function pay(req, res) {
+  createPaymentIntent(req.body)
+    .then((secret) => {
+      res.send(secret);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function updateCardDetails(req, res) {
+  getSetupIntent(req.body)
+    .then((secret) => {
+      res.send(secret);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+module.exports = routes;
