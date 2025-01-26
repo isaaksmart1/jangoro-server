@@ -135,8 +135,11 @@ const webhook = async (req) => {
     throw `Server Error: ${err.message}`;
   }
 };
+
 const createPaymentIntent = async (params) => {
+  const { subscription } = params;
   try {
+    const interval = subscription.plan.includes("monthly") ? "month" : "year";
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -146,12 +149,15 @@ const createPaymentIntent = async (params) => {
             product_data: {
               name: "Sign Up Fee",
             },
+            recurring: {
+              interval,
+            },
             unit_amount: params.amount,
           },
           quantity: 1,
         },
       ],
-      mode: "subscription", // Use 'subscription' instead of 'payment'
+      mode: "subscription", // Use 'subscription' mode
       subscription_data: {
         trial_period_days: 1, // 1 day free trial
       },
