@@ -14,5 +14,3 @@ export const TermsPolicies = {
 };
 
 export const CookiePolicies = {};
-
-export const AdPolicies = {};

@@ -2,31 +2,30 @@ export default function About() {
   return (
     <div className="p-4 text-slate-900">
       <p className="text-md my-2">
-        Welcome to OpenEnded, the premier platform for idea discovery,
-        collaboration, creation, and protection. OpenEnded is designed for the
-        forward-thinking minds of millennials and young entrepreneurs.
+        Welcome to OpenEnded, the leading platform for survey analysis and
+        data-driven insights. OpenEnded is built for researchers, businesses,
+        and organizations looking to unlock the full potential of their survey
+        data.
       </p>
       <p className="text-md my-2">
-        Imagine a space where innovation meets protection, where creativity
-        thrives and intellectual property is safeguarded. Our AI-powered social
-        ideation platform offers a rich tapestry of tutorials, how-tos, and
-        entrepreneurial insights, ensuring your ideas are securely protected
-        through our cutting-edge proof of copyright verification and viewing
-        authorization system. With digital signatures, your creations are
-        shielded, allowing you to collaborate with confidence.
+        Imagine a space where data meets clarity, where complex survey responses
+        are transformed into actionable insights. Our AI-powered platform
+        simplifies survey analysis, offering intuitive tools for data
+        visualization, trend identification, and predictive analytics. With our
+        advanced algorithms, your survey results are processed with precision,
+        empowering you to make informed decisions with confidence.
       </p>
       <p className="text-md my-2">
-        Our platform features a dual revenue model, with paid subscriptions
-        unlocking premium features and benefits for a seamless and enriching
-        user experience. Additionally, in-app advertising opens doors for users
-        to earn commissions, turning their passion for sharing ideas into a
-        lucrative opportunity.
+        OpenEnded features a flexible pricing model, with premium subscriptions
+        unlocking advanced features such as custom reporting, sentiment
+        analysis, and enhanced data export options. Additionally, in-app
+        services offer businesses the opportunity to engage with targeted
+        audiences for real-time feedback.
       </p>
       <p className="text-md my-2">
-        Join us in revolutionizing the way ideas are born, nurtured, and
-        protected. Together, let's pave the way for a future where creativity
-        knows no bounds, and innovation thrives with security and sustainability
-        at its core.
+        Join us in reshaping the way survey data is analyzed, understood, and
+        acted upon. Together, we can harness the power of insights to drive
+        innovation, improve outcomes, and make smarter, data-backed decisions.
       </p>
     </div>
   );
