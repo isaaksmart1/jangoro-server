@@ -1,0 +1,94 @@
+import { Link } from "@remix-run/react";
+import { ROUTES } from "~/utils/utils";
+
+export const Legal = ({}) => {
+  return (
+    <div className="p-4">
+      <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-oe-white">
+          <svg
+            className="h-6 w-6 text-gray-600 group-hover:text-oe-secondary"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 2.25a.75.75 0 0 0-.75.75v1.5h-6A2.25 2.25 0 0 0 3 6.75v13.5A2.25 2.25 0 0 0 5.25 22.5h13.5A2.25 2.25 0 0 0 21 20.25v-13.5A2.25 2.25 0 0 0 18.75 4.5h-6v-1.5a.75.75 0 0 0-.75-.75zm-3 6h6M12 12h6m-6 4h6m-7.5 0h-3m3-4h-3m-3 0h3m0 4h-3"
+            />
+          </svg>
+        </div>
+        <Link to={`${ROUTES.legal}#terms`}>
+          <div className="flex-auto">
+            <p className="block font-semibold text-gray">
+              Terms
+              <span className="absolute inset-0"></span>
+            </p>
+            <p className="mt-1 text-gray-600">
+              Get a better understanding of your terms and conditions
+            </p>
+          </div>
+        </Link>
+      </div>
+      <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-oe-white">
+          <svg
+            className="h-6 w-6 text-gray-600 group-hover:text-oe-secondary"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 15a1.5 1.5 0 1 1-1.5-1.5A1.5 1.5 0 0 1 12 15zm4.5-7.5V9a6 6 0 0 0-12 0v1.5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3zM9 9v-1.5a3 3 0 1 1 6 0V9"
+            />
+          </svg>
+        </div>
+        <Link to={`${ROUTES.legal}#privacy-policy`}>
+          <div className="flex-auto">
+            <p className="block font-semibold text-gray">
+              Privacy Policy
+              <span className="absolute inset-0"></span>
+            </p>
+            <p className="mt-1 text-gray-600">
+              Review how we protect your privacy
+            </p>
+          </div>
+        </Link>
+      </div>
+      <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-oe-white">
+          <svg
+            className="h-6 w-6 text-gray-600 group-hover:text-oe-secondary"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33"
+            />
+          </svg>
+        </div>
+        <Link to={`${ROUTES.legal}#community-guidelines`}>
+          <div className="flex-auto">
+            <p className="block font-semibold text-gray">
+              Community Guidelines
+              <span className="absolute inset-0"></span>
+            </p>
+            <p className="mt-1 text-gray-600">Follow our best practices</p>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+};
