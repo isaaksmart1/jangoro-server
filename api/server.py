@@ -16,22 +16,28 @@ app = Flask(__name__)
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"
+    "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"  # openai key
 )
+# os.environ["OPENAI_API_KEY"] = "sk-d69db7a1b74c46afb6447fa963518fe0"  # deepseek key
+# os.environ["OPENAI_API_KEY"] = "sk-31346ac61b3e45218d2fec08d82e0023"
 
 
-def generate(combined_feedback, system_prompt, max_tokens=256):
+def generate(combined_feedback, agent_text, max_tokens=256):
+    system_prompt = (
+        "You are an expert in analyzing customer Surveys and Reviews; a state-of-the-art analysis tool."
+        + agent_text
+    )
     client = OpenAI(
-        api_key=os.environ.get(
-            "OPENAI_API_KEY"
-        ),  # This is the default and can be omitted
+        api_key=os.environ.get("OPENAI_API_KEY"),
+        # base_url="https://api.deepseek.com",
     )
     chat_completion = client.chat.completions.create(
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": combined_feedback},
         ],
-        model="gpt-4o",
+        model="gpt-4o-mini",
+        # model="deepseek-chat",
         max_tokens=max_tokens,  # Limit response tokens to avoid exceeding context length
         temperature=0.7,  # Adjust for creative vs. deterministic responses
     )
@@ -114,7 +120,7 @@ def analyze_bulk_refinement():
     for feedback in feedbacks:
         # Combine feedback into one text
         combined_feedback = " ".join(feedback)
-        system_prompt = "You are a helpful QA assistant. Create a refined survey from the given text: {combined_feedback}. Must format in a survey like fashion"
+        system_prompt = f"Create a refined survey from the given text: {combined_feedback}. Must be clear, readable and formatted as a survey."
 
         try:
             # OpenAI API call to generate a refinement
@@ -161,12 +167,11 @@ def analyze_bulk_summary():
         # Combine feedback into one text
         combined_feedback = " ".join(feedback)
 
-        system_prompt = "You are a helpful QA assistant. Summarize the given text: {combined_feedback}"
+        system_prompt = f"Summarize the given text: {combined_feedback}."
 
         try:
             # OpenAI API call to generate a summary
             chat_completion = generate(combined_feedback, system_prompt)
-
             # Extract the content from the API response
             s = chat_completion.model_dump_json()
             s = json.loads(s)["choices"][0]["message"]["content"].strip()
@@ -204,7 +209,7 @@ def analyze_bulk_sentiment():
     for feedback in feedbacks:
         # Combine feedback into one text
         combined_feedback = " ".join(feedback)
-        system_prompt = "You are a helpful Sentiment Analayzer assistant. Provide a detailed sentiment analysis of the given text and score in words - POSITIVE or NEGATIVE {combined_feedback}."
+        system_prompt = f"Provide a detailed sentiment analysis of the given text and score in words - POSITIVE or NEGATIVE {combined_feedback}."
 
         try:
             # OpenAI API call to generate a refinement
