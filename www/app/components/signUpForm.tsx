@@ -85,14 +85,14 @@ export default function SignUpForm({ emailRef, email, setEmail }) {
 
   return (
     <div className="relative md:flex md:flex-row w-full justify-center">
-      <a href="https://apps.apple.com/us/app/openended/id6670697772">
+      <a href="https://apps.apple.com/us/app/jangoro/id6670697772">
         <img
           className="store-icon my-4 md:m-4 object-cover rounded-[15px]"
           src={appStore}
           alt="App Store"
         />
       </a>
-      <a href="https://play.google.com/store/apps/details?id=com.openended">
+      <a href="https://play.google.com/store/apps/details?id=com.jangoro">
         <img
           className="store-icon my-4 md:m-4 object-cover rounded-[15px]"
           src={playStore}

@@ -1,5 +1,5 @@
 apps:
-  - name: 'openended-api'
+  - name: 'jangoro-api'
     script: './src/server.js'
     instances: max
     autorestart: true

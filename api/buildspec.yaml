@@ -1,4 +1,4 @@
-image: openended/openended-backend:latest
+image: jangoro/jangoro-backend:latest
 
 options:
   docker: true
@@ -30,26 +30,26 @@ pipelines:
           name: Build, Tag and Push the Dev Docker image
           script:
             - echo "Logging in to Docker registry"
-            - echo "huddl35mart!" | docker login --username openended --password-stdin
+            - echo "huddl35mart!" | docker login --username jangoro --password-stdin
             - docker system prune -af
             - echo "Building Docker image"
-            - docker build -t openended-backend:latest .
+            - docker build -t jangoro-backend:latest .
             - echo "Tagging Docker image"
-            - docker tag openended-backend:latest openended/openended-backend
+            - docker tag jangoro-backend:latest jangoro/jangoro-backend
             - docker images
             - echo "Pushing Docker image to registry"
-            - docker push openended/openended-backend
+            - docker push jangoro/jangoro-backend
     stage:
       - step:
           name: Build, Tag and Push the Stage Docker image
           script:
             - echo "Logging in to Docker registry"
-            - echo "huddl35mart!" | docker login --username openended --password-stdin
+            - echo "huddl35mart!" | docker login --username jangoro --password-stdin
             - docker system prune -af
             - echo "Building Docker image"
-            - docker build -t openended-backend:stage .
+            - docker build -t jangoro-backend:stage .
             - echo "Tagging Docker image"
-            - docker tag openended-backend:stage openended/openended-backend:stage
+            - docker tag jangoro-backend:stage jangoro/jangoro-backend:stage
             - docker images
             - echo "Pushing Docker image to registry"
-            - docker push openended/openended-backend:stage
+            - docker push jangoro/jangoro-backend:stage

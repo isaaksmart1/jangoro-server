@@ -1,5 +1,5 @@
 apps:
-  - name: "openended-www"
+  - name: "jangoro-www"
     script: "npm"
     args: "start"
     instances: max
