@@ -7,7 +7,7 @@ export default function CookiePolicy() {
 
       <p className="text-2xl my-4">1. Introduction</p>
       <p className="text-md my-2">
-        Welcome to OpenEnded ("We," "Us," or "Our"). This Cookie Policy explains
+        Welcome to Jangoro ("We," "Us," or "Our"). This Cookie Policy explains
         how we use cookies and similar technologies on our platform to enhance
         your experience, analyze data usage, and improve our services. By using
         our website, you consent to the use of cookies as described in this
@@ -67,8 +67,8 @@ export default function CookiePolicy() {
       <p className="text-2xl my-4">7. Contact Us</p>
       <p className="text-md my-2">
         If you have any questions or concerns about this Cookie Policy or how we
-        use cookies, please contact us at team@openended.com. By continuing to
-        use our platform, you agree to the use of cookies as outlined in this
+        use cookies, please contact us at team@jangoro.com. By continuing to use
+        our platform, you agree to the use of cookies as outlined in this
         policy.
       </p>
     </div>

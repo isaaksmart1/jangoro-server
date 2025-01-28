@@ -17,9 +17,9 @@ export default function Footer({}) {
       >
         <div className="flex lg:flex-1 mb-8">
           <a href="/" className="-m-1.5 p-1.5 flex flex-row items-center">
-            <span className="sr-only">OpenEnded</span>
+            <span className="sr-only">Jangoro</span>
             <div className="logo-container w-40 flex flex-row items-center p-2">
-              <img src={logo} alt="OpenEnded" className="h-12 w-auto" />
+              <img src={logo} alt="Jangoro" className="h-12 w-auto" />
             </div>
           </a>
         </div>
@@ -70,10 +70,10 @@ export default function Footer({}) {
             </h1>
             <ul>
               <li className="text-oe-white my-1">
-                <a href="mailto:team@openended.com">team@openended.com</a>
+                <a href="mailto:team@jangoro.com">team@jangoro.com</a>
               </li>
               <li className="text-oe-white my-1">
-                <a href="mailto:support@openended.com">support@openended.com</a>
+                <a href="mailto:support@jangoro.com">support@jangoro.com</a>
               </li>
             </ul>
           </div>
@@ -95,12 +95,12 @@ export default function Footer({}) {
                 <img src={linkedin} alt="LinkedIn" className="h-4 w-auto" />
               </li>
               <li className="social-icon bg-oe-white p-2 mx-1">
-                <a href="https://www.tiktok.com/@openended">
+                <a href="https://www.tiktok.com/@jangoro">
                   <img src={tiktok} alt="TikTok" className="h-4 w-auto" />
                 </a>
               </li>
               <li className="social-icon bg-oe-white p-2 mx-1">
-                <a href="https://x.com/openended">
+                <a href="https://x.com/jangoro">
                   <img src={twitter} alt="X" className="h-4 w-auto" />
                 </a>
               </li>
@@ -109,7 +109,7 @@ export default function Footer({}) {
         </div>
       </nav>
       <p className="text-oe-white p-4">
-        &copy; 2025 OpenEnded Ltd. All rights reserved.
+        &copy; 2025 Jangoro Ltd. All rights reserved.
       </p>
     </footer>
   );

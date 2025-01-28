@@ -17,7 +17,7 @@ import { createBetaUser } from "~/models/beta.server";
 import { useOptionalUser } from "~/utils/utils";
 import PricingTable from "~/components/artifacts/pricing";
 
-export const meta: MetaFunction = () => [{ title: "OpenEnded" }];
+export const meta: MetaFunction = () => [{ title: "Jangoro" }];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();

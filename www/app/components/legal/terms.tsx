@@ -7,16 +7,16 @@ export default function Terms() {
 
       <p className="text-2xl my-4">1. Acceptance of Terms</p>
       <p className="text-md my-2">
-        Welcome to OpenEnded, a platform provided by OpenEnded Ltd ("We," "Us,"
+        Welcome to Jangoro, a platform provided by Jangoro Ltd ("We," "Us,"
         "Our") designed to analyze and interpret survey data effectively. By
         accessing or using our services, you agree to comply with and be bound
         by these terms and conditions ("Terms"). If you do not agree to these
-        Terms, please discontinue using OpenEnded.
+        Terms, please discontinue using Jangoro.
       </p>
 
       <p className="text-2xl my-4">2. Privacy Policy Integration</p>
       <p className="text-md my-2">
-        These Terms are an integral part of the OpenEnded Privacy Policy, which
+        These Terms are an integral part of the Jangoro Privacy Policy, which
         outlines how we collect, process, and safeguard your data. By accepting
         these Terms, you also agree to our Privacy Policy.
       </p>
@@ -24,35 +24,34 @@ export default function Terms() {
       <p className="text-2xl my-4">3. User Responsibilities</p>
       <p className="text-md my-2">
         As a User ("You"), you are responsible for ensuring the accuracy and
-        legality of the data you upload to OpenEnded. This includes survey
+        legality of the data you upload to Jangoro. This includes survey
         responses, demographic information, and any other datasets. You must
         have the appropriate permissions or rights to share any data used on our
         platform.
       </p>
       <p className="text-md my-2">
-        When sharing or analyzing data through OpenEnded, you agree to comply
-        with applicable data protection laws, including but not limited to the
-        GDPR and CCPA. You may not use OpenEnded for any unlawful or
-        unauthorized purpose.
+        When sharing or analyzing data through Jangoro, you agree to comply with
+        applicable data protection laws, including but not limited to the GDPR
+        and CCPA. You may not use Jangoro for any unlawful or unauthorized
+        purpose.
       </p>
 
       <p className="text-2xl my-4">4. Ownership and Intellectual Property</p>
       <p className="text-md my-2">
-        You retain ownership of the data you upload to OpenEnded. By using our
+        You retain ownership of the data you upload to Jangoro. By using our
         services, you grant us a non-exclusive, worldwide license to process,
-        store, and analyze your data to provide the requested services.
-        OpenEnded does not claim ownership of your data.
+        store, and analyze your data to provide the requested services. Jangoro
+        does not claim ownership of your data.
       </p>
       <p className="text-md my-2">
-        OpenEnded retains ownership of all software, algorithms, and
-        methodologies used to analyze survey data. You may not copy,
-        reverse-engineer, or reproduce any part of our platform without our
-        express permission.
+        Jangoro retains ownership of all software, algorithms, and methodologies
+        used to analyze survey data. You may not copy, reverse-engineer, or
+        reproduce any part of our platform without our express permission.
       </p>
 
       <p className="text-2xl my-4">5. Data Sharing and Compliance</p>
       <p className="text-md my-2">
-        OpenEnded may share data to comply with legal requirements or requests
+        Jangoro may share data to comply with legal requirements or requests
         from relevant authorities investigating inappropriate behavior or
         suspected illegal activities. We do not share user data with third
         parties without explicit consent, except as required by law.
@@ -60,7 +59,7 @@ export default function Terms() {
 
       <p className="text-2xl my-4">6. Anonymity and Confidentiality</p>
       <p className="text-md my-2">
-        OpenEnded prioritizes data anonymity to protect survey participants'
+        Jangoro prioritizes data anonymity to protect survey participants'
         identities. Personally identifiable information (PII) is only visible
         when explicitly necessary and within the context of agreed-upon data
         analysis terms.
@@ -78,25 +77,25 @@ export default function Terms() {
       <p className="text-md my-2">
         Users can review, modify, or delete uploaded data and personal
         information in compliance with applicable data protection regulations.
-        OpenEnded ensures compliance with the General Data Protection Regulation
+        Jangoro ensures compliance with the General Data Protection Regulation
         (GDPR) and similar laws.
       </p>
 
       <p className="text-2xl my-4">9. Limitation of Liability</p>
       <p className="text-md my-2">
-        OpenEnded is not responsible for inaccuracies or errors in the data
+        Jangoro is not responsible for inaccuracies or errors in the data
         uploaded by users. Users bear sole responsibility for the quality and
         reliability of the information they provide.
       </p>
       <p className="text-md my-2">
-        OpenEnded is also not liable for any damages resulting from the misuse
-        of data or insights generated through our platform.
+        Jangoro is also not liable for any damages resulting from the misuse of
+        data or insights generated through our platform.
       </p>
 
       <p className="text-2xl my-4">10. Contact Information</p>
       <p className="text-md my-2">
         For questions, concerns, or support regarding these Terms or our Privacy
-        Policy, please contact us at team@openended.com. We are committed to
+        Policy, please contact us at team@jangoro.com. We are committed to
         assisting you promptly.
       </p>
 
@@ -110,8 +109,8 @@ export default function Terms() {
 
       <p className="text-2xl my-4">12. Conclusion</p>
       <p className="text-md my-2">
-        By using OpenEnded, you agree to these Terms and our Privacy Policy.
-        Thank you for choosing OpenEnded as your survey analysis platform.
+        By using Jangoro, you agree to these Terms and our Privacy Policy. Thank
+        you for choosing Jangoro as your survey analysis platform.
       </p>
     </div>
   );

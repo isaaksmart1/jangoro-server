@@ -6,11 +6,11 @@ export default function PrivacyPolicy() {
       </p>
 
       <p className="text-md my-2">
-        Welcome to OpenEnded ("We", "Us", "Our"), the innovative platform
-        designed to simplify survey analysis and turn responses into actionable
-        insights. At OpenEnded, we are dedicated to protecting your privacy and
-        ensuring a secure, user-friendly experience. This Privacy Policy
-        outlines how we collect, use, and safeguard your data.
+        Welcome to Jangoro ("We", "Us", "Our"), the innovative platform designed
+        to simplify survey analysis and turn responses into actionable insights.
+        At Jangoro, we are dedicated to protecting your privacy and ensuring a
+        secure, user-friendly experience. This Privacy Policy outlines how we
+        collect, use, and safeguard your data.
       </p>
 
       <p className="text-md my-2">
@@ -108,16 +108,16 @@ export default function PrivacyPolicy() {
 
       <p className="text-md my-2">
         If you have questions or concerns about our Privacy Policy, please
-        contact us at team@openended.com. We are committed to addressing your
+        contact us at team@jangoro.com. We are committed to addressing your
         inquiries promptly and transparently.
       </p>
 
       <p className="text-2xl my-4">9. Conclusion</p>
 
       <p className="text-md my-2">
-        By using OpenEnded, you agree to this Privacy Policy. Your continued use
+        By using Jangoro, you agree to this Privacy Policy. Your continued use
         of the platform signifies your consent to our practices. Thank you for
-        trusting OpenEnded with your survey analysis needs.
+        trusting Jangoro with your survey analysis needs.
       </p>
     </div>
   );

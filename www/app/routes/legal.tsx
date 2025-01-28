@@ -92,7 +92,7 @@ export default function LegalPage() {
                 </div>
               )}
               <div className="flex flex-col flex-wrap w-10/12 md:w-2/5 m-8 p-8 border-2 border-slate-400 rounded-xl">
-                <h1 className="text-3xl">OpenEnded's Privacy Policy</h1>
+                <h1 className="text-3xl">Jangoro's Privacy Policy</h1>
                 {activeLink ? PrivacyPolicies[activeItem]() : <PrivacyPolicy />}
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function LegalPage() {
               )}
               <div className="flex flex-col flex-wrap w-10/12 md:w-2/5 m-8 p-8 border-2 border-slate-400 rounded-xl">
                 <h1 className="text-3xl">
-                  OpenEnded's Corporate Terms and Conditions
+                  Jangoro's Corporate Terms and Conditions
                 </h1>
                 {activeLink ? TermsPolicies[activeItem]() : <Terms />}
               </div>

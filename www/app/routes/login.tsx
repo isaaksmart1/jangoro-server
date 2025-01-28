@@ -106,13 +106,13 @@ export default function LoginPage() {
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full w-3/4 md:max-w-md p-8 mb-8 border-slate-300 border-2 rounded-2xl">
         <a href="/">
-          <img src={logo} alt="OpenEnded" className="mx-auto mt-2 w-12" />
+          <img src={logo} alt="Jangoro" className="mx-auto mt-2 w-12" />
         </a>
         <h1 className="text-center text-2xl font-semibold text-oe-black mt-4 mb-2">
           Sign In
         </h1>
         <p className="text-center text-xl font-normal text-oe-black mb-4">
-          with your OpenEnded Account
+          with your Jangoro Account
         </p>
         <Form method="post" className="space-y-6">
           <div>
