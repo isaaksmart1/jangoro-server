@@ -19,7 +19,6 @@ os.environ["OPENAI_API_KEY"] = (
     "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"  # openai key
 )
 # os.environ["OPENAI_API_KEY"] = "sk-d69db7a1b74c46afb6447fa963518fe0"  # deepseek key
-# os.environ["OPENAI_API_KEY"] = "sk-31346ac61b3e45218d2fec08d82e0023"  # idearify deepseek
 
 
 def generate(combined_feedback, agent_text, max_tokens=256):
