@@ -21,7 +21,7 @@ os.environ["OPENAI_API_KEY"] = (
 # os.environ["OPENAI_API_KEY"] = "sk-d69db7a1b74c46afb6447fa963518fe0"  # deepseek key
 
 
-def generate(combined_feedback, agent_text, max_tokens=256):
+def generate(combined_feedback, agent_text, max_tokens=256, temperature=0.7):
     system_prompt = (
         "You are an expert in analyzing customer Surveys and Reviews; a state-of-the-art analysis tool."
         + agent_text
@@ -38,7 +38,7 @@ def generate(combined_feedback, agent_text, max_tokens=256):
         model="gpt-4o-mini",
         # model="deepseek-chat",
         max_tokens=max_tokens,  # Limit response tokens to avoid exceeding context length
-        temperature=0.7,  # Adjust for creative vs. deterministic responses
+        temperature=temperature,  # Adjust for creative vs. deterministic responses
     )
     return chat_completion
 
@@ -119,12 +119,23 @@ def analyze_bulk_refinement():
     for feedback in feedbacks:
         # Combine feedback into one text
         combined_feedback = " ".join(feedback)
-        system_prompt = f"Create a refined survey from the given text: {combined_feedback}. Must be clear, readable and formatted as a survey."
+        system_prompt = f"""
+        Create a sophisticated survey from the given text: {combined_feedback}. 
+        Generate complete reactjs-jsonschema-form json schema.
+        In addition, a populated json data array of length 2.
+
+        Output:
+        JSON schema 
+        JSON data
+        """
 
         try:
             # OpenAI API call to generate a refinement
             chat_completion = generate(
-                combined_feedback, system_prompt, max_tokens=1024
+                combined_feedback,
+                system_prompt,
+                max_tokens=2048,
+                temperature=0.5,
             )
 
             # Extract the content from the API response
