@@ -48,6 +48,7 @@ import csv
 
 def collect_feedback(feedbacks, files):
     feedback = []
+    survey = {"header": "", "data": ""}
     # Process each CSV file
     for key, file in files.items():
         # Read the CSV file
@@ -59,32 +60,14 @@ def collect_feedback(feedbacks, files):
             f = ", ".join([str(r) for r in row])
             feedback.append(f)
 
-        feedbacks.append(feedback)
+        survey["header"] = feedback[0]
+        survey["data"] = feedback[1:]
+        feedbacks.append(survey)
 
     if not feedback:
         return jsonify({"error": "No feedback found in the uploaded files."}), 400
 
     return feedbacks
-
-
-# def collect_feedback(feedbacks, files):
-#     feedback = []
-#     # Process each CSV file
-#     for key, file in files.items():
-#         # Read the CSV file into a DataFrame
-#         df = pd.read_csv(file)
-
-#         # Collect feedbacks from CSV rows
-#         for _, row in df.iterrows():
-#             f = ", ".join([str(r) for r in row])
-#             feedback.append(f)
-
-#         feedbacks.append(feedback)
-
-#     if not feedback:
-#         return jsonify({"error": "No feedback found in the uploaded files."}), 400
-
-#     return feedbacks
 
 
 def truncate_sentence(s):
@@ -117,22 +100,16 @@ def analyze_bulk_refinement():
 
     i = 0
     for feedback in feedbacks:
-        # Combine feedback into one text
-        combined_feedback = " ".join(feedback)
-        system_prompt = f"""
-        Create a sophisticated survey from the given text: {combined_feedback}. 
-        Generate complete reactjs-jsonschema-form json schema.
-        In addition, a populated json data array of length 2.
-
-        Output:
-        JSON schema 
-        JSON data
-        """
+        # Combine feedback into one text, small sample size
+        combined_feedback = ", ".join(feedback["data"][0:25])
+        input_text = {"header": feedback["header"], "data": feedback["data"][0:25]}
+        system_prompt = f"You are an expert at creating sophisticated surveys from the given input {input_text}."
+        user_prompt = f"""Build me a complete survey."""
 
         try:
             # OpenAI API call to generate a refinement
             chat_completion = generate(
-                combined_feedback,
+                user_prompt,
                 system_prompt,
                 max_tokens=2048,
                 temperature=0.5,
@@ -150,9 +127,9 @@ def analyze_bulk_refinement():
             i = i + 1
 
         except Exception as e:
-            print({"error": f"Failed to generate summary: {str(e)}"})
-            return jsonify({"error": f"Failed to generate summary: {str(e)}"}), 500
-
+            print({"error": f"Failed to generate survey: {str(e)}"})
+            return jsonify({"error": f"Failed to generate survey: {str(e)}"}), 500
+        
     # Return the summary
     return jsonify({"refinement": refine})
 
@@ -175,7 +152,9 @@ def analyze_bulk_summary():
     i = 0
     for feedback in feedbacks:
         # Combine feedback into one text
-        combined_feedback = " ".join(feedback)
+        combined_feedback = " ".join(
+            [feedback["header"], ", ".join(feedback["data"][0:25])]
+        )
 
         system_prompt = f"Summarize the given text: {combined_feedback}."
 
@@ -218,8 +197,11 @@ def analyze_bulk_sentiment():
     i = 0
     for feedback in feedbacks:
         # Combine feedback into one text
-        combined_feedback = " ".join(feedback)
-        system_prompt = f"Provide a detailed sentiment analysis of the given text and score in words - POSITIVE or NEGATIVE {combined_feedback}."
+        combined_feedback = " ".join(
+            [feedback["header"], ", ".join(feedback["data"][0:25])]
+        )
+        system_prompt = f"""Provide a detailed sentiment analysis of the given text and score in words
+          - POSITIVE or NEGATIVE {combined_feedback}."""
 
         try:
             # OpenAI API call to generate a refinement
@@ -239,8 +221,8 @@ def analyze_bulk_sentiment():
             i = i + 1
 
         except Exception as e:
-            print({"error": f"Failed to generate summary: {str(e)}"})
-            return jsonify({"error": f"Failed to generate summary: {str(e)}"}), 500
+            print({"error": f"Failed to generate sentiment: {str(e)}"})
+            return jsonify({"error": f"Failed to generate sentiment: {str(e)}"}), 500
 
     # Return the sentiment
     return jsonify({"sentiments": sentiments})
