@@ -24,7 +24,7 @@ const dynamodb = new AWS.DynamoDB();
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 // const usersTable = "idfy-db-users-test";
-const usersTable = developmentMode ? "oe-db-users-dev" : "oe-db-users-prod";
+const usersTable = developmentMode ? "jgo-db-users-dev" : "jgo-db-users-prod";
 
 function hash(password) {
   return bcrypt.hashSync(password, 10);
