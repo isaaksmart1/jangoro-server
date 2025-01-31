@@ -33,7 +33,7 @@ function hash(password) {
 const userSchema = (id, data) => {
   const schema = {
     id: { S: id },
-    avatar: { S: data.avatar || "" },
+    avatarUrl: { S: data.avatarUrl || "" },
     status: { S: data.status || "" },
     username: { S: data.username || "" },
     email: { S: data.email || "" },
