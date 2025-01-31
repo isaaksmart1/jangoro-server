@@ -20,7 +20,7 @@ var routes = express();
 
 routes.get("/", defaultRoute);
 routes.get("/index", healthCheck);
-routes.get("/login", login);
+routes.post("/login", login);
 routes.post("/register", register);
 
 // Accounts API
@@ -66,7 +66,7 @@ function healthCheck(req, res) {
 }
 
 function login(req, res) {
-  const { email, password } = req.query;
+  const { email, password } = req.body;
   account
     .authenticate(email, password)
     .then((response) => {
