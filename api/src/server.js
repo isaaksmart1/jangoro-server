@@ -4,7 +4,8 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var routes = require("./routes/routes");
 var app = express();
-var initGraphQL = require("./middleware/graphql");
+var { graphqlHTTP } = require("express-graphql");
+var { schema, root } = require("./middleware/graphql");
 
 const Address = {
   localhost: ["127.0.0.1", "localhost"],
@@ -49,7 +50,14 @@ app.use(function (req, res, next) {
 });
 
 // MAIN APPLICATION STARTS HERE
-app.use("/graphql", initGraphQL());
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 app.use("/", routes);
 
