@@ -2,14 +2,13 @@ const Stripe = require("stripe");
 const {
   STRIPE_SECRET_KEY,
   STRIPE_PUBLISHABLE_KEY,
-  PRICE,
   STRIPE_WEBHOOK_KEY,
-  STRIPE_MONTHLY_MEMBERSHIP_PRICE_ID,
+  STRIPE_PRICE_ID,
 } = require("../config/stripe");
 const membershipIDs = require("../config/stripe-membership-ids.json");
-const stripe = Stripe(STRIPE_SECRET_KEY);
-const fs = require("fs");
+const account = require("../services/accounts.service");
 const { URL } = require("../middleware/helpers");
+const stripe = Stripe(STRIPE_SECRET_KEY);
 
 // In-memory storage for processed event IDs (use persistent storage in production)
 const processedEventIds = new Set();
@@ -136,6 +135,23 @@ const webhook = async (req) => {
   }
 };
 
+const retrieveSession = async (params) => {
+  try {
+    const { sessionId } = params;
+
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (!session) throw new Error("Session not found");
+
+    return {
+      customerId: session.customer,
+      subscriptionId: session.subscription,
+    };
+  } catch (error) {
+    console.error("Error retrieving session:", error);
+    return { error: "Failed to retrieve session" };
+  }
+};
+
 const createPaymentIntent = async (params) => {
   const { subscription } = params;
   try {
@@ -144,28 +160,32 @@ const createPaymentIntent = async (params) => {
       payment_method_types: ["card"],
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "Sign Up Fee",
-            },
-            recurring: {
-              interval,
-            },
-            unit_amount: params.amount,
-          },
+          price: STRIPE_PRICE_ID,
           quantity: 1,
         },
       ],
-      mode: "subscription", // Use 'subscription' mode
+      mode: "subscription",
       subscription_data: {
-        trial_period_days: 1, // 1 day free trial
+        trial_period_days: 1, // 1-day free trial
       },
-      success_url: `${URL.app}/#/login`,
-      cancel_url: `${URL.app}/#/login`,
+      success_url: `${URL.app}/login?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${URL.app}/login`,
+      metadata: {
+        userId: params.id, // Store user ID for reference
+        subscriptionType: interval, // Monthly or Annually
+        email: params.email,
+      },
     });
 
-    return { id: session.id };
+    // Return necessary params to frontend
+    return {
+      id: session.id,
+      url: session.url, // Stripe checkout redirect URL
+      customerId: session.customer, // Stripe customer ID
+      subscriptionId: session.subscription, // Subscription ID
+      amount: params.amount, // Amount charged
+      interval, // Subscription plan interval
+    };
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -182,6 +202,25 @@ const getSetupIntent = async (params) => {
   } catch (error) {
     console.error("Error creating Setup Intent:", error);
     res.status(500).json({ error: "Failed to create Setup Intent" });
+  }
+};
+
+const createBillingPortal = async (params) => {
+  try {
+    const { customerId } = params;
+    if (!customerId) {
+      return { error: "Missing customer ID" };
+    }
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: "http://app.jangoro.com/billing", // Redirect user back
+    });
+
+    return { url: session.url };
+  } catch (error) {
+    console.error("Stripe Billing Portal Error:", error);
+    return { error: "Failed to create billing portal session" };
   }
 };
 
@@ -379,6 +418,9 @@ async function subscribe(event) {
         items: [{ price: membershipIDs[subscriptionPrice] }],
         default_payment_method: paymentMethodId,
       });
+      // Update user in the database
+      const user = await account.getUser(customerId.metadata.email);
+      await account.updateUser({ ...user, customerId });
       console.log(`Customer ${customerId} subscribed to the monthly plan.`);
     }
   } catch (error) {
@@ -392,7 +434,9 @@ module.exports = {
   createStripeAccount,
   createSubscription,
   cancelSubscriptionsAndDeleteCustomer,
+  createBillingPortal,
   createPaymentIntent,
+  retrieveSession,
   createCustomer,
   getSetupIntent,
   transactions,

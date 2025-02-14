@@ -50,8 +50,14 @@ const root = {
   register: async ({ registerInput }) => {
     const { email, password } = registerInput;
 
+    const subscription = "month";
+
     try {
-      const response = await accounts.register({ email, password });
+      const response = await accounts.register({
+        email,
+        password,
+        subscription,
+      });
       return response;
     } catch (error) {
       e = new Error(error);

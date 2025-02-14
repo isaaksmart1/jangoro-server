@@ -1,4 +1,5 @@
 import { useMatches } from "@remix-run/react";
+import { register } from "node:module";
 import { useMemo } from "react";
 
 import type { User } from "~/models/user.server";
@@ -6,21 +7,28 @@ import type { User } from "~/models/user.server";
 const DEFAULT_REDIRECT = "/";
 
 export const URL = {
-  app: "http://localhost:5173",
+  app: "https://app.jangaro.com",
+  www: "https://jangaro.com",
+  api: "https://api.jangaro.com",
+  ai: "https://ai.jangaro.com",
+  base_l: "http://localhost:5173",
+  www_l: "http://localhost:3000",
+  api_l: "http://localhost:4000",
+  ai_l: "http://localhost:5000",
 };
 
 const LINKS = {
-  login: "#/login",
+  login: "login",
   legal: "legal",
-  register: "#",
+  register: "register",
   notes: "notes",
   company: "company",
 };
 
 export const ROUTES = {
   login: `${URL.app}/${LINKS.login}`,
+  register: `${URL.app}/${LINKS.register}`,
   legal: `/${LINKS.legal}`,
-  register: `/${LINKS.register}`,
   notes: `/${LINKS.notes}`,
   company: `/${LINKS.company}`,
 };

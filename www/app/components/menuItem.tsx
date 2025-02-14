@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Legal } from "./menu/legal";
+
 import { Company } from "./menu/company";
+import { Legal } from "./menu/legal";
 
 export const MenuItem = ({ content }) => {
   const [menuItem, setMenuItem] = useState(<></>);

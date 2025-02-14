@@ -11,9 +11,9 @@ var {
   createSubscription,
   createCustomer,
   transactions,
-} = require("../services/payments.service");
-const {
+  retrieveSession,
   getSetupIntent,
+  createBillingPortal,
   createPaymentIntent,
 } = require("../services/payments.service");
 var routes = express();
@@ -42,6 +42,8 @@ routes.post("/create-subscription", paymentsSubscription);
 routes.post("/create-stripe-account", createStripeAccount);
 routes.post("/create-payment-intent", pay);
 routes.post("/get-setup-intent", updateCardDetails);
+routes.post("/retrieve-session", getSession);
+routes.post("/create-billing-portal-session", billingPortal);
 routes.get("/get-transactions", getTransactions);
 
 function defaultRoute(req, res) {
@@ -202,6 +204,16 @@ function paymentsSubscription(req, res) {
     });
 }
 
+function getSession(req, res) {
+  retrieveSession(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
 function createStripeAccount(req, res) {
   createCustomer(req.body)
     .then((response) => {
@@ -226,6 +238,16 @@ function updateCardDetails(req, res) {
   getSetupIntent(req.body)
     .then((secret) => {
       res.send(secret);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function billingPortal(req, res) {
+  createBillingPortal(req.body)
+    .then((response) => {
+      res.send(response);
     })
     .catch((err) => {
       res.status(400).send(err);

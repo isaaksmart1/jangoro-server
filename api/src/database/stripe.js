@@ -1,10 +1,6 @@
 const Stripe = require("stripe");
 const {
   STRIPE_SECRET_KEY,
-  STRIPE_PUBLISHABLE_KEY,
-  PRICE,
-  STRIPE_WEBHOOK_KEY,
-  STRIPE_MONTHLY_MEMBERSHIP_PRICE_ID,
 } = require("../config/stripe");
 const stripe = Stripe(STRIPE_SECRET_KEY);
 
