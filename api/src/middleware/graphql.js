@@ -2,13 +2,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { buildSchema } = require("graphql");
 const SECRET_KEY = require("../config.json").secret;
+const accounts = require("../services/accounts.service");
 
 // Mock Database (Replace with a real DB like MongoDB/PostgreSQL later)
-const users = [];
-const companies = [
-  { id: "1", name: "Refine CRM Inc." },
-  { id: "2", name: "Tech Solutions Ltd." },
-];
 
 const schema = buildSchema(`
   type Query {
@@ -54,53 +50,34 @@ const root = {
   register: async ({ registerInput }) => {
     const { email, password } = registerInput;
 
-    // Check if user already exists
-    const existingUser = users.find((u) => u.email === email);
-    if (existingUser) throw new Error("User already exists");
-
-    // Hash password before storing
-    const hashedPassword = bcrypt.hashSync(password, 10);
-
-    // Create new user
-    const newUser = {
-      id: String(users.length + 1),
-      email,
-      password: hashedPassword, // Store hashed password
-    };
-
-    users.push(newUser);
-
-    // Generate JWT Token
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email },
-      SECRET_KEY,
-      {
-        expiresIn: "1h",
-      }
-    );
-
-    return { accessToken: token, user: newUser };
+    try {
+      const response = await accounts.register({ email, password });
+      return response;
+    } catch (error) {
+      e = new Error(error);
+      return {
+        e,
+        message: "Registration failed",
+      };
+    }
   },
 
   login: async ({ loginInput }) => {
     const { email, password } = loginInput;
 
-    const user = users.find((u) => u.email === email);
-    if (!user) throw new Error("User not found");
-
-    // Compare hashed password
-    const isValidPassword = bcrypt.compareSync(password, user.password);
-    if (!isValidPassword) {
-      console.log(isValidPassword);
-      throw new Error("Invalid credentials");
+    try {
+      const response = await accounts.authenticate(email, password);
+      return {
+        accessToken: response.user.jwtToken,
+        user: response.account,
+      };
+    } catch (error) {
+      e = new Error(error);
+      return {
+        e,
+        message: "Registration failed",
+      };
     }
-
-    // Generate JWT Token
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
-      expiresIn: "1h",
-    });
-
-    return { accessToken: token, user };
   },
 
   // Fetch a single user by ID

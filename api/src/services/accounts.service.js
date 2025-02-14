@@ -58,7 +58,7 @@ const authenticate = async (email, password) => {
       updateUser(user);
 
       Log(user, accountStream);
-      return user;
+      return {user, account};
     } else {
       Log(`${email}, User not found.`, accountStream);
       throw "User not found.";
@@ -112,8 +112,8 @@ const register = async (data) => {
   };
 
   const newData = {
-    id: schema.id.S,
-    password: schema.password.S,
+    ...data,
+    id: newId,
   };
 
   try {
@@ -455,11 +455,13 @@ async function createUser(data, params) {
       relics.forEach((account) => deactivate(account));
     }
 
+    // authentication successful so generate jwt and refresh tokens
+    const jwtToken = generateJwtToken(data);
     Log("You are now registered.", accountStream);
+
     return {
-      id: data.id,
-      password: data.password,
-      message: "You are now registered.",
+      user: data,
+      accessToken: jwtToken,
     };
   } catch (error) {
     Log(error, accountStream);
