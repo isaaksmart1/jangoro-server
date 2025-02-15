@@ -40,11 +40,11 @@ export default function App() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-MGFZHTNH');
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-T22V7ZTZ');
             `,
           }}
         />
@@ -68,7 +68,7 @@ export default function App() {
         />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-C2JMQQ75FT"
+          src="https://www.googletagmanager.com/gtag/js?id=GTM-T22V7ZTZ"
         ></script>
         <script
           dangerouslySetInnerHTML={{
@@ -76,7 +76,7 @@ export default function App() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-C2JMQQ75FT');
+              gtag('config', 'GTM-T22V7ZTZ');
             `,
           }}
         />
@@ -107,7 +107,7 @@ export default function App() {
       <body className="h-full">
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MGFZHTNH"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-T22V7ZTZ"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}

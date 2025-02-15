@@ -29,7 +29,7 @@ routes.get("/user/:email", getUser);
 routes.get("/user/id/:id", getUserById);
 routes.post("/user/update", updateUser);
 routes.post("/user/update/password", updatePassword);
-routes.post("/user/deactivate", authenticateToken, deactivate);
+routes.post("/user/deactivate", deactivate);
 routes.post("/user/refresh-token", refreshToken);
 
 // Payments API
