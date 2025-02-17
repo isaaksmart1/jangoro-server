@@ -406,8 +406,8 @@ const deactivate = async (account) => {
     //   subject: "Huddl Account Deactivation: Anonymous feedback",
     //   text: `Reason for deletion - ${data.feedback}`,
     // });
-    // result = await cancelSubscriptionsAndDeleteCustomer(account.email);
-    const result = 200;
+
+    result = await cancelSubscriptionsAndDeleteCustomer(account.email);
     if (result === 200) {
       await db.documentClient.delete(deleteParams).promise();
       Log(`Account deleted`, accountStream);
