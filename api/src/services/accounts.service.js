@@ -182,10 +182,9 @@ const resetPassword = async (token, email, password) => {
     if (!isValid) throw "Invalid token";
 
     // Hash the new password & update user
-    user.password = await bcrypt.hash(password, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
-    await updateUser(user);
+    await updatePassword({ email, password });
 
     return { message: "Password reset successfully!" };
   } catch (error) {

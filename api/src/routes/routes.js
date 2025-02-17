@@ -94,8 +94,7 @@ function register(req, res) {
 
 function resetPassword(req, res) {
   const { token } = req.params;
-  const { password } = req.body;
-  const { email } = req.query;
+  const { password, email } = req.body;
   account
     .resetPassword(token, email, password)
     .then((response) => {
