@@ -75,7 +75,7 @@ export default function Index() {
         >
           <PricingTable />
         </Section>
-        <Section
+        {/* <Section
           title="Join our growing community"
           description=""
           backgroundColor="transparent"
@@ -84,7 +84,7 @@ export default function Index() {
           setEmail={setEmail}
         >
           <Socials />
-        </Section>
+        </Section> */}
         <Footer />
         <Cookies
           isAcceptCookies={isAcceptCookies}
