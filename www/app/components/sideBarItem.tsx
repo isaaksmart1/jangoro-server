@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Legal } from "./sidebar/legal";
 import { Company } from "./sidebar/company";
+import { Docs } from "./sidebar/docs";
 
 export const SideBarItem = ({ title }) => {
   const [isExpanded, setExpand] = useState(false);
@@ -9,6 +10,7 @@ export const SideBarItem = ({ title }) => {
   useEffect(() => {
     if (title.toLowerCase() === "legal") setMenuItem(<Legal />);
     else if (title.toLowerCase() === "company") setMenuItem(<Company />);
+    else if (title.toLowerCase() === "docs") setMenuItem(<Docs />);
   }, []);
 
   return (

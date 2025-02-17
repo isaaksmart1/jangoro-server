@@ -22,6 +22,7 @@ const LINKS = {
   register: "register",
   notes: "notes",
   company: "company",
+  docs: "docs",
 };
 
 export const ROUTES = {
@@ -30,6 +31,7 @@ export const ROUTES = {
   legal: `/${LINKS.legal}`,
   notes: `/${LINKS.notes}`,
   company: `/${LINKS.company}`,
+  docs: `/${LINKS.docs}`,
 };
 
 /**
