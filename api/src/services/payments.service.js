@@ -339,31 +339,32 @@ async function cancelSubscriptionsAndDeleteCustomer(email) {
     });
 
     if (customers.data.length === 0) {
-      console.log(`No customer found with email ${email}`);
-      return;
+      throw `No customer found with email ${email}`;
     }
 
     const customer = customers.data[0];
 
-    // Retrieve the customer's subscriptions
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customer.id,
-    });
-
-    // Cancel each subscription
-    for (const subscription of subscriptions.data) {
-      await stripe.subscriptions.del(subscription.id);
-    }
-
     // Delete the customer
-    await stripe.customers.del(customer.id);
+    const result = await stripe.customers.del(customer.id);
 
-    console.log(
-      `Customer ${customer.id} and their subscriptions have been deleted.`
-    );
-    return 200;
+    if (result.deleted) {
+      // Retrieve the customer's subscriptions
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customer.id,
+      });
+
+      // Cancel each subscription
+      for (const subscription of subscriptions.data) {
+        await stripe.subscriptions.del(subscription.id);
+      }
+
+      console.log(
+        `Customer ${customer.id} and their subscriptions have been deleted.`
+      );
+      return 200;
+    }
   } catch (error) {
-    console.error(`Failed to delete customer ${customer.id}:`, error);
+    console.log(`Failed to delete customer:`, error);
     return error;
   }
 }

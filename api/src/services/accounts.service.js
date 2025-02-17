@@ -58,7 +58,7 @@ const authenticate = async (email, password) => {
       updateUser(user);
 
       Log(user, accountStream);
-      return {user, account};
+      return { user, account };
     } else {
       Log(`${email}, User not found.`, accountStream);
       throw "User not found.";
@@ -408,6 +408,7 @@ const deactivate = async (account) => {
     // });
 
     result = await cancelSubscriptionsAndDeleteCustomer(account.email);
+    
     if (result === 200) {
       await db.documentClient.delete(deleteParams).promise();
       Log(`Account deleted`, accountStream);
