@@ -24,7 +24,8 @@ routes.post("/login", login);
 routes.post("/register", register);
 
 // Accounts API
-routes.get("/user/reset-password", forgotPasswordLimiter, resetPassword);
+routes.post("/user/reset-password/:token", resetPassword);
+routes.post("/user/forgot-password", forgotPassword);
 routes.get("/user/:email", getUser);
 routes.get("/user/id/:id", getUserById);
 routes.post("/user/update", updateUser);
@@ -92,14 +93,23 @@ function register(req, res) {
 }
 
 function resetPassword(req, res) {
-  const { username, email, answer } = req.query;
-  const params = {
-    username,
-    email,
-    securityAnswer: answer,
-  };
+  const { token } = req.params;
+  const { password } = req.body;
+  const { email } = req.query;
   account
-    .resetPassword(params)
+    .resetPassword(token, email, password)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+}
+
+function forgotPassword(req, res) {
+  const { email } = req.body;
+  account
+    .forgotPassword(email)
     .then((response) => {
       res.status(200).send(response);
     })

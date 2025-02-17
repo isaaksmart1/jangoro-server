@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const db = require("../config/database");
@@ -10,6 +12,9 @@ const { env, developmentMode } = require("../middleware/helpers");
 const { Log, accountStream } = require("./logger.service");
 const { cancelSubscriptionsAndDeleteCustomer } = require("./payments.service");
 
+// Email transport configuration
+const transporter = nodemailer.createTransport(config.smtpOptions);
+const APP_URL = "https://app.jangoro.com";
 // periodicallyDeleteCodes();
 
 const authenticate = async (email, password) => {
@@ -134,32 +139,58 @@ const register = async (data) => {
   }
 };
 
-const resetPassword = async (data) => {
-  const query = {
-    TableName: db.usersTable,
-    IndexName: "email-index",
-    KeyConditionExpression: "email = :email",
-    ExpressionAttributeValues: {
-      ":email": { S: data.email },
-    },
-  };
+const forgotPassword = async (email) => {
+  try {
+    const user = await getUser(email);
+    if (!user) throw "User not found";
 
-  const account = await db.dynamodb.query(query).promise();
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hash = await bcrypt.hash(resetToken, 10);
 
-  if (account.Items.length > 0) {
-    let user = db.AWS.DynamoDB.Converter.unmarshall(account.Items[0]);
+    // Save hashed token & expiry time in the database
+    user.resetPasswordToken = hash;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiration
+    await updateUser(user);
 
-    if (user.email.toLowerCase() === data.email.toLowerCase()) {
-      return user.id;
-    } else {
-      Log(`User details incorrect`, accountStream);
-      Log(user, accountStream);
-      Log(data, accountStream);
-      throw 500;
-    }
-  } else {
-    Log(`User not found, ${data.email}`, accountStream);
-    throw "User not found";
+    // Send email with reset link
+    const resetUrl = `${APP_URL}/reset-password/${resetToken}?email=${encodeURIComponent(
+      email
+    )}`;
+    const mailOptions = {
+      to: email,
+      subject: "Password Reset",
+      text: `Click here to reset your password: ${resetUrl}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return { message: "Password reset email sent!" };
+  } catch (error) {
+    Log({ message: "Server error", error }, accountStream);
+    throw { message: "Server error", error };
+  }
+};
+
+const resetPassword = async (token, email, password) => {
+  try {
+    const user = await getUser(email);
+
+    if (!user) throw "Invalid or expired token";
+
+    const isValid = await bcrypt.compare(token, user.resetPasswordToken);
+    if (!isValid) throw "Invalid token";
+
+    // Hash the new password & update user
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await updateUser(user);
+
+    return { message: "Password reset successfully!" };
+  } catch (error) {
+    Log({ message: "Server error", error }, accountStream);
+    throw { message: "Server error", error };
   }
 };
 
@@ -408,7 +439,7 @@ const deactivate = async (account) => {
     // });
 
     result = await cancelSubscriptionsAndDeleteCustomer(account.email);
-    
+
     if (result === 200) {
       await db.documentClient.delete(deleteParams).promise();
       Log(`Account deleted`, accountStream);
@@ -473,6 +504,7 @@ module.exports = {
   authenticate,
   register,
   resetPassword,
+  forgotPassword,
   getUser,
   getUserById,
   updateUser,
