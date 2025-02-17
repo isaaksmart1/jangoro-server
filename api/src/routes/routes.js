@@ -48,14 +48,14 @@ routes.get("/get-transactions", getTransactions);
 
 function defaultRoute(req, res) {
   const dt = new Date();
-  // res.send({
-  //   data: dt.toISOString(),
-  //   aws: {
-  //     region: "eu-west-2",
-  //     accessKeyId: "AKIA6FYDLCFVAJ6V2D37", // Replace with your AWS access key ID
-  //     secretAccessKey: "9g+bpaZLFKHt8H5DyQgkb6mjbUqD2PL4COFuC+nk", // Replace with your AWS secret access key
-  //   },
-  // });
+  res.send({
+    data: dt.toISOString(),
+    // aws: {
+    //   region: "eu-west-2",
+    //   accessKeyId: "AKIA6FYDLCFVAJ6V2D37", // Replace with your AWS access key ID
+    //   secretAccessKey: "9g+bpaZLFKHt8H5DyQgkb6mjbUqD2PL4COFuC+nk", // Replace with your AWS secret access key
+    // },
+  });
 }
 
 function healthCheck(req, res) {
