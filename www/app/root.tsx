@@ -50,7 +50,7 @@ export default function App() {
         />
         <meta
           name="description"
-          content="Create, discover and collaborate on ideas across all topics."
+          content="AI-powered Survey and Review analytics solution."
         />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
