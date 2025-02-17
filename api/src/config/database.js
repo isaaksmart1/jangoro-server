@@ -7,8 +7,8 @@ const { developmentMode } = require("../middleware/helpers");
 // Configure AWS with your credentials and desired region
 AWS.config.update({
   region: "eu-west-2",
-  accessKeyId: "AKIA6FYDLCFVAJ6V2D37",
-  secretAccessKey: "9g+bpaZLFKHt8H5DyQgkb6mjbUqD2PL4COFuC+nk",
+  accessKeyId: "AKIA6FYDLCFVP7PVRQYD",
+  secretAccessKey: "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",
 });
 
 // Cloud watch logs instance
