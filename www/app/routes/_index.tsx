@@ -48,7 +48,7 @@ export default function Index() {
   const [email, setEmail] = useState(emailRef.current);
 
   return (
-    <main className="relative bg-oe-primary w-full sm:flex sm:items-center sm:justify-center">
+    <main className="relative bg-jgo-primary w-full sm:flex sm:items-center sm:justify-center">
       <div className="relative w-full">
         <Header user={user} />
         <Hero

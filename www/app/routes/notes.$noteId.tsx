@@ -43,7 +43,7 @@ export default function NoteDetailsPage() {
       <Form method="post">
         <button
           type="submit"
-          className="rounded bg-oe-accent-500 px-4 py-2 text-oe-primary hover:bg-oe-accent-600 focus:bg-oe-accent-400"
+          className="rounded bg-jgo-accent-500 px-4 py-2 text-jgo-primary hover:bg-jgo-accent-600 focus:bg-jgo-accent-400"
         >
           Delete
         </button>

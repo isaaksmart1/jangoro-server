@@ -20,11 +20,11 @@ export default function Hero({ user, emailRef, email, setEmail }) {
             <TypedText texts={phrases} />
           </h1> */}
           <div className="my-8 w-1/2">
-            <h1 className="block text-oe-accent drop-shadow-md text-left text-4xl">
+            <h1 className="block text-jgo-accent drop-shadow-md text-left text-4xl">
               Unlock Insights in Seconds.
             </h1>
             <br />
-            <p className="block text-oe-white drop-shadow-md text-left text-xl">
+            <p className="block text-jgo-white drop-shadow-md text-left text-xl">
               Transform survey data into actionable results with our powerful
               analysis tool—fast, accurate, and effortless. Know what matters
               most, instantly.

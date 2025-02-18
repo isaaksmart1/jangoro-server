@@ -31,7 +31,7 @@ export default function DocsPage() {
     <div>
       <Header />
       <div className="flex min-h-full flex-col">
-        <ul className="flex flex-row flex-wrap w-full p-4 bg-oe-tertiary">
+        <ul className="flex flex-row flex-wrap w-full p-4 bg-jgo-tertiary">
           <li className="text-slate-300 font-bold my-2 md:my-0 mx-4">
             <a href="#" onClick={() => handleSetUrl("/docs")}>
               Docs

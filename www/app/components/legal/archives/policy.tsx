@@ -16,7 +16,7 @@ export default function Policy({
       {activeItem === policy ? (
         <a
           href={url}
-          className="font-semibold italic bg-oe-primary text-oe-white p-2 my-2"
+          className="font-semibold italic bg-jgo-primary text-jgo-white p-2 my-2"
           onClick={handleSetPolicy}
         >
           {policy}

@@ -52,7 +52,7 @@ const TypedText = ({
   }, [cursorBlinkSpeed]);
 
   return (
-    <span className="block text-oe-primary font-bold drop-shadow-md text-5xl">
+    <span className="block text-jgo-primary font-bold drop-shadow-md text-5xl">
       {currentText}
       <span
         style={{

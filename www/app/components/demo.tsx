@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import demoVideo from "../assets/video/oe-demo.mp4";
+import demoVideo from "../assets/video/jgo-demo.mp4";
 
 export default function Demo() {
   const sectionRef = useRef(null);
@@ -35,7 +35,7 @@ export default function Demo() {
         </div>
         <div className="mt-2 flex flex-wrap justify-center gap-8">
           <video
-            className="mx-auto w-80 rounded-2xl border-4 border-oe-primary" // Center the video
+            className="mx-auto w-80 rounded-2xl border-4 border-jgo-primary" // Center the video
             playsInline
             autoPlay // Autoplay the video on load
             loop // Loop the video

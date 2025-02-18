@@ -5,12 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        "oe-white": "#ffffff",
-        "oe-black": "#000000",
-        "oe-accent": "#3bc1f6",
-        "oe-primary": "#4d195c",
-        "oe-secondary": "#3b82f6",
-        "oe-tertiary": "#3b1446",
+        "jgo-white": "#ffffff",
+        "jgo-black": "#000000",
+        "jgo-accent": "#3bc1f6",
+        "jgo-primary": "#4d195c",
+        "jgo-secondary": "#3b82f6",
+        "jgo-tertiary": "#3b1446",
       },
     },
   },

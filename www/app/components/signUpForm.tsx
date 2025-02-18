@@ -24,7 +24,7 @@ export default function SignUpForm({ emailRef, email, setEmail }) {
 
   // return (
   //   <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-  //     <p className="text-oe-primary font-bold text-xl p-4 h-16 text-oe-white justify-center bg-oe-primary">
+  //     <p className="text-jgo-primary font-bold text-xl p-4 h-16 text-jgo-white justify-center bg-jgo-primary">
   //       Get Early Access
   //     </p>
   //     <Form
@@ -37,17 +37,17 @@ export default function SignUpForm({ emailRef, email, setEmail }) {
 
   //       <select
   //         name="platform"
-  //         className="form-control w-full max-w-xs h-16 p-4 bg-oe-white text-slate-400 border border-gray-300 rounded"
+  //         className="form-control w-full max-w-xs h-16 p-4 bg-jgo-white text-slate-400 border border-gray-300 rounded"
   //         defaultValue=""
   //         onChange={(e) => setPlatform(e.target.value)}
   //       >
   //         <option value="" disabled>
   //           Which platform?
   //         </option>
-  //         <option value="Android" className="text-oe-black">
+  //         <option value="Android" className="text-jgo-black">
   //           Android
   //         </option>
-  //         <option value="iOS" className="text-oe-black">
+  //         <option value="iOS" className="text-jgo-black">
   //           iOS
   //         </option>
   //       </select>
@@ -65,7 +65,7 @@ export default function SignUpForm({ emailRef, email, setEmail }) {
 
   //       <button
   //         type="submit"
-  //         className={`w-full max-w-xs h-16 rounded bg-oe-primary text-oe-white p-4 ${
+  //         className={`w-full max-w-xs h-16 rounded bg-jgo-primary text-jgo-white p-4 ${
   //           signedUp ? "bg-sky-500" : "hover:bg-green-700"
   //         }`}
   //         onClick={() => {

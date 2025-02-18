@@ -13,7 +13,7 @@ AWS.config.update({
 
 // Cloud watch logs instance
 const cloudwatchlogs = new AWS.CloudWatchLogs();
-const logGroupName = "/aws/oe/log";
+const logGroupName = "/aws/jgo/log";
 const accountStream = "accounts";
 
 // Create S3 instance

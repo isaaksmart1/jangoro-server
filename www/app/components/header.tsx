@@ -21,7 +21,7 @@ export default function Header({ user }) {
   };
 
   return (
-    <header className="header bg-oe-primary">
+    <header className="header bg-jgo-primary">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -36,7 +36,7 @@ export default function Header({ user }) {
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-oe-white-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-jgo-white-700"
             onClick={() => setMenuOpen(true)}
           >
             <span className="sr-only">Open menu</span>
@@ -61,13 +61,13 @@ export default function Header({ user }) {
           <div className="relative">
             <button
               type="button"
-              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-oe-white"
+              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-jgo-white"
               aria-expanded="false"
               onClick={() => toggleMenuItem("company")}
             >
               Company
               <svg
-                className="h-5 w-5 flex-none text-oe-white"
+                className="h-5 w-5 flex-none text-jgo-white"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
@@ -87,13 +87,13 @@ export default function Header({ user }) {
           <div className="relative">
             <button
               type="button"
-              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-oe-white"
+              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-jgo-white"
               aria-expanded="false"
               onClick={() => toggleMenuItem("legal")}
             >
               Legal
               <svg
-                className="h-5 w-5 flex-none text-oe-white"
+                className="h-5 w-5 flex-none text-jgo-white"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
@@ -111,13 +111,13 @@ export default function Header({ user }) {
           <div className="relative">
             <button
               type="button"
-              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-oe-white"
+              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-jgo-white"
               aria-expanded="false"
               onClick={() => toggleMenuItem("docs")}
             >
               Docs
               <svg
-                className="h-5 w-5 flex-none text-oe-white"
+                className="h-5 w-5 flex-none text-jgo-white"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
@@ -135,7 +135,7 @@ export default function Header({ user }) {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href={ROUTES.login}
-            className="text-lg font-semibold leading-6 text-oe-white"
+            className="text-lg font-semibold leading-6 text-jgo-white"
           >
             Log In <span aria-hidden="true">&rarr;</span>
           </a>
@@ -146,7 +146,7 @@ export default function Header({ user }) {
         <div className="lg:hidden" role="dialog" aria-modal="true">
           <div className="fixed inset-0 z-10"></div>
 
-          <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-oe-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-jgo-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <a href="/" className="-m-1.5 p-1.5 flex flex-row items-center">
                 <span className="sr-only">Jangoro</span>
@@ -154,7 +154,7 @@ export default function Header({ user }) {
               </a>
               <button
                 type="button"
-                className="-m-2.5 rounded-md p-2.5 text-oe-white-700"
+                className="-m-2.5 rounded-md p-2.5 text-jgo-white-700"
                 onClick={() => setMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>

@@ -5,9 +5,9 @@ export const Legal = ({}) => {
   return (
     <div className="p-4">
       <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-oe-white">
+        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-jgo-white">
           <svg
-            className="h-6 w-6 text-gray-600 group-hover:text-oe-secondary"
+            className="h-6 w-6 text-gray-600 group-hover:text-jgo-secondary"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
@@ -34,9 +34,9 @@ export const Legal = ({}) => {
         </Link>
       </div>
       <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-oe-white">
+        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-jgo-white">
           <svg
-            className="h-6 w-6 text-gray-600 group-hover:text-oe-secondary"
+            className="h-6 w-6 text-gray-600 group-hover:text-jgo-secondary"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
