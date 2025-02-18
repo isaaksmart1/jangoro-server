@@ -43,9 +43,6 @@ def generate(combined_feedback, agent_text, max_tokens=256, temperature=0.7):
     return chat_completion
 
 
-import csv
-
-
 def collect_feedback(feedbacks, files):
     feedback = []
     survey = {"header": "", "data": ""}
@@ -129,7 +126,7 @@ def analyze_bulk_refinement():
         except Exception as e:
             print({"error": f"Failed to generate survey: {str(e)}"})
             return jsonify({"error": f"Failed to generate survey: {str(e)}"}), 500
-        
+
     # Return the summary
     return jsonify({"refinement": refine})
 
@@ -226,6 +223,53 @@ def analyze_bulk_sentiment():
 
     # Return the sentiment
     return jsonify({"sentiments": sentiments})
+
+
+@app.route("/analyze-action-plan", methods=["POST"])
+def analyze_action_plan():
+    feedbacks = []
+    actionPlan = []
+
+    # Retrieve files as a dictionary
+    files = request.files.to_dict()
+    keys = list(request.files.keys())
+
+    if not files:
+        return jsonify({"error": "No files uploaded."}), 400
+
+    # Collect feedback from files (assumes this function is defined elsewhere)
+    feedbacks = collect_feedback(feedbacks=feedbacks, files=files)
+
+    i = 0
+    for feedback in feedbacks:
+        # Combine feedback into one text
+        combined_feedback = " ".join(
+            [feedback["header"], ", ".join(feedback["data"][0:25])]
+        )
+
+        system_prompt = (
+            f"Provide a strategic business action plan of the given text: {combined_feedback}."
+        )
+
+        try:
+            # OpenAI API call to generate a summary
+            chat_completion = generate(combined_feedback, system_prompt)
+            # Extract the content from the API response
+            s = chat_completion.model_dump_json()
+            s = json.loads(s)["choices"][0]["message"]["content"].strip()
+
+            # Join the sentences back into a string
+            s = truncate_sentence(s)
+            d = {}
+            d[keys[i]] = s
+            actionPlan.append(d)
+            i = i + 1
+
+        except Exception as e:
+            return jsonify({"error": f"Failed to generate action Plan: {str(e)}"}), 500
+
+    # Return the summary
+    return jsonify({"actionPlan": actionPlan})
 
 
 if __name__ == "__main__":
