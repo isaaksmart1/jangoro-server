@@ -54,6 +54,10 @@ export default function App() {
         />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+          name="keywords"
+          content="Jangoro, AI Survey Analytics, Review Insights, Customer Feedback Analysis, Data Insights, AI Reviews, Sentiment Analysis, Business Intelligence, Market Research, Customer Satisfaction, AI-powered Reviews, AI Feedback, Online Surveys, User Experience Analytics, Consumer Data, Competitive Analysis"
+        />
         <Meta />
         <Links />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
