@@ -25,7 +25,7 @@ export default function Hero({ user, emailRef, email, setEmail }) {
             </h1>
             <br />
             <p className="block text-jgo-white drop-shadow-md text-left text-xl">
-              Transform survey data into actionable results with our powerful
+              Transform customer survey data into actionable results with our powerful
               analysis tool—fast, accurate, and effortless. Know what matters
               most, instantly.
             </p>
