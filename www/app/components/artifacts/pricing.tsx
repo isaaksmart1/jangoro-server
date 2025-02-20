@@ -42,8 +42,20 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href={ROUTES.register}>Get Started</a>
+            <a href={ROUTES.register}>Get Started *</a>
           </button>
+          <p
+            style={{
+              fontStyle: "italic",
+              fontSize: 12,
+              maxWidth: 312,
+              margin: 8,
+            }}
+          >
+            * Selecting this plan will automatically put you on the $15/mo
+            subscription. Once you have created an account, login and go to
+            Billing &#8594; Manage Subscriptions to upgrade.
+          </p>
         </div>
       </div>
     </div>
