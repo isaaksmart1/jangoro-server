@@ -3,11 +3,13 @@ const {
   STRIPE_SECRET_KEY,
   STRIPE_PUBLISHABLE_KEY,
   STRIPE_WEBHOOK_KEY,
-  STRIPE_PRICE_ID,
+  STRIPE_PRICE_ID_MONTHLY,
+  STRIPE_PRICE_ID_YEARLY,
 } = require("../config/stripe");
 const membershipIDs = require("../config/stripe-membership-ids.json");
 const account = require("../services/accounts.service");
 const { URL } = require("../middleware/helpers");
+const { accountStream, Log } = require("./logger.service");
 const stripe = Stripe(STRIPE_SECRET_KEY);
 
 // In-memory storage for processed event IDs (use persistent storage in production)
@@ -156,11 +158,13 @@ const createPaymentIntent = async (params) => {
   const { subscription } = params;
   try {
     const interval = subscription.plan.includes("monthly") ? "month" : "year";
+    const price =
+      interval === "month" ? STRIPE_PRICE_ID_MONTHLY : STRIPE_PRICE_ID_YEARLY;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
-          price: STRIPE_PRICE_ID,
+          price,
           quantity: 1,
         },
       ],
@@ -169,7 +173,7 @@ const createPaymentIntent = async (params) => {
         trial_period_days: 1, // 1-day free trial
       },
       success_url: `${URL.app}/login?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${URL.app}/login`,
+      cancel_url: `${URL.app}/login?session_id=cancelledCheckout`,
       metadata: {
         userId: params.id, // Store user ID for reference
         subscriptionType: interval, // Monthly or Annually
@@ -358,13 +362,14 @@ async function cancelSubscriptionsAndDeleteCustomer(email) {
         await stripe.subscriptions.del(subscription.id);
       }
 
-      console.log(
-        `Customer ${customer.id} and their subscriptions have been deleted.`
+      Log(
+        `Customer ${customer.id} and their subscriptions have been deleted.`,
+        accountStream
       );
       return 200;
     }
   } catch (error) {
-    console.log(`Failed to delete customer:`, error);
+    Log(`Failed to delete stripe customer:${error}`, accountStream);
     return error;
   }
 }

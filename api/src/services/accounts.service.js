@@ -437,19 +437,16 @@ const deactivate = async (account) => {
     //   text: `Reason for deletion - ${data.feedback}`,
     // });
 
+    let result = await db.documentClient.delete(deleteParams).promise();
     result = await cancelSubscriptionsAndDeleteCustomer(account.email);
 
-    if (result === 200) {
-      await db.documentClient.delete(deleteParams).promise();
-      Log(`Account deleted`, accountStream);
-      Log(account, accountStream);
-      return result;
-    } else {
-      throw `Failed to cancel account membership: ${account.email}\n\n${result}`;
-    }
+    Log(`Account deleted`, accountStream);
+    Log(account, accountStream);
+
+    return result;
   } catch (err) {
     console.log(err);
-    Log(err, accountStream);
+    Log(`Failed to cancel account membership: ${err}`, accountStream);
     throw err;
   }
 };
