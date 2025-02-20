@@ -16,6 +16,7 @@ var {
   createBillingPortal,
   createPaymentIntent,
 } = require("../services/payments.service");
+const { redeem } = require("../services/auxilary.service");
 var routes = express();
 
 routes.get("/", defaultRoute);
@@ -46,6 +47,9 @@ routes.post("/get-setup-intent", updateCardDetails);
 routes.post("/retrieve-session", getSession);
 routes.post("/create-billing-portal-session", billingPortal);
 routes.get("/get-transactions", getTransactions);
+
+// Auxilary API
+routes.post("/user/redeem", redeemCode);
 
 function defaultRoute(req, res) {
   const dt = new Date();
@@ -270,6 +274,17 @@ function getTransactions(req, res) {
     })
     .catch((err) => {
       res.status(500).send(err);
+    });
+}
+
+function redeemCode(req, res) {
+  redeem(req.body)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      const status = err.statusCode || 400;
+      res.status(status).send(err);
     });
 }
 

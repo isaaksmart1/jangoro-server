@@ -25,6 +25,7 @@ const documentClient = new AWS.DynamoDB.DocumentClient();
 
 // const usersTable = "idfy-db-users-test";
 const usersTable = developmentMode ? "jgo-db-users-dev" : "jgo-db-users-prod";
+const redemptionTable = developmentMode ? "jgo-db-redemptions-dev" : "jgo-db-redemptions-prod";
 
 function hash(password) {
   return bcrypt.hashSync(password, 10);
@@ -52,6 +53,7 @@ const userSchema = (id, data) => {
 
 module.exports = {
   usersTable,
+  redemptionTable,
   s3,
   dynamodb,
   documentClient,

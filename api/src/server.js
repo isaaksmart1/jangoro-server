@@ -6,12 +6,15 @@ var routes = require("./routes/routes");
 var app = express();
 var { graphqlHTTP } = require("express-graphql");
 var { schema, root } = require("./middleware/graphql");
+const { redeemLimiter } = require("./services/auxilary.service");
 
 const Address = {
   localhost: ["127.0.0.1", "localhost"],
   machine: ["0.0.0.0"],
   proxy: [],
 };
+
+app.set("trust proxy", 1); // 1 means trust first proxy, you can use 'true' for all proxies
 
 app.use(
   bodyParser.json({
@@ -50,6 +53,7 @@ app.use(function (req, res, next) {
 });
 
 // MAIN APPLICATION STARTS HERE
+app.use("/user/redeem", redeemLimiter);
 app.use(
   "/graphql",
   graphqlHTTP({
