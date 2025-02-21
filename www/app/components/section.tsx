@@ -1,41 +1,60 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function Section({
-  children,
   title,
   description,
   email,
   emailRef,
   setEmail,
+  fade = true,
   backgroundColor = "bg-jgo-primary",
+  children = <></>,
 }) {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const section = sectionRef.current;
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Check if the section or any child is in view
+      let isInView =
+        rect.top < viewportHeight * 0.75 && rect.bottom > viewportHeight * 0.25;
+
+      // Check children individually if section itself is not visible
+      if (!isInView) {
+        for (const child of section.children) {
+          const childRect = child.getBoundingClientRect();
+          if (
+            childRect.top < viewportHeight * 0.75 &&
+            childRect.bottom > viewportHeight * 0.25
+          ) {
+            isInView = true;
+            break;
+          }
         }
-      },
-      { threshold: 0.5 },
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
       }
+
+      setIsVisible(isInView);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check on mount
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  const fadeSection = `section ${isVisible ? "fade-in" : "fade-out"}`;
+  const section = "section";
+
   return (
-    <div
-      ref={sectionRef}
-      className={`section ${isVisible ? "fade-in" : "fade-out"}`}
-    >
+    <div ref={sectionRef} className={fade ? fadeSection : section}>
       <div
         className={`relative ${backgroundColor} md:w-full md:flex lg:flex-col sm:flex-row justify-center px-4 pb-4 pt-8 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-10 lg:pt-8`}
       >
