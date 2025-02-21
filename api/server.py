@@ -2,274 +2,117 @@ import os
 import re
 import json
 import csv
-
-# import pandas as pd
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from openai import OpenAI
 
-from flask import Flask, request, jsonify
-from transformers import pipeline
-from flask_cors import CORS  # Import CORS
-
 app = Flask(__name__)
-
-# Enable CORS for all routes
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"  # openai key
+    "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"
 )
-# os.environ["OPENAI_API_KEY"] = "sk-d69db7a1b74c46afb6447fa963518fe0"  # deepseek key
 
 
-def generate(combined_feedback, agent_text, max_tokens=256, temperature=0.7):
+def generate_response(prompt, agent_text, max_tokens=256, temperature=0.7):
     system_prompt = (
-        "You are an expert in analyzing customer Surveys and Reviews; a state-of-the-art analysis tool."
-        + agent_text
+        f"You are an expert in analyzing customer surveys and reviews. {agent_text}"
     )
-    client = OpenAI(
-        api_key=os.environ.get("OPENAI_API_KEY"),
-        # base_url="https://api.deepseek.com",
-    )
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": combined_feedback},
-        ],
-        model="gpt-4o-mini",
-        # model="deepseek-chat",
-        max_tokens=max_tokens,  # Limit response tokens to avoid exceeding context length
-        temperature=temperature,  # Adjust for creative vs. deterministic responses
-    )
-    return chat_completion
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt},
+            ],
+            model="gpt-4o-mini",
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        return json.loads(chat_completion.model_dump_json())["choices"][0]["message"][
+            "content"
+        ].strip()
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API call failed: {e}")
 
 
-def collect_feedback(feedbacks, files):
-    feedback = []
-    survey = {"header": "", "data": ""}
-    # Process each CSV file
+def collect_feedback(files):
+    feedbacks = []
+
     for key, file in files.items():
-        # Read the CSV file
-        file.stream.seek(0)  # Ensure the file pointer is at the start
+        file.stream.seek(0)
         reader = csv.reader(file.stream.read().decode("utf-8").splitlines())
+        feedback = [", ".join(row) for row in reader]
 
-        # Collect feedbacks from CSV rows
-        for row in reader:
-            f = ", ".join([str(r) for r in row])
-            feedback.append(f)
+        if feedback:
+            feedbacks.append({"header": feedback[0], "data": feedback[1:]})
 
-        survey["header"] = feedback[0]
-        survey["data"] = feedback[1:]
-        feedbacks.append(survey)
+    if not feedbacks:
+        return None, {"error": "No feedback found in the uploaded files."}, 400
 
-    if not feedback:
-        return jsonify({"error": "No feedback found in the uploaded files."}), 400
-
-    return feedbacks
+    return feedbacks, None, None
 
 
-def truncate_sentence(s):
-    # Regex pattern to capture only complete sentences
-    pattern = r"([A-Z][^.!?]*[.!?])"
+def truncate_sentence(text):
+    sentences = re.findall(r"([A-Z][^.!?]*[.!?])", text)
+    return " ".join(sentences)
 
-    # Find all complete sentences
-    complete_sentences = re.findall(pattern, s)
 
-    # Join the sentences back into a string
-    c = " ".join(complete_sentences)
+def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5):
+    files = request.files.to_dict()
+    if not files:
+        return jsonify({"error": "No files uploaded."}), 400
 
-    return c
+    feedbacks, error_response, error_code = collect_feedback(files)
+    if error_response:
+        return jsonify(error_response), error_code
+
+    results = []
+    for i, feedback in enumerate(feedbacks):
+        combined_feedback = " ".join(
+            [feedback["header"], ", ".join(feedback["data"][:25])]
+        )
+        system_prompt = instruction.format(combined_feedback)
+
+        try:
+            response = generate_response(
+                combined_feedback, system_prompt, max_tokens, temperature
+            )
+            results.append({list(files.keys())[i]: truncate_sentence(response)})
+        except RuntimeError as e:
+            return jsonify({"error": str(e)}), 500
+
+    return jsonify({process_type: results})
 
 
 @app.route("/analyze-refinement", methods=["POST"])
 def analyze_bulk_refinement():
-    feedbacks = []
-    refine = []
-
-    # Retrieve files as a dictionary
-    files = request.files.to_dict()
-    keys = list(request.files.keys())
-
-    if not files:
-        return jsonify({"error": "No files uploaded."}), 400
-
-    # Collect feedback from files (assumes this function is defined elsewhere)
-    feedbacks = collect_feedback(feedbacks=feedbacks, files=files)
-
-    i = 0
-    for feedback in feedbacks:
-        # Combine feedback into one text, small sample size
-        combined_feedback = ", ".join(feedback["data"][0:25])
-        input_text = {"header": feedback["header"], "data": feedback["data"][0:25]}
-        system_prompt = f"You are an expert at creating sophisticated surveys from the given input {input_text}."
-        user_prompt = f"""Build me a complete survey."""
-
-        try:
-            # OpenAI API call to generate a refinement
-            chat_completion = generate(
-                user_prompt,
-                system_prompt,
-                max_tokens=2048,
-                temperature=0.5,
-            )
-
-            # Extract the content from the API response
-            s = chat_completion.model_dump_json()
-            s = json.loads(s)["choices"][0]["message"]["content"].strip()
-
-            # Join the sentences back into a string
-            r = truncate_sentence(s)
-            d = {}
-            d[keys[i]] = r
-            refine.append(d)
-            i = i + 1
-
-        except Exception as e:
-            print({"error": f"Failed to generate survey: {str(e)}"})
-            return jsonify({"error": f"Failed to generate survey: {str(e)}"}), 500
-
-    # Return the summary
-    return jsonify({"refinement": refine})
+    return analyze_feedback(
+        "refinement",
+        "You are an expert at creating sophisticated surveys from the given input: {}. Build me a complete survey.",
+        max_tokens=2048,
+    )
 
 
 @app.route("/analyze-summary", methods=["POST"])
 def analyze_bulk_summary():
-    feedbacks = []
-    summary = []
-
-    # Retrieve files as a dictionary
-    files = request.files.to_dict()
-    keys = list(request.files.keys())
-
-    if not files:
-        return jsonify({"error": "No files uploaded."}), 400
-
-    # Collect feedback from files (assumes this function is defined elsewhere)
-    feedbacks = collect_feedback(feedbacks=feedbacks, files=files)
-
-    i = 0
-    for feedback in feedbacks:
-        # Combine feedback into one text
-        combined_feedback = " ".join(
-            [feedback["header"], ", ".join(feedback["data"][0:25])]
-        )
-
-        system_prompt = f"Summarize the given text: {combined_feedback}."
-
-        try:
-            # OpenAI API call to generate a summary
-            chat_completion = generate(combined_feedback, system_prompt)
-            # Extract the content from the API response
-            s = chat_completion.model_dump_json()
-            s = json.loads(s)["choices"][0]["message"]["content"].strip()
-
-            # Join the sentences back into a string
-            s = truncate_sentence(s)
-            d = {}
-            d[keys[i]] = s
-            summary.append(d)
-            i = i + 1
-
-        except Exception as e:
-            return jsonify({"error": f"Failed to generate summary: {str(e)}"}), 500
-
-    # Return the summary
-    return jsonify({"summary": summary})
+    return analyze_feedback("summary", "Summarize the given text: {}.")
 
 
 @app.route("/analyze-sentiment", methods=["POST"])
 def analyze_bulk_sentiment():
-    feedbacks = []
-    sentiments = []
-
-    # Retrieve files as a dictionary
-    files = request.files.to_dict()
-    keys = list(request.files.keys())
-
-    if not files:
-        return jsonify({"error": "No files uploaded."}), 400
-
-    # Collect feedback from files (assumes this function is defined elsewhere)
-    feedbacks = collect_feedback(feedbacks=feedbacks, files=files)
-
-    i = 0
-    for feedback in feedbacks:
-        # Combine feedback into one text
-        combined_feedback = " ".join(
-            [feedback["header"], ", ".join(feedback["data"][0:25])]
-        )
-        system_prompt = f"""Provide a detailed sentiment analysis of the given text and score in words
-          - POSITIVE or NEGATIVE {combined_feedback}."""
-
-        try:
-            # OpenAI API call to generate a refinement
-            chat_completion = generate(
-                combined_feedback, system_prompt, max_tokens=1024
-            )
-
-            # Extract the content from the API response
-            s = chat_completion.model_dump_json()
-            s = json.loads(s)["choices"][0]["message"]["content"].strip()
-
-            # Join the sentences back into a string
-            s = truncate_sentence(s)
-            d = {}
-            d[keys[i]] = s
-            sentiments.append(d)
-            i = i + 1
-
-        except Exception as e:
-            print({"error": f"Failed to generate sentiment: {str(e)}"})
-            return jsonify({"error": f"Failed to generate sentiment: {str(e)}"}), 500
-
-    # Return the sentiment
-    return jsonify({"sentiments": sentiments})
+    return analyze_feedback(
+        "sentiments",
+        "Provide a detailed sentiment analysis of the given text and score in words - POSITIVE or NEGATIVE: {}.",
+    )
 
 
 @app.route("/analyze-action-plan", methods=["POST"])
 def analyze_action_plan():
-    feedbacks = []
-    actionPlan = []
-
-    # Retrieve files as a dictionary
-    files = request.files.to_dict()
-    keys = list(request.files.keys())
-
-    if not files:
-        return jsonify({"error": "No files uploaded."}), 400
-
-    # Collect feedback from files (assumes this function is defined elsewhere)
-    feedbacks = collect_feedback(feedbacks=feedbacks, files=files)
-
-    i = 0
-    for feedback in feedbacks:
-        # Combine feedback into one text
-        combined_feedback = " ".join(
-            [feedback["header"], ", ".join(feedback["data"][0:25])]
-        )
-
-        system_prompt = (
-            f"Provide a strategic business action plan of the given text: {combined_feedback}."
-        )
-
-        try:
-            # OpenAI API call to generate a summary
-            chat_completion = generate(combined_feedback, system_prompt)
-            # Extract the content from the API response
-            s = chat_completion.model_dump_json()
-            s = json.loads(s)["choices"][0]["message"]["content"].strip()
-
-            # Join the sentences back into a string
-            s = truncate_sentence(s)
-            d = {}
-            d[keys[i]] = s
-            actionPlan.append(d)
-            i = i + 1
-
-        except Exception as e:
-            return jsonify({"error": f"Failed to generate action Plan: {str(e)}"}), 500
-
-    # Return the summary
-    return jsonify({"actionPlan": actionPlan})
+    return analyze_feedback(
+        "actionPlan", "Provide a strategic business action plan for the given text: {}."
+    )
 
 
 if __name__ == "__main__":
