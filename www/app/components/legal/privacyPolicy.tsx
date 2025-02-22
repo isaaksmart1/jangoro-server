@@ -108,8 +108,9 @@ export default function PrivacyPolicy() {
 
       <p className="text-md my-2">
         If you have questions or concerns about our Privacy Policy, please
-        contact us at team@jangoro.com. We are committed to addressing your
-        inquiries promptly and transparently.
+        contact us at{" "}
+        <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>. We are
+        committed to addressing your inquiries promptly and transparently.
       </p>
 
       <p className="text-2xl my-4">9. Conclusion</p>

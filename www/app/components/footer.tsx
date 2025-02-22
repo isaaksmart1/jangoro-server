@@ -70,10 +70,7 @@ export default function Footer({}) {
             </h1>
             <ul>
               <li className="text-jgo-white my-1">
-                <a href="mailto:team@jangoro.com">team@jangoro.com</a>
-              </li>
-              <li className="text-jgo-white my-1">
-                <a href="mailto:support@jangoro.com">support@jangoro.com</a>
+                <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>
               </li>
             </ul>
           </div>
@@ -86,21 +83,16 @@ export default function Footer({}) {
               Socials
             </h1>
             <ul className="flex flex-row">
-              <li className="social-icon bg-jgo-white p-2 mx-1">
+              {/* <li className="social-icon bg-jgo-white p-2 mx-1">
                 <a href="https://discord.com/invite/bapedUtcEv">
                   <img src={discord} alt="Discord" className="h-4 w-auto" />
                 </a>
               </li>
               <li className="social-icon bg-jgo-white p-2 mx-1">
                 <img src={linkedin} alt="LinkedIn" className="h-4 w-auto" />
-              </li>
+              </li> */}
               <li className="social-icon bg-jgo-white p-2 mx-1">
-                <a href="https://www.tiktok.com/@jangoro">
-                  <img src={tiktok} alt="TikTok" className="h-4 w-auto" />
-                </a>
-              </li>
-              <li className="social-icon bg-jgo-white p-2 mx-1">
-                <a href="https://x.com/jangoro">
+                <a href="https://x.com/JangoroOfficial">
                   <img src={twitter} alt="X" className="h-4 w-auto" />
                 </a>
               </li>

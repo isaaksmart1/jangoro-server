@@ -93,7 +93,8 @@ export default function Docs() {
         If you need assistance, reach out to our support team:
         <ul className="list-disc pl-5">
           <li>
-            <strong>Email:</strong> support@jangoro.com
+            <strong>Email:</strong>
+            <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>
           </li>
           <li>
             <strong>Live Chat:</strong> Available on our website

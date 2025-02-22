@@ -95,8 +95,9 @@ export default function Terms() {
       <p className="text-2xl my-4">10. Contact Information</p>
       <p className="text-md my-2">
         For questions, concerns, or support regarding these Terms or our Privacy
-        Policy, please contact us at team@jangoro.com. We are committed to
-        assisting you promptly.
+        Policy, please contact us at{" "}
+        <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>. We are
+        committed to assisting you promptly.
       </p>
 
       <p className="text-2xl my-4">11. Updates to Terms and Privacy Policy</p>
