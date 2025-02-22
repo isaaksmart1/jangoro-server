@@ -137,12 +137,16 @@ export default function Header({ user }) {
             href={ROUTES.login}
             className="text-lg font-semibold leading-6 text-jgo-white"
           >
-            Log In <span aria-hidden="true">&rarr;</span>
+            Log In
           </a>
         </div>
         <a
           href="https://jangoro.com/demo"
-          className="button bg-blue-500 text-white mx-3 p-3 rounded-2xl "
+          className="button bg-blue-500 text-white mx-3 p-2 rounded-2xl "
+          style={{
+            border: "1px solid white",
+            fontWeight: "bolder",
+          }}
         >
           Book a Demo
         </a>
