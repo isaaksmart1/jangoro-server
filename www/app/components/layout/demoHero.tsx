@@ -6,7 +6,7 @@ export default function DemoHero({ user, emailRef, email, setEmail }) {
     <div className="hero-container w-full sm:overflow-hidden sm:rounded-b-[30px]">
       <div className="relative mx-auto w-full md:flex md:flex-row justify-center pb-8 pt-16 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-16">
         <div className="relative w-full">
-          <div className="my-8 w-1/2">
+          <div className="w-full md:w-1/2 my-8">
             <img
               className="relative inset-0 w-full h-full rounded-3xl"
               src={demo}
@@ -32,54 +32,27 @@ export default function DemoHero({ user, emailRef, email, setEmail }) {
           </div>
         </div>
 
-        <div className="relative container w-1/2 h-1/2 bg-blue-500 overflow-hidden rounded-3xl p-8">
+        <div className="relative w-full h-full md:w-1/2 md:h-1/2 bg-blue-500 overflow-hidden rounded-3xl p-8">
           <form>
-            <h1
-              className="text-white-500 p-4"
-              style={{ fontSize: 32, color: "white" }}
-            >
+            <h1 className="text-white p-4 text-2xl md:text-3xl">
               Schedule a Demo
             </h1>
             <div className="flex flex-col p-4">
-              <label
-                htmlFor="email"
-                style={{
-                  fontSize: 24,
-                  color: "white",
-                  marginBottom: 12,
-                  backgroundColor: "transparent",
-                }}
-              >
+              <label htmlFor="email" className="text-white text-lg mb-3">
                 Email
               </label>
               <input
-                style={{
-                  border: "1px solid white",
-                  borderRadius: 24,
-                  padding: 16,
-                  backgroundColor: "white",
-                }}
+                className="border border-white rounded-3xl p-4 bg-white"
                 type="email"
                 name="email"
                 placeholder="Email"
               />
               <button
                 type="submit"
-                style={{
-                  color: "white",
-                  backgroundColor: "black",
-                  border: "1px solid white",
-                  borderRadius: 12,
-                  fontSize: 16,
-                  padding: 12,
-                  marginTop: 24,
-                  marginBottom: 12,
-                }}
+                className="text-white bg-black border border-white rounded-xl text-base p-3 mt-6 mb-3"
               >
                 <a
-                  href={
-                    "https://calendar.google.com/calendar/u/2?cid=dGVhbS5qYW5nb3JvQGdtYWlsLmNvbQ"
-                  }
+                  href="https://calendar.google.com/calendar/u/2?cid=dGVhbS5qYW5nb3JvQGdtYWlsLmNvbQ"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
