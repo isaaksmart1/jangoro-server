@@ -3,7 +3,7 @@ import { ROUTES } from "~/utils/utils";
 
 const PricingTable = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-semibold text-center mb-12 text-white">
         Choose Your Plan
       </h2>

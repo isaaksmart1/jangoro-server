@@ -82,6 +82,7 @@ export default function Index() {
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
+          customVerticalPadding="pt-0 pb-16"
         >
           <Socials />
         </Section>

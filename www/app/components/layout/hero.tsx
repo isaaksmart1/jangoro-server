@@ -18,7 +18,7 @@ export default function Hero({ user, emailRef, email, setEmail }) {
           {/* <h1 className="text-left text-6xl font-extrabold tracking-tight sm:text-6xl lg:text-6xl">
             <TypedText texts={phrases} />
           </h1> */}
-          <div className="my-8 w-1/2">
+          <div className="w-full md:w-1/2 my-8">
             <h1 className="block text-jgo-accent drop-shadow-md text-left text-4xl">
               Unlock Insights in Seconds.
             </h1>
