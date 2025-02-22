@@ -94,9 +94,12 @@ export default function Docs() {
         <ul className="list-disc pl-5">
           <li>
             <strong>Email:</strong>
-            <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>
+            <a href="mailto:team.jangoro@gmail.com" className="text-blue-500">
+              {" "}
+              team@jangoro.com
+            </a>
           </li>
-          <li>
+          {/* <li>
             <strong>Live Chat:</strong> Available on our website
           </li>
           <li>
@@ -104,7 +107,7 @@ export default function Docs() {
             <a href="https://help.jangoro.com" className="text-blue-500">
               Visit Here
             </a>
-          </li>
+          </li> */}
         </ul>
       </p>
 

@@ -96,7 +96,7 @@ export default function Terms() {
       <p className="text-md my-2">
         For questions, concerns, or support regarding these Terms or our Privacy
         Policy, please contact us at{" "}
-        <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>. We are
+        <a href="mailto:team.jangoro@gmail.com" className="text-blue-500">team@jangoro.com</a>. We are
         committed to assisting you promptly.
       </p>
 

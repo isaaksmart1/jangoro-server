@@ -70,7 +70,7 @@ export default function Footer({}) {
             </h1>
             <ul>
               <li className="text-jgo-white my-1">
-                <a href="mailto:team.jangoro@gmail.com">team@jangoro.com</a>
+                <a href="mailto:team.jangoro@gmail.com" className="text-blue-500">team@jangoro.com</a>
               </li>
             </ul>
           </div>
