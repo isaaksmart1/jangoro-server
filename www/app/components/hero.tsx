@@ -14,7 +14,7 @@ export default function Hero({ user, emailRef, email, setEmail }) {
   ];
   return (
     <div className="hero-container w-full sm:overflow-hidden sm:rounded-b-[30px]">
-      <div className="relative container mx-auto w-4/6 md:flex md:flex-row justify-center pb-8 pt-16 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-16">
+      <div className="relative mx-auto w-full md:flex md:flex-row justify-center pb-8 pt-16 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-16">
         <div className="relative w-full">
           {/* <h1 className="text-left text-6xl font-extrabold tracking-tight sm:text-6xl lg:text-6xl">
             <TypedText texts={phrases} />

@@ -19,10 +19,24 @@
   background-color: transparent;
 }
 
+.hero-container {
+  padding-right: 48px;
+  padding-left: 48px;
+  grid-column-gap: 48px;
+  grid-row-gap: 48px;
+  width: 100%;
+  max-width: 96rem;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
 .section {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 
 .section.fade-in {
