@@ -144,7 +144,6 @@ export default function Header({ user }) {
           href="https://jangoro.com/demo"
           className="button bg-blue-500 text-white mx-3 p-2 rounded-2xl "
           style={{
-            border: "1px solid white",
             fontWeight: "bolder",
           }}
         >
