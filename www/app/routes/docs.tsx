@@ -1,8 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import Docs from "~/components/docs/docs";
-import Footer from "~/components/footer";
-import Header from "~/components/header";
+import Footer from "~/components/layout/footer";
+import Header from "~/components/layout/header";
 import { ROUTES } from "~/utils/utils";
 
 export const meta: MetaFunction = () => [{ title: "Docs" }];

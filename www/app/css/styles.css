@@ -48,3 +48,7 @@
   opacity: 0;
   transform: translateY(20px);
 }
+
+.demo-list-details li {
+  list-style: circle;
+}

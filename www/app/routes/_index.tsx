@@ -4,18 +4,18 @@ import { useRef, useState } from "react";
 
 import "~/css/styles.css";
 
+import PricingTable from "~/components/artifacts/pricing";
 import { Socials } from "~/components/artifacts/socials";
-import Cookies from "~/components/cookies";
-import Demo from "~/components/demo";
-import Footer from "~/components/footer";
-import Header from "~/components/header";
-import Hero from "~/components/hero";
-import Section from "~/components/section";
+import Cookies from "~/components/layout/cookies";
+import Demo from "~/components/layout/demoHero";
+import Footer from "~/components/layout/footer";
+import Header from "~/components/layout/header";
+import Hero from "~/components/layout/hero";
+import Section from "~/components/layout/section";
 import SignUpForm from "~/components/signUpForm";
 import TechUsed from "~/components/techUsed";
 import { createBetaUser } from "~/models/beta.server";
 import { useOptionalUser } from "~/utils/utils";
-import PricingTable from "~/components/artifacts/pricing";
 
 export const meta: MetaFunction = () => [{ title: "Jangoro" }];
 

@@ -1,8 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 
-import Footer from "~/components/footer";
-import Header from "~/components/header";
+import Footer from "~/components/layout/footer";
+import Header from "~/components/layout/header";
 import {
   CookiePolicies,
   PrivacyPolicies,
