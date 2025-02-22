@@ -218,13 +218,13 @@ const createBillingPortal = async (params) => {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: "http://app.jangoro.com/billing", // Redirect user back
+      return_url: "https://app.jangoro.com/billing", // Redirect user back
     });
 
     return { url: session.url };
   } catch (error) {
     console.error("Stripe Billing Portal Error:", error);
-    return { error: "Failed to create billing portal session" };
+    return { error: "Failed to create billing portal session", message: error };
   }
 };
 
@@ -315,6 +315,19 @@ const makePayment = async (
   } catch (error) {
     console.error("Error making payment:", error);
     throw error;
+  }
+};
+
+const retrieveCustomer = async (email) => {
+  try {
+    let customer = await findOrCreateCustomer(email, {});
+    return customer;
+  } catch (error) {
+    console.error("Failed to retrieve customer", error);
+    throw {
+      error: "Failed to retrieve customer",
+      message: error,
+    };
   }
 };
 
@@ -443,6 +456,7 @@ module.exports = {
   createBillingPortal,
   createPaymentIntent,
   retrieveSession,
+  retrieveCustomer,
   createCustomer,
   getSetupIntent,
   transactions,

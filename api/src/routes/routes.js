@@ -15,6 +15,7 @@ var {
   getSetupIntent,
   createBillingPortal,
   createPaymentIntent,
+  retrieveCustomer,
 } = require("../services/payments.service");
 const { redeem } = require("../services/auxilary.service");
 var routes = express();
@@ -44,8 +45,9 @@ routes.post("/create-subscription", paymentsSubscription);
 routes.post("/create-stripe-account", createStripeAccount);
 routes.post("/create-payment-intent", pay);
 routes.post("/get-setup-intent", updateCardDetails);
-routes.post("/retrieve-session", getSession);
+routes.post("/retrieve-session", getStripeSession);
 routes.post("/create-billing-portal-session", billingPortal);
+routes.get("/retrieve-customer", getStripeCustomer);
 routes.get("/get-transactions", getTransactions);
 
 // Auxilary API
@@ -217,8 +219,19 @@ function paymentsSubscription(req, res) {
     });
 }
 
-function getSession(req, res) {
+function getStripeSession(req, res) {
   retrieveSession(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+}
+
+function getStripeCustomer(req, res) {
+  const { email } = req.query;
+  retrieveCustomer(email)
     .then((response) => {
       res.status(200).send(response);
     })
