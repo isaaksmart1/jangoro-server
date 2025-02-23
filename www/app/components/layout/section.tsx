@@ -57,7 +57,7 @@ export default function Section({
   return (
     <div ref={sectionRef} className={fade ? fadeSection : section}>
       <div
-        className={`relative ${backgroundColor} md:w-full md:flex lg:flex-col sm:flex-row justify-center ${customVerticalPadding} px-4 sm:px-6 sm:pb-16 sm:pt-24 lg:px-8 lg:pb-10 lg:pt-8`}
+        className={`relative ${backgroundColor} md:w-full md:flex lg:flex-col sm:flex-row justify-center ${customVerticalPadding} px-4 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8 lg:pb-10 lg:pt-8`}
       >
         <div className="mx-auto text-center">
           <h1 className="p-6 font-bold text-4xl text-jgo-accent">{title}</h1>

@@ -1,20 +1,17 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
-import { redirect, useActionData } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
 import { useRef, useState } from "react";
 
 import "~/css/styles.css";
 
+import { AIChatCard } from "~/components/artifacts/features";
 import PricingTable from "~/components/artifacts/pricing";
 import { Socials } from "~/components/artifacts/socials";
 import Cookies from "~/components/layout/cookies";
-import Demo from "~/components/layout/demoHero";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import Hero from "~/components/layout/hero";
 import Section from "~/components/layout/section";
-import SignUpForm from "~/components/signUpForm";
-import TechUsed from "~/components/techUsed";
-import { createBetaUser } from "~/models/beta.server";
 import { useOptionalUser } from "~/utils/utils";
 
 export const meta: MetaFunction = () => [{ title: "Jangoro" }];
@@ -57,15 +54,16 @@ export default function Index() {
           email={email}
           setEmail={setEmail}
         />
-        {/* <TechUsed /> */}
+
         <Section
           title="AI Summarizing and Sentiment Analysis"
           description="Upload survey responses or feedback data. Engage with our in-built AI chatbot to summarize responses, extract key insights, and analyze sentiment."
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
-        />
-        {/* <Demo /> */}
+        >
+          <AIChatCard />
+        </Section>
         <Section
           title="Pricing"
           description=""

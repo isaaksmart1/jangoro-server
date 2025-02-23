@@ -5,7 +5,7 @@ import "~/css/styles.css";
 import DemoHero from "~/components/layout/demoHero";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
-import TechUsed from "~/components/techUsed";
+import TechUsed from "~/components/artifacts/techUsed";
 import { useOptionalUser } from "~/utils/utils";
 
 export const meta: MetaFunction = () => [{ title: "Jangoro" }];
