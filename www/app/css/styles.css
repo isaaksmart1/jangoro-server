@@ -49,11 +49,15 @@
   transform: translateY(20px);
 }
 
-.demo-list-details li {
-  list-style: circle;
+.section-custom-styles {
+  opacity: 1;
 }
 
 /* artifacts */
+
+.demo-list-details li {
+  list-style: circle;
+}
 
 @keyframes borderMove {
   0% {

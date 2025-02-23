@@ -10,6 +10,7 @@ export default function Section({
   backgroundColor = "bg-jgo-primary",
   children = <></>,
   customVerticalPadding = "pb-4 pt-8",
+  customCSSStyles = "",
 }) {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -52,7 +53,7 @@ export default function Section({
   }, []);
 
   const fadeSection = `section ${isVisible ? "fade-in" : "fade-out"}`;
-  const section = "section";
+  const section = `section ${customCSSStyles}`;
 
   return (
     <div ref={sectionRef} className={fade ? fadeSection : section}>
