@@ -1,12 +1,10 @@
 apps:
   - name: jangoro-ai
-    script: server.py  # Change this to the entry point of your Flask app
-    interpreter: python3.11  # Change to 'python' if using Python 2 (not recommended)
+    script: server.py
+    interpreter: python3.11
     instances: 1
     autorestart: true
     watch: true
-    # output: logs/pm2.log
-    # error: logs/pm2-error.log
     max_memory_restart: 1G
     env:
       NODE_ENV: production
