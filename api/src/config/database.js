@@ -2,14 +2,19 @@ const fs = require("fs");
 const path = require("path");
 const AWS = require("aws-sdk");
 const bcrypt = require("bcryptjs");
-const { developmentMode } = require("../middleware/helpers");
+const { DEVELOPMENT, USE_DEV_DB } = require("../middleware/helpers");
 
-// Configure AWS with your credentials and desired region
-AWS.config.update({
+// Configurations
+const ddbOptions = {
+  endpoint: "http://localhost:5768",
   region: "eu-west-2",
-  accessKeyId: "AKIA6FYDLCFVP7PVRQYD",
-  secretAccessKey: "egaNAtIYOiDAYLtAXuqXklzIzym7aV2WKVKPAAbW",
-});
+  credentials: {
+    accessKeyId: "dummy",
+    secretAccessKey: "dummy",
+  },
+};
+
+const s3Options = {};
 
 // Cloud watch logs instance
 const cloudwatchlogs = new AWS.CloudWatchLogs();
@@ -17,15 +22,17 @@ const logGroupName = "/aws/jgo/log";
 const accountStream = "accounts";
 
 // Create S3 instance
-const s3 = new AWS.S3();
+const s3 = new AWS.S3(s3Options);
 
 // Create a new DynamoDB instance
-const dynamodb = new AWS.DynamoDB();
-const documentClient = new AWS.DynamoDB.DocumentClient();
+const dynamodb = new AWS.DynamoDB(ddbOptions);
+const documentClient = new AWS.DynamoDB.DocumentClient(ddbOptions);
 
 // const usersTable = "idfy-db-users-test";
-const usersTable = developmentMode ? "jgo-db-users-dev" : "jgo-db-users-prod";
-const redemptionTable = developmentMode ? "jgo-db-redemptions-dev" : "jgo-db-redemptions-prod";
+const usersTable = (DEVELOPMENT || USE_DEV_DB) ? "jgo-db-users-dev" : "jgo-db-users-prod";
+const redemptionTable = (DEVELOPMENT || USE_DEV_DB)
+  ? "jgo-db-redemptions-dev"
+  : "jgo-db-redemptions-prod";
 
 function hash(password) {
   return bcrypt.hashSync(password, 10);

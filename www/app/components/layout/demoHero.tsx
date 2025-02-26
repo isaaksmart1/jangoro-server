@@ -47,20 +47,14 @@ export default function DemoHero({ user, emailRef, email, setEmail }) {
                 name="email"
                 placeholder="Email"
               />
-              <button
-                type="submit"
-                className="text-white bg-black border border-white rounded-xl text-base p-3 mt-6 mb-3"
+              <a
+                href="https://calendly.com/team-idearify/jangoro-demo"
+                className="text-white bg-black border border-white rounded-xl text-base text-center p-3 mt-6 mb-3"
               >
-                <a
-                  href="https://calendar.google.com/calendar/u/2?cid=dGVhbS5qYW5nb3JvQGdtYWlsLmNvbQ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Pick a Demo Slot <span aria-hidden="true">&rarr;</span>
-                </a>
-              </button>
+                Pick a Demo Slot <span aria-hidden="true">&rarr;</span>
+              </a>
               <p className="text-white text-center font-semibold text-sm">
-                By continuing, you are agreeing to Jangoro Privacy Policy and
+                By continuing, you are agreeing to Jangoro's Privacy Policy and
                 Terms of Service.
               </p>
             </div>

@@ -3,18 +3,24 @@ import { useMemo } from "react";
 
 import type { User } from "~/models/user.server";
 
+const DEVELOPMENT = false;
 const DEFAULT_REDIRECT = "/";
 
-export const URL = {
+const dev = {
+  app: "http://localhost:4173",
+  www: "http://localhost:6001",
+  api: "http://localhost:4000",
+  ai: "http://localhost:5000",
+};
+
+const prod = {
   app: "https://app.jangoro.com",
   www: "https://jangoro.com",
   api: "http://api.jangoro.com",
   ai: "http://ai.jangoro.com",
-  base_l: "http://localhost:5173",
-  www_l: "http://localhost:3000",
-  api_l: "http://localhost:4000",
-  ai_l: "http://localhost:5000",
 };
+
+export const URL = DEVELOPMENT ? dev : prod;
 
 const LINKS = {
   login: "login",
@@ -23,10 +29,13 @@ const LINKS = {
   notes: "notes",
   company: "company",
   docs: "docs",
+  demo: "demo",
 };
 
 export const ROUTES = {
+  index: URL.app,
   login: `${URL.app}/${LINKS.login}`,
+  demo: `${URL.www}/${LINKS.demo}`,
   register: `${URL.app}/${LINKS.register}`,
   legal: `/${LINKS.legal}`,
   notes: `/${LINKS.notes}`,

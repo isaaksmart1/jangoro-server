@@ -5,6 +5,7 @@ const {
   STRIPE_WEBHOOK_KEY,
   STRIPE_PRICE_ID_MONTHLY,
   STRIPE_PRICE_ID_YEARLY,
+  STRIPE_PRICE_ID_LIFETIME,
 } = require("../config/stripe");
 const membershipIDs = require("../config/stripe-membership-ids.json");
 const account = require("../services/accounts.service");
@@ -155,11 +156,29 @@ const retrieveSession = async (params) => {
 };
 
 const createPaymentIntent = async (params) => {
-  const { subscription } = params;
+  const { subscription, email, amount } = params;
   try {
-    const interval = subscription.plan.includes("monthly") ? "month" : "year";
-    const price =
-      interval === "month" ? STRIPE_PRICE_ID_MONTHLY : STRIPE_PRICE_ID_YEARLY;
+    if (!subscription || !subscription.plan) {
+      throw new Error("Subscription plan is required");
+    }
+
+    const interval = subscription.plan;
+    let price;
+
+    switch (interval) {
+      case "month":
+        price = STRIPE_PRICE_ID_MONTHLY;
+        break;
+      case "year":
+        price = STRIPE_PRICE_ID_YEARLY;
+        break;
+      case "life":
+        price = STRIPE_PRICE_ID_LIFETIME;
+        break;
+      default:
+        throw new Error("Invalid subscription plan");
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -168,30 +187,31 @@ const createPaymentIntent = async (params) => {
           quantity: 1,
         },
       ],
-      mode: "subscription",
-      subscription_data: {
-        trial_period_days: 1, // 1-day free trial
-      },
+      mode: interval === "life" ? "payment" : "subscription",
       success_url: `${URL.app}/login?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${URL.app}/login?session_id=cancelledCheckout`,
       metadata: {
-        userId: params.id, // Store user ID for reference
-        subscriptionType: interval, // Monthly or Annually
-        email: params.email,
+        subscriptionType: interval, // Monthly, Annually, or Lifetime
+        email,
       },
+      ...(interval !== "life" && {
+        subscription_data: {
+          trial_period_days: 1, // 1-day free trial
+        },
+      }),
     });
 
-    // Return necessary params to frontend
+    // Return necessary details to the frontend
     return {
       id: session.id,
       url: session.url, // Stripe checkout redirect URL
-      customerId: session.customer, // Stripe customer ID
-      subscriptionId: session.subscription, // Subscription ID
-      amount: params.amount, // Amount charged
+      customerId: session.customer || null, // Stripe customer ID
+      subscriptionId: session.subscription || null, // Subscription ID if applicable
+      amount, // Amount charged
       interval, // Subscription plan interval
     };
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    throw { error: error.message };
   }
 };
 
@@ -218,7 +238,7 @@ const createBillingPortal = async (params) => {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: "https://app.jangoro.com/billing", // Redirect user back
+      return_url: `${URL.app}/billing`, // Redirect user back
     });
 
     return { url: session.url };

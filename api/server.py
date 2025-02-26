@@ -115,5 +115,27 @@ def analyze_action_plan():
     )
 
 
+@app.route("/analyze-query", methods=["POST"])
+def analyze_ai_query():
+    data = request.form  # Ensure you're using request.form for form-data
+
+    if not data or "query" not in data:
+        return jsonify({"error": "Missing 'query' parameter"}), 400
+
+    query = data.get("query", "").strip()
+
+    if not query:
+        return jsonify({"error": "'query' cannot be empty"}), 400
+
+    # Correct formatting
+    appended = "{}. Context: {}".format(query, "{}")
+    template = "You are an expert AI assistant who gives excellent responses to customer survey feedback and reviews: {}."
+    system_prompt = template.format(appended)
+
+    return analyze_feedback(
+        "general", system_prompt
+    )  # Ensure analyze_feedback() is properly defined
+
+
 if __name__ == "__main__":
     app.run(debug=True)

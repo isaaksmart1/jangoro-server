@@ -81,7 +81,7 @@ const root = {
       e = new Error(error);
       return {
         e,
-        message: "Registration failed",
+        message: "Login failed",
       };
     }
   },

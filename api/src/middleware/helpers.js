@@ -1,15 +1,21 @@
-const developmentMode = true;
+const DEVELOPMENT = false;
+const USE_DEV_DB = true;
 
-const URL = {
+const dev = {
+  app: "http://localhost:3000",
+  www: "http://localhost:6001",
+  api: "http://localhost:4000",
+  ai: "http://localhost:5000",
+};
+
+const prod = {
   app: "https://app.jangoro.com",
   www: "https://jangoro.com",
   api: "http://api.jangoro.com",
   ai: "http://ai.jangoro.com",
-  base_l: "http://localhost:5173",
-  www_l: "http://localhost:3000",
-  api_l: "http://localhost:4000",
-  ai_l: "http://localhost:5000",
 };
+
+const URL = DEVELOPMENT ? dev : prod;
 
 function env() {
   const command = arguments[0];
@@ -31,7 +37,8 @@ function checkEmailDomain(email) {
 }
 
 module.exports = {
-  developmentMode,
+  DEVELOPMENT,
+  USE_DEV_DB,
   checkEmailDomain,
   env,
   URL,

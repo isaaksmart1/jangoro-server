@@ -1,9 +1,10 @@
 {
-  "name": "jangoro-www-cd5f",
+  "name": "jangoro-www",
   "private": true,
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
+    "dev:port": "PORT=6001 npm run dev",
     "dev": "remix dev -c \"npm run dev:serve\"",
     "dev:serve": "binode --require ./mocks -- @remix-run/serve:remix-serve ./build/index.js",
     "format": "prettier --write .",

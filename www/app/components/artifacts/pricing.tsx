@@ -1,4 +1,5 @@
-import React from "react";
+import { LocalFireDepartment } from "@mui/icons-material";
+
 import { ROUTES } from "~/utils/utils";
 
 const PricingTable = () => {
@@ -7,13 +8,13 @@ const PricingTable = () => {
       <h2 className="text-3xl font-semibold text-center mb-12 text-white">
         Choose Your Plan
       </h2>
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="flex flex-row flex-wrap gap-8">
         {/* Monthly Plan */}
         <div className="border rounded-lg shadow-lg p-6 bg-white">
           <h3 className="text-2xl font-semibold text-center mb-4">
             Monthly Plan
           </h3>
-          <p className="text-center text-4xl font-bold mb-6">${15}/mo</p>
+          <p className="text-center text-4xl font-bold mb-6">$15/mo</p>
           <ul className="list-disc pl-5 space-y-3">
             <li>1 Day Free Trial</li>
             <li>Unlimited Access to All Features</li>
@@ -23,7 +24,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href={ROUTES.register}>Get Started</a>
+            <a href={`${ROUTES.register}?plan=month`}>Get Started</a>
           </button>
         </div>
 
@@ -32,7 +33,7 @@ const PricingTable = () => {
           <h3 className="text-2xl font-semibold text-center mb-4">
             Yearly Plan
           </h3>
-          <p className="text-center text-4xl font-bold mb-6">${99}/yr</p>
+          <p className="text-center text-4xl font-bold mb-6">$99/yr</p>
           <ul className="list-disc pl-5 space-y-3">
             <li>1 Day Free Trial</li>
             <li>Unlimited Access to All Features</li>
@@ -42,7 +43,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href={`${ROUTES.register}?plan=yearly`}>Get Started</a>
+            <a href={`${ROUTES.register}?plan=year`}>Get Started</a>
           </button>
           {/* <p
             style={{
@@ -65,14 +66,22 @@ const PricingTable = () => {
           </h3>
           <p className="text-center text-4xl font-bold mb-6">$49</p>
           <ul className="list-disc pl-5 space-y-3">
+            <li style={{ listStyle: "none" }}>
+              <span
+                style={{ backgroundColor: "firebrick" }}
+                className="text-white rounded-lg p-2 my-2"
+              >
+                Limited Supply
+              </span>
+            </li>
             <li>Unlimited Access to All Features</li>
             <li>Priority Support</li>
             <li>Free Updates</li>
             <li>Analytics Dashboard</li>
-            <li>60 day money-back guarantee</li>
+            <li>Save over 40% vs Yearly Plan</li>
           </ul>
           <button className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700">
-            <a href={'https://appsumo.com'}>Purchase</a>
+            <a href={`${ROUTES.register}?plan=life`}>Purchase</a>
           </button>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { useRef, useState } from "react";
 
 import "~/css/styles.css";
-
+import spreadsheet from "~/assets/img/spreadsheet.jpg";
 import { AIChatCard } from "~/components/artifacts/features";
 import PricingTable from "~/components/artifacts/pricing";
 import { Socials } from "~/components/artifacts/socials";
@@ -12,7 +12,13 @@ import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import Hero from "~/components/layout/hero";
 import Section from "~/components/layout/section";
-import { useOptionalUser } from "~/utils/utils";
+import { ROUTES, useOptionalUser } from "~/utils/utils";
+
+const TryItButton = () => (
+  <button className="w-1/4 mt-6 py-2 bg-blue-600 text-white rounded-full text-lg hover:bg-blue-700">
+    <a href={ROUTES.register}>Try It</a>
+  </button>
+);
 
 export const meta: MetaFunction = () => [{ title: "Jangoro" }];
 
@@ -56,13 +62,48 @@ export default function Index() {
         />
 
         <Section
-          title="AI Summarizing and Sentiment Analysis"
-          description="Upload survey responses or feedback data. Engage with our in-built AI chatbot to summarize responses, extract key insights, and analyze sentiment."
+          title="Features"
+          description="No more tedious one at a time"
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
         >
-          <AIChatCard />
+          <div className="flex flex-col justify-center mx-auto">
+            <div className="flex flow-row flex-wrap justify-center m-2">
+              <AIChatCard />
+              <div className="w-full md:w-1/2">
+                <h2 className="text-jgo-accent text-2xl font-semibold p-2 mt-16">
+                  Analyze Sentiment and Summarise
+                </h2>
+                <p className="text-white text-lg md:w-96 m-2">
+                  Upload survey responses or feedback data. Engage with our
+                  in-built AI chatbot to summarize responses, extract key
+                  insights, and analyze sentiment.
+                </p>
+                <TryItButton />
+              </div>
+            </div>
+            <div className="flex flow-row flex-wrap justify-center m-2">
+              <div className="w-full md:w-1/2">
+                <h2 className="text-jgo-accent text-2xl font-semibold p-2 mt-16">
+                  Batch generate and analyze content
+                </h2>
+                <p className="text-white text-lg md:w-96 m-2">
+                  To generate content, answer, or to analyze user review,
+                  customer feedback in bulk, just upload your data as CSV, then
+                  Jangoro will quickly give you the results.
+                </p>
+                <TryItButton />
+              </div>
+              <img
+                className="m-5 rounded-2xl"
+                src={spreadsheet}
+                alt="spreadsheet"
+                width={312}
+                height={96}
+              />
+            </div>
+          </div>
         </Section>
         <Section
           title="Pricing"

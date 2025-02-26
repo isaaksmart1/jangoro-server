@@ -20,6 +20,7 @@ async function batchInsertRedemptionCodes(redemptionCodes) {
           createdAt: new Date().toISOString(),
           userId: "0",
           ipAddress: "0",
+          redeemed: false,
         },
       },
     }));
@@ -55,7 +56,7 @@ async function deleteAllEntries() {
       }
 
       // Split items into chunks of 25 (DynamoDB batchWrite limit)
-      const batches = chunkArray(items.Items, 25);
+      const batches = chunkArray(items.Items, 15);
 
       for (const batch of batches) {
         const deleteRequests = batch.map((item) => ({

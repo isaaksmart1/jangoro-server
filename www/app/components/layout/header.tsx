@@ -29,7 +29,8 @@ export default function Header({ user }) {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5 flex flex-row items-center">
             <span className="sr-only">Jangoro</span>
-            <img src={logo} alt="Jangoro" className="h-12 w-auto" />
+            <img src={logo} alt="Jangoro" className="h-12 w-auto mr-0" />
+            <p className="text-white text-xl font-semibold mx-1">angoro</p>
           </a>
         </div>
 
@@ -141,7 +142,7 @@ export default function Header({ user }) {
           </a>
         </div>
         <a
-          href="https://jangoro.com/demo"
+          href={ROUTES.demo}
           className="button bg-blue-500 text-white mx-3 p-2 rounded-2xl "
           style={{
             fontWeight: "bolder",

@@ -56,7 +56,16 @@
 /* artifacts */
 
 .demo-list-details li {
-  list-style: circle;
+  list-style: none; /* Removes default bullets */
+  padding: 0;
+}
+
+.demo-list-details li {
+  background-image: url("../assets/img/check.png");
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 25px;
 }
 
 @keyframes borderMove {

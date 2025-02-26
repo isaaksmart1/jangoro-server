@@ -8,13 +8,13 @@ const { v4: uuidv4 } = require("uuid");
 const db = require("../config/database");
 const config = require("../config.json");
 const sendEmail = require("../middleware/send-email");
-const { env, developmentMode } = require("../middleware/helpers");
+const { env, DEVELOPMENT, URL } = require("../middleware/helpers");
 const { Log, accountStream } = require("./logger.service");
 const { cancelSubscriptionsAndDeleteCustomer } = require("./payments.service");
 
 // Email transport configuration
 const transporter = nodemailer.createTransport(config.smtpOptions);
-const APP_URL = "https://app.jangoro.com";
+const APP_URL = URL.app;
 // periodicallyDeleteCodes();
 
 const authenticate = async (email, password) => {
@@ -60,10 +60,10 @@ const authenticate = async (email, password) => {
       };
 
       // update status to active
-      updateUser(user);
+      const status = await updateUser(user);
 
       Log(user, accountStream);
-      return { user, account };
+      return { user, account, status };
     } else {
       Log(`${email}, User not found.`, accountStream);
       throw "User not found.";
@@ -122,7 +122,7 @@ const register = async (data) => {
   };
 
   try {
-    if (developmentMode) {
+    if (DEVELOPMENT) {
       return createUser(newData, params);
     } else {
       const valid = env("checkEmailDomain", data.email, organisation);

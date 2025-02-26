@@ -20,6 +20,7 @@ export default function Footer({}) {
             <span className="sr-only">Jangoro</span>
             <div className="logo-container w-40 flex flex-row items-center p-2">
               <img src={logo} alt="Jangoro" className="h-12 w-auto" />
+              <p className="text-white text-xl font-semibold mx-1">angoro</p>
             </div>
           </a>
         </div>

@@ -17,7 +17,10 @@ var {
   createPaymentIntent,
   retrieveCustomer,
 } = require("../services/payments.service");
-const { redeem } = require("../services/auxilary.service");
+const {
+  redeem,
+  getRandomRedemptionCode,
+} = require("../services/auxilary.service");
 var routes = express();
 
 routes.get("/", defaultRoute);
@@ -51,17 +54,13 @@ routes.get("/retrieve-customer", getStripeCustomer);
 routes.get("/get-transactions", getTransactions);
 
 // Auxilary API
+routes.get("/user/redeem/get", getRedeemCode);
 routes.post("/user/redeem", redeemCode);
 
 function defaultRoute(req, res) {
   const dt = new Date();
   res.send({
     data: dt.toISOString(),
-    // aws: {
-    //   region: "eu-west-2",
-    //   accessKeyId: "AKIA6FYDLCFVAJ6V2D37", // Replace with your AWS access key ID
-    //   secretAccessKey: "9g+bpaZLFKHt8H5DyQgkb6mjbUqD2PL4COFuC+nk", // Replace with your AWS secret access key
-    // },
   });
 }
 
@@ -292,6 +291,17 @@ function getTransactions(req, res) {
 
 function redeemCode(req, res) {
   redeem(req.body)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      const status = err.statusCode || 400;
+      res.status(status).send(err);
+    });
+}
+
+function getRedeemCode(req, res) {
+  getRandomRedemptionCode()
     .then((response) => {
       res.send(response);
     })

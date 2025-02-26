@@ -1,5 +1,8 @@
 const Stripe = require("stripe");
-const { STRIPE_SECRET_KEY } = require("../config/stripe");
+const {
+  STRIPE_SECRET_KEY,
+  STRIPE_PRICE_ID_LIFETIME,
+} = require("../config/stripe");
 const stripe = Stripe(STRIPE_SECRET_KEY);
 const rateLimit = require("express-rate-limit");
 const { redemptionTable, dynamodb, AWS } = require("../config/database");
@@ -13,6 +16,35 @@ const redeemLimiter = rateLimit({
 });
 
 // Redemption API
+const getRandomRedemptionCode = async () => {
+  try {
+    // Scan the table to retrieve all available redemption codes
+    const scanParams = {
+      TableName: redemptionTable,
+      FilterExpression: "redeemed = :redeemed", // Ensure only unredeemed codes are retrieved
+      ExpressionAttributeValues: { ":redeemed": { BOOL: false } },
+      Limit: 10,
+    };
+
+    const scanResult = await dynamodb.scan(scanParams).promise();
+
+    if (!scanResult.Items || scanResult.Items.length === 0) {
+      throw new Error("No available redemption codes.");
+    }
+
+    // Pick a random code from the list
+    const randomIndex = Math.floor(Math.random() * scanResult.Items.length);
+    const randomCodeItem = scanResult.Items[randomIndex];
+
+    return {
+      code: randomCodeItem.code.S,
+    };
+  } catch (error) {
+    console.error("Error retrieving redemption code:", error);
+    throw new Error("Unable to fetch a redemption code at this time.");
+  }
+};
+
 const redeem = async (params) => {
   const { code, userId, stripeCustomerId, email } = params;
   // const userIP = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -94,15 +126,14 @@ const redeem = async (params) => {
       subscription: "lifetime",
     });
 
-    await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{ price: "price_1QucvxL7QJgb8vM7LNKXQloP" }], // Lifetime plan Stripe price ID
-      billing_cycle_anchor: Math.floor(Date.now() / 1000), // Set to current UNIX timestamp
-      cancel_at_period_end: false,
-      metadata: {
-        plan: "Lifetime Access",
-      },
-    });
+    // const paymentIntent = await stripe.paymentIntents.create({
+    //   amount: 4900, // Set the correct price in cents (e.g., $99.99)
+    //   currency: "usd",
+    //   customer: customer.id,
+    //   description: "Lifetime Access",
+    //   metadata: { plan: "Lifetime Access" },
+    //   payment_method_types: ["card"],
+    // });
 
     // Mark code as redeemed
     const updateParams = {
@@ -123,6 +154,7 @@ const redeem = async (params) => {
     return {
       plan: "Lifetime Access",
       message: "Code redeemed successfully! You now have lifetime access.",
+      customerId: customer.id,
     };
   } catch (error) {
     console.error("Redemption Error:", error);
@@ -135,5 +167,6 @@ const redeem = async (params) => {
 
 module.exports = {
   redeem,
+  getRandomRedemptionCode,
   redeemLimiter,
 };

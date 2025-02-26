@@ -1,3 +1,5 @@
+import { ROUTES } from "../../utils/utils";
+
 export default function Docs() {
   return (
     <div className="p-4 text-slate-900">
@@ -16,7 +18,7 @@ export default function Docs() {
       <h3 className="text-lg font-semibold mt-2">Creating an Account</h3>
       <p className="text-md my-2">
         1. Visit{" "}
-        <a href="https://app.jangoro.com" className="text-blue-500">
+        <a href={ROUTES.index} className="text-blue-500">
           app.jangoro.com
         </a>{" "}
         and click on <strong>Sign Up</strong>.<br />
@@ -29,7 +31,7 @@ export default function Docs() {
       <h3 className="text-lg font-semibold mt-2">Logging In</h3>
       <p className="text-md my-2">
         1. Go to{" "}
-        <a href="https://app.jangoro.com/login" className="text-blue-500">
+        <a href={ROUTES.login} className="text-blue-500">
           app.jangoro.com/login
         </a>
         .<br />
