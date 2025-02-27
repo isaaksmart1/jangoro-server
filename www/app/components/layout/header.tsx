@@ -148,7 +148,7 @@ export default function Header({ user }) {
             fontWeight: "bolder",
           }}
         >
-          Book a Demo
+          Book Demo
         </a>
       </nav>
 
