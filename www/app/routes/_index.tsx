@@ -13,6 +13,7 @@ import Header from "~/components/layout/header";
 import Hero from "~/components/layout/hero";
 import Section from "~/components/layout/section";
 import { ROUTES, useOptionalUser } from "~/utils/utils";
+import FAQ from "~/components/artifacts/faq";
 
 const TryItButton = () => (
   <button className="w-1/4 mt-6 py-2 bg-blue-600 text-white rounded-full text-lg hover:bg-blue-700">
@@ -113,6 +114,15 @@ export default function Index() {
           setEmail={setEmail}
         >
           <PricingTable />
+        </Section>
+        <Section
+          title="Frequently Asked Questions"
+          description=""
+          emailRef={emailRef}
+          email={email}
+          setEmail={setEmail}
+        >
+          <FAQ />
         </Section>
         <Section
           title="Join our growing community"
