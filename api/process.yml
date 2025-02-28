@@ -1,8 +1,8 @@
 apps:
-  - name: 'jangoro-api'
-    script: './src/server.js'
+  - name: "jangoro-api"
+    script: "./src/server.js"
     instances: 1
-    autorestart: true
+    autorestart: false
     watch: true
     max_memory_restart: 1G
     env:

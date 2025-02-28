@@ -1,9 +1,9 @@
 apps:
-  - name: jangoro-ai
-    script: server.py
+  - name: "jangoro-ai"
+    script: "./server.py"
     interpreter: python3.11
     instances: 1
-    autorestart: true
+    autorestart: false
     watch: true
     max_memory_restart: 1G
     env:

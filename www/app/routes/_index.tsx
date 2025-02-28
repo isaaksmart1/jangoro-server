@@ -63,7 +63,7 @@ export default function Index() {
 
         <Section
           title="Features"
-          description="No more tedious one at a time"
+          description="No more handling survey responses one at a time"
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
@@ -89,9 +89,9 @@ export default function Index() {
                   Batch generate and analyze content
                 </h2>
                 <p className="text-white text-lg md:w-96 m-2">
-                  To generate content, answer, or to analyze user review,
-                  customer feedback in bulk, just upload your data as CSV, then
-                  Jangoro will quickly give you the results.
+                  To generate content, receive answers and customer feedback in
+                  bulk, or to analyze user reviews, just upload your data as
+                  CSV, then Jangoro will quickly give you the results.
                 </p>
                 <TryItButton />
               </div>
