@@ -1,10 +1,7 @@
 import { Link } from "@remix-run/react";
 
 import "~/css/styles.css";
-import discord from "~/assets/img/discord.png";
-import linkedin from "~/assets/img/linkedin.png";
 import logo from "~/assets/img/logo.png";
-import tiktok from "~/assets/img/tiktok.png";
 import twitter from "~/assets/img/twitter.png";
 import { ROUTES } from "~/utils/utils";
 
@@ -36,6 +33,9 @@ export default function Footer({}) {
             <ul>
               <li className="text-jgo-white my-1">
                 <Link to={`${ROUTES.company}`}>About Us</Link>
+              </li>
+              <li className="text-jgo-white my-1">
+                <Link to={`${ROUTES.help}`}>Help Center</Link>
               </li>
             </ul>
           </div>
@@ -84,14 +84,6 @@ export default function Footer({}) {
               Socials
             </h1>
             <ul className="flex flex-row">
-              {/* <li className="social-icon bg-jgo-white p-2 mx-1">
-                <a href="https://discord.com/invite/bapedUtcEv">
-                  <img src={discord} alt="Discord" className="h-4 w-auto" />
-                </a>
-              </li>
-              <li className="social-icon bg-jgo-white p-2 mx-1">
-                <img src={linkedin} alt="LinkedIn" className="h-4 w-auto" />
-              </li> */}
               <li className="social-icon bg-jgo-white p-2 mx-1">
                 <a href="https://x.com/JangoroOfficial">
                   <img src={twitter} alt="X" className="h-4 w-auto" />

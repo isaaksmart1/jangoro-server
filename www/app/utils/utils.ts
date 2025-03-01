@@ -30,12 +30,14 @@ const LINKS = {
   company: "company",
   docs: "docs",
   demo: "demo",
+  help: "help",
 };
 
 export const ROUTES = {
   index: URL.app,
   login: `${URL.app}/${LINKS.login}`,
   demo: `${URL.www}/${LINKS.demo}`,
+  help: `${URL.www}/${LINKS.help}`,
   register: `${URL.app}/${LINKS.register}`,
   legal: `/${LINKS.legal}`,
   notes: `/${LINKS.notes}`,

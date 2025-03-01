@@ -1,26 +1,31 @@
-import discord from "~/assets/img/discord.png";
-import linkedin from "~/assets/img/linkedin.png";
-import tiktok from "~/assets/img/tiktok.png";
 import twitter from "~/assets/img/twitter.png";
+import slack from "~/assets/img/slack.png"; // Add your Slack logo
 
 export function Socials() {
   return (
-    <div>
-      <ul className="flex flex-wrap">
-        <li className="social-icon p-2 mx-auto"></li>
-      </ul>
-      <ul className="flex flex-wrap justify-center">
-        {/* <li className="social-icon bg-purple-500 p-4 m-2">
-          <a href="https://discord.com/invite/bapedUtcEv">
-            <img src={discord} alt="Discord" className="h-12 w-12" />
+    <div className="flex flex-col items-center space-y-6">
+      <ul className="flex flex-wrap justify-center space-x-4">
+        <li>
+          <a href="https://x.com/JangoroOfficial" className="group">
+            <div className="p-4 bg-blue-400 rounded-full shadow-lg hover:bg-blue-500 transition duration-300">
+              <img
+                src={twitter}
+                alt="X"
+                className="h-12 w-12 group-hover:scale-110 transition-transform"
+              />
+            </div>
           </a>
         </li>
-        <li className="social-icon bg-jgo-accent p-4 m-2">
-          <img src={linkedin} alt="LinkedIn" className="h-12 w-12" />
-        </li> */}
-        <li className="social-icon bg-jgo-white p-4 m-2">
-          <a href="https://x.com/JangoroOfficial">
-            <img src={twitter} alt="X" className="h-12 w-12" />
+
+        <li>
+          <a href="https://join.slack.com/t/jangoro/signup" className="group">
+            <div className="p-4 bg-white rounded-full shadow-lg hover:bg-green-400 transition duration-300">
+              <img
+                src={slack}
+                alt="Slack"
+                className="h-12 w-12 group-hover:scale-110 transition-transform"
+              />
+            </div>
           </a>
         </li>
       </ul>
