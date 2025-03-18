@@ -75,12 +75,16 @@ export default function App() {
           src="https://www.googletagmanager.com/gtag/js?id=GTM-T22V7ZTZ"
         ></script>
         <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-K727R6YZS5"
+        ></script>
+        <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'GTM-T22V7ZTZ');
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-K727R6YZS5');
             `,
           }}
         />

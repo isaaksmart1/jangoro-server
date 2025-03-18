@@ -1,8 +1,10 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import ReactGA from "react-ga4";
 
 import type { User } from "~/models/user.server";
 
+ReactGA.initialize("GTM-K727R6YZS5");
 const DEVELOPMENT = false;
 const DEFAULT_REDIRECT = "/";
 
@@ -20,8 +22,6 @@ const prod = {
   ai: "http://ai.jangoro.com",
 };
 
-export const URL = DEVELOPMENT ? dev : prod;
-
 const LINKS = {
   login: "login",
   legal: "legal",
@@ -32,6 +32,17 @@ const LINKS = {
   demo: "demo",
   help: "help",
 };
+
+function isUser(user: unknown): user is User {
+  return (
+    user != null &&
+    typeof user === "object" &&
+    "email" in user &&
+    typeof user.email === "string"
+  );
+}
+
+export const URL = DEVELOPMENT ? dev : prod;
 
 export const ROUTES = {
   index: URL.app,
@@ -84,15 +95,6 @@ export function useMatchesData(
   return route?.data as Record<string, unknown>;
 }
 
-function isUser(user: unknown): user is User {
-  return (
-    user != null &&
-    typeof user === "object" &&
-    "email" in user &&
-    typeof user.email === "string"
-  );
-}
-
 export function useOptionalUser(): User | undefined {
   const data = useMatchesData("root");
   if (!data || !isUser(data.user)) {
@@ -113,6 +115,14 @@ export function useUser(): User {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+export function GACTA(label: string) {
+  ReactGA.event({
+    category: "CTA", // Category of event
+    action: "Click", // Action taken
+    label: label, // Description (optional)
+  });
 }
 
 export const defaultUserFields = {

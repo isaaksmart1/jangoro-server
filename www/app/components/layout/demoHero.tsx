@@ -1,5 +1,6 @@
 import "../../css/styles.css";
 import demo from "../../assets/img/demo.jpg";
+import { GACTA } from "~/utils/utils";
 
 export default function DemoHero({ user, emailRef, email, setEmail }) {
   return (
@@ -50,6 +51,7 @@ export default function DemoHero({ user, emailRef, email, setEmail }) {
               <a
                 href="https://calendly.com/team-idearify/jangoro-demo"
                 className="text-white bg-black border border-white rounded-xl text-base text-center p-3 mt-6 mb-3"
+                onClick={() => GACTA("Demo Slot")}
               >
                 Pick a Demo Slot <span aria-hidden="true">&rarr;</span>
               </a>

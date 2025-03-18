@@ -5,7 +5,7 @@ import { SideBarItem } from "../sideBarItem";
 
 import "~/css/styles.css";
 import logo from "~/assets/img/logo.png";
-import { ROUTES } from "~/utils/utils";
+import { GACTA, ROUTES } from "~/utils/utils";
 
 export default function Header({ user }) {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
@@ -137,6 +137,7 @@ export default function Header({ user }) {
           <a
             href={ROUTES.login}
             className="text-lg font-semibold leading-6 text-jgo-white"
+            onClick={() => GACTA('Log In')}
           >
             Log In
           </a>
