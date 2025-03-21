@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
@@ -7,8 +6,7 @@ const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const db = require("../config/database");
 const config = require("../config.json");
-const sendEmail = require("../middleware/send-email");
-const { env, DEVELOPMENT, URL } = require("../middleware/helpers");
+const { URL } = require("../middleware/helpers");
 const { Log, accountStream } = require("./logger.service");
 const { cancelSubscriptionsAndDeleteCustomer } = require("./payments.service");
 
@@ -122,17 +120,7 @@ const register = async (data) => {
   };
 
   try {
-    if (DEVELOPMENT) {
-      return createUser(newData, params);
-    } else {
-      const valid = env("checkEmailDomain", data.email, organisation);
-      if (valid) {
-        return createUser(newData, params);
-      } else {
-        Log(`Invalid student email address, ${data.email}`, accountStream);
-        throw `Invalid student email address`;
-      }
-    }
+    return createUser(newData, params);
   } catch (err) {
     Log(err, accountStream);
     throw "Error creating user";

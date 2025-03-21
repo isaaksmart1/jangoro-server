@@ -37,6 +37,7 @@ const schema = buildSchema(`
   input RegisterInput {
     email: String!
     password: String!
+    subscription: String!
   }
 
   input LoginInput {
@@ -48,9 +49,7 @@ const schema = buildSchema(`
 // ✅ **Resolvers (Backend Logic)**
 const root = {
   register: async ({ registerInput }) => {
-    const { email, password } = registerInput;
-
-    const subscription = "month";
+    const { email, password, subscription } = registerInput;
 
     try {
       const response = await accounts.register({
