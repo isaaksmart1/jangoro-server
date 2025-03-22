@@ -282,10 +282,10 @@ const getUserById = async (id) => {
 const updateUser = async (newData) => {
   const params = {
     TableName: db.usersTable,
-    IndexName: "id-index", // Your GSI name
-    KeyConditionExpression: "id = :id",
+    IndexName: "email-index", // Your GSI name
+    KeyConditionExpression: "email = :email",
     ExpressionAttributeValues: {
-      ":id": { S: newData.id },
+      ":email": { S: newData.email },
     },
   };
 
