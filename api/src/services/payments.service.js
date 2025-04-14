@@ -196,7 +196,7 @@ const createPaymentIntent = async (params) => {
       },
       ...(interval !== "life" && {
         subscription_data: {
-          trial_period_days: 1, // 1-day free trial
+          trial_period_days: 14, // 14-day free trial
         },
       }),
     });

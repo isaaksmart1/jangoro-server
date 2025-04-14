@@ -16,7 +16,7 @@ const PricingTable = () => {
           </h3>
           <p className="text-center text-4xl font-bold mb-6">$15/mo</p>
           <ul className="list-disc pl-5 space-y-3">
-            <li>1 Day Free Trial</li>
+            <li>14 Day Free Trial</li>
             <li>Unlimited Access to All Features</li>
             <li>Priority Support</li>
             <li>Free Updates</li>
@@ -38,7 +38,7 @@ const PricingTable = () => {
           </h3>
           <p className="text-center text-4xl font-bold mb-6">$99/yr</p>
           <ul className="list-disc pl-5 space-y-3">
-            <li>1 Day Free Trial</li>
+            <li>14 Day Free Trial</li>
             <li>Unlimited Access to All Features</li>
             <li>Priority Support</li>
             <li>Free Updates</li>
