@@ -5,11 +5,20 @@ import { SideBarItem } from "../sideBarItem";
 
 import "~/css/styles.css";
 import logo from "~/assets/img/logo.png";
-import { GACTA, ROUTES } from "~/utils/utils";
+import { ROUTES } from "~/utils/utils";
 
 export default function Header({ user }) {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  function GACTA(eventName: string, label: string) {
+    if (window.gtag) {
+      window.gtag("event", eventName, {
+        event_category: "button",
+        event_label: label,
+      });
+    }
+  }
 
   const toggleMenuItem = (item) => {
     setActiveMenuItem((prevMenuItem) => {
@@ -137,7 +146,7 @@ export default function Header({ user }) {
           <a
             href={ROUTES.login}
             className="text-lg font-semibold leading-6 text-jgo-white"
-            onClick={() => GACTA('Log In')}
+            onClick={() => GACTA("click_login", "Log In")}
           >
             Log In
           </a>

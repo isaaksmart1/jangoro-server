@@ -1,10 +1,8 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
-import ReactGA from "react-ga4";
 
 import type { User } from "~/models/user.server";
 
-ReactGA.initialize("GTM-K727R6YZS5");
 const DEVELOPMENT = false;
 const DEFAULT_REDIRECT = "/";
 
@@ -115,14 +113,6 @@ export function useUser(): User {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
-}
-
-export function GACTA(label: string) {
-  ReactGA.event({
-    category: "CTA", // Category of event
-    action: "Click", // Action taken
-    label: label, // Description (optional)
-  });
 }
 
 export const defaultUserFields = {

@@ -37,17 +37,6 @@ export default function App() {
   return (
     <html lang="en" className="h-full">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-T22V7ZTZ');
-            `,
-          }}
-        />
         <meta
           name="description"
           content="AI-powered Survey and Review analytics solution."
@@ -70,10 +59,6 @@ export default function App() {
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet"
         />
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=GTM-T22V7ZTZ"
-        ></script>
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-K727R6YZS5"
@@ -113,14 +98,7 @@ export default function App() {
         />
       </head>
       <body className="h-full">
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-T22V7ZTZ"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
+        <noscript></noscript>
         <Outlet />
         <ScrollRestoration />
         <Scripts />

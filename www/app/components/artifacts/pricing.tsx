@@ -1,8 +1,15 @@
-import { LocalFireDepartment } from "@mui/icons-material";
-
-import { GACTA, ROUTES } from "~/utils/utils";
+import { ROUTES } from "~/utils/utils";
 
 const PricingTable = () => {
+  function GACTA(eventName: string, label: string) {
+    if (window.gtag) {
+      window.gtag("event", eventName, {
+        event_category: "button",
+        event_label: label,
+      });
+    }
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-semibold text-center mb-12 text-white">
@@ -25,7 +32,9 @@ const PricingTable = () => {
           </ul>
           <button
             className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
-            onClick={() => GACTA("Get Started $15/mo")}
+            onClick={() =>
+              GACTA("click_monthly_purchase", "Get Started $15/mo")
+            }
           >
             <a href={`${ROUTES.register}?plan=month`}>Get Started</a>
           </button>
@@ -47,7 +56,7 @@ const PricingTable = () => {
           </ul>
           <button
             className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
-            onClick={() => GACTA("Get Started $99/yr")}
+            onClick={() => GACTA("click_yearly_purchase", "Get Started $99/yr")}
           >
             <a href={`${ROUTES.register}?plan=year`}>Get Started</a>
           </button>
@@ -88,7 +97,9 @@ const PricingTable = () => {
           </ul>
           <button
             className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
-            onClick={() => GACTA("Purchase Lifetime Plan")}
+            onClick={() =>
+              GACTA("click_lifetime_purchase", "Purchase Lifetime Plan")
+            }
           >
             <a href={`${ROUTES.register}?plan=life`}>Purchase</a>
           </button>

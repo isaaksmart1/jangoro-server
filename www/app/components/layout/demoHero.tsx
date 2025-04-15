@@ -1,8 +1,16 @@
 import "../../css/styles.css";
 import demo from "../../assets/img/demo.jpg";
-import { GACTA } from "~/utils/utils";
 
 export default function DemoHero({ user, emailRef, email, setEmail }) {
+  function GACTA(eventName: string, label: string) {
+    if (window.gtag) {
+      window.gtag("event", eventName, {
+        event_category: "button",
+        event_label: label,
+      });
+    }
+  }
+
   return (
     <div className="hero-container w-full sm:overflow-hidden sm:rounded-b-[30px]">
       <div className="relative mx-auto w-full md:flex md:flex-row justify-center pb-8 pt-16 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-16">
@@ -51,7 +59,7 @@ export default function DemoHero({ user, emailRef, email, setEmail }) {
               <a
                 href="https://calendly.com/team-idearify/jangoro-demo"
                 className="text-white bg-black border border-white rounded-xl text-base text-center p-3 mt-6 mb-3"
-                onClick={() => GACTA("Demo Slot")}
+                onClick={() => GACTA("click_schedule_demo", "Demo Slot")}
               >
                 Pick a Demo Slot <span aria-hidden="true">&rarr;</span>
               </a>
