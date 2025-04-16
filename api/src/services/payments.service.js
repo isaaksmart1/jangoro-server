@@ -21,13 +21,10 @@ const findOrCreateCustomer = async (email, metadata) => {
   let customer = null;
   try {
     // Use an existing Customer ID if this is a returning customer.
-    customer = await stripe.customers
-      .list({
-        email: email,
-      })
-      .then((customers) =>
-        customers.data.length > 0 ? customers.data[0] : null
-      );
+    customerList = await stripe.customers.list({
+      email: email,
+    });
+    customer = customerList.data.length > 0 ? customerList.data[0] : null;
     customer = await stripe.customers.update(customer.id, {
       metadata,
     });

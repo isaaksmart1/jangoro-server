@@ -72,11 +72,13 @@ const root = {
 
     try {
       const response = await accounts.authenticate(email, password);
+      console.log(response.account);
       return {
         accessToken: response.user.jwtToken,
         user: response.account,
       };
     } catch (error) {
+      console.log(error);
       e = new Error(error);
       return {
         e,
