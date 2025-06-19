@@ -111,7 +111,7 @@ const PricingTable = () => {
           <h3 className="text-2xl font-semibold text-center mb-4">
             Lifetime Plan
           </h3>
-          <p className="text-center text-4xl font-bold mb-6">$49</p>
+          <p className="text-center text-4xl font-bold mb-6">$299</p>
           <ul className="list-disc pl-5 space-y-3">
             <li style={{ listStyle: "none" }}>
               <span
