@@ -20,6 +20,7 @@ var {
 const {
   redeem,
   getRandomRedemptionCode,
+  countActiveRedemptions,
 } = require("../services/auxilary.service");
 var routes = express();
 
@@ -55,6 +56,7 @@ routes.get("/get-transactions", getTransactions);
 
 // Auxilary API
 routes.get("/user/redeem/get", getRedeemCode);
+routes.get("/user/redeem/total", countRedemptions);
 routes.post("/user/redeem", redeemCode);
 
 function defaultRoute(req, res) {
@@ -291,6 +293,17 @@ function getTransactions(req, res) {
 
 function redeemCode(req, res) {
   redeem(req.body)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      const status = err.statusCode || 400;
+      res.status(status).send(err);
+    });
+}
+
+function countRedemptions(req, res) {
+  countActiveRedemptions()
     .then((response) => {
       res.send(response);
     })

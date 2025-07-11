@@ -45,6 +45,35 @@ const getRandomRedemptionCode = async () => {
   }
 };
 
+const countActiveRedemptions = async () => {
+  try {
+    let totalCount = 0;
+    let lastEvaluatedKey = null;
+
+    do {
+      const scanParams = {
+        TableName: redemptionTable,
+        FilterExpression: "redeemed = :redeemed",
+        ExpressionAttributeValues: { ":redeemed": { BOOL: false } },
+        ExclusiveStartKey: lastEvaluatedKey,
+      };
+
+      const scanResult = await dynamodb.scan(scanParams).promise();
+
+      if (scanResult.Items) {
+        totalCount += scanResult.Items.length;
+      }
+
+      lastEvaluatedKey = scanResult.LastEvaluatedKey;
+    } while (lastEvaluatedKey);
+
+    return { totalCount };
+  } catch (error) {
+    console.error("Error counting unredeemed codes:", error);
+    throw new Error("Unable to count unredeemed codes at this time.");
+  }
+};
+
 const redeem = async (params) => {
   const { code, userId, stripeCustomerId, email } = params;
   // const userIP = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -168,5 +197,6 @@ const redeem = async (params) => {
 module.exports = {
   redeem,
   getRandomRedemptionCode,
+  countActiveRedemptions,
   redeemLimiter,
 };
