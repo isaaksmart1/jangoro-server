@@ -12,12 +12,11 @@ const dev = {
   api: "http://localhost:4000",
   ai: "http://localhost:5000",
 };
-
-const prod = {
+export const prod = {
   app: "https://app.jangoro.com",
   www: "https://jangoro.com",
-  api: "http://api.jangoro.com",
-  ai: "http://ai.jangoro.com",
+  api: "https://api.jangoro.com",
+  ai: "https://ai.jangoro.com",
 };
 
 const LINKS = {

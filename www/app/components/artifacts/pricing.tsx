@@ -1,6 +1,21 @@
-import { ROUTES } from "~/utils/utils";
+import { useEffect, useState } from "react";
+import { prod, ROUTES } from "~/utils/utils";
 
 const PricingTable = () => {
+  const [supply, setSupply] = useState("");
+
+  useEffect(() => {
+    getRedeemCount();
+  }, []);
+
+  async function getRedeemCount() {
+    const res = await fetch(`${prod.api}/user/redeem/total`);
+    const totalCount = await res.json();
+    const count = totalCount.totalCount;
+    if (count > 100) setSupply("Limited Supply");
+    else setSupply(`${count} codes left`);
+  }
+
   function GACTA(eventName: string, label: string) {
     if (window.gtag) {
       window.gtag("event", eventName, {
@@ -21,7 +36,9 @@ const PricingTable = () => {
           className="border rounded-lg shadow-lg p-6 bg-white"
           style={{ maxWidth: 360 }}
         >
-          <h3 className="text-2xl font-semibold text-center mb-4">Basic Plan</h3>
+          <h3 className="text-2xl font-semibold text-center mb-4">
+            Basic Plan
+          </h3>
           <p className="text-center text-4xl font-bold mb-6">Free</p>
           <ul className="list-disc pl-5 space-y-3">
             <li>Summarise</li>
@@ -118,7 +135,7 @@ const PricingTable = () => {
                 style={{ backgroundColor: "firebrick" }}
                 className="text-white rounded-lg p-2 my-2"
               >
-                Limited Supply
+                {supply.toString()}
               </span>
             </li>
             <li>
