@@ -144,7 +144,7 @@ const PricingTable = () => {
             <li>Priority Support</li>
             <li>Free Updates</li>
             <li>Analytics Dashboard</li>
-            <li>Save over 40% vs Yearly Plan</li>
+            <li>Custom Integrations</li>
           </ul>
           <button
             className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
