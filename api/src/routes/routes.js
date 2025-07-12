@@ -56,7 +56,7 @@ routes.get("/get-transactions", getTransactions);
 
 // Auxilary API
 routes.get("/user/redeem/get", getRedeemCode);
-routes.get("/user/redeem/total", countRedemptions);
+routes.get("/redeem/total", countRedemptions);
 routes.post("/user/redeem", redeemCode);
 
 function defaultRoute(req, res) {

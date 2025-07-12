@@ -9,7 +9,7 @@ const PricingTable = () => {
   }, []);
 
   async function getRedeemCount() {
-    const res = await fetch(`${prod.api}/user/redeem/total`);
+    const res = await fetch(`${prod.api}/redeem/total`);
     const totalCount = await res.json();
     const count = totalCount.totalCount;
     if (count > 100) setSupply("Limited Supply");
