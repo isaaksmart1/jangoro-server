@@ -20,13 +20,17 @@ export default function Header({ user }) {
     }
   }
 
-  const toggleMenuItem = (item) => {
+  const toggleMenuItem = (item: string | null) => {
     setActiveMenuItem((prevMenuItem) => {
       if (prevMenuItem === null) {
         return item;
       }
       return null;
     });
+  };
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -141,7 +145,19 @@ export default function Header({ user }) {
             </button>
             {activeMenuItem === "docs" ? <MenuItem content="docs" /> : null}
           </div>
+
+          <div className="relative">
+            <button
+              type="button"
+              className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-jgo-white"
+              aria-expanded="false"
+              onClick={() => scrollToSection("pricing")}
+            >
+              Pricing
+            </button>
+          </div>
         </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href={ROUTES.login}
@@ -151,6 +167,7 @@ export default function Header({ user }) {
             Log In
           </a>
         </div>
+
         <a
           href={ROUTES.demo}
           className="button bg-blue-500 text-white mx-3 p-2 rounded-2xl "

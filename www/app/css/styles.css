@@ -3,6 +3,10 @@
   font-weight: 400;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .store-icon {
   width: 250px;
   height: 75px;

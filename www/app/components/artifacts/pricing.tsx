@@ -26,7 +26,7 @@ const PricingTable = () => {
   }
 
   return (
-    <div className="mx-auto px-4 py-8">
+    <div id="pricing" className="mx-auto px-4 py-8">
       <h2 className="text-3xl font-semibold text-center mb-12 text-white">
         Choose Your Plan
       </h2>
