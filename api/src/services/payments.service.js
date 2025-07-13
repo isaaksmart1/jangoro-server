@@ -195,7 +195,10 @@ const createPaymentIntent = async (params) => {
     if (STRIPE_PUBLISHABLE_KEY.includes("test"))
       payload.line_items = [
         {
-          price: "price_1RkLtxL7QJgb8vM7vqNDU44b", // You can use a test price ID here
+          price:
+            interval !== "life"
+              ? "price_1RkLruL7QJgb8vM7Lyw4cmQU"
+              : "price_1RkLtxL7QJgb8vM7vqNDU44b",
           quantity: 1,
         },
       ];
