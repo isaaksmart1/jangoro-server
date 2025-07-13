@@ -68,7 +68,7 @@ export default function CookiePolicy() {
       <p className="text-md my-2">
         If you have any questions or concerns about this Cookie Policy or how we
         use cookies, please contact us at{" "}
-        <a href="mailto:team.jangoro@gmail.com" className="text-blue-500">team@jangoro.com</a>. By
+        <a href="mailto:team.jangoro@gmail.com" className="text-blue-500">team.jangoro@gmail.com</a>. By
         continuing to use our platform, you agree to the use of cookies as
         outlined in this policy.
       </p>

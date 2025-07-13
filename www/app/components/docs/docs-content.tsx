@@ -364,7 +364,7 @@ export default function DocsContent() {
                       href="mailto:team.jangoro@gmail.com"
                       className="text-blue-500 hover:text-blue-700"
                     >
-                      team@jangoro.com
+                      team.jangoro@gmail.com
                     </a>
                   </div>
                 </div>
