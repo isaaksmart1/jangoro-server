@@ -176,14 +176,8 @@ const createPaymentIntent = async (params) => {
         throw new Error("Invalid subscription plan");
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const payload = {
       payment_method_types: ["card"],
-      line_items: [
-        {
-          price,
-          quantity: 1,
-        },
-      ],
       mode: interval === "life" ? "payment" : "subscription",
       success_url: `${URL.app}/login?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${URL.app}/login?session_id=cancelledCheckout`,
@@ -196,7 +190,24 @@ const createPaymentIntent = async (params) => {
           trial_period_days: 14, // 14-day free trial
         },
       }),
-    });
+    };
+
+    if (STRIPE_PUBLISHABLE_KEY.includes("test"))
+      payload.line_items = [
+        {
+          price: "price_1RkLtxL7QJgb8vM7vqNDU44b", // You can use a test price ID here
+          quantity: 1,
+        },
+      ];
+    else
+      payload.line_items = [
+        {
+          price,
+          quantity: 1,
+        },
+      ];
+
+    const session = await stripe.checkout.sessions.create(payload);
 
     // Return necessary details to the frontend
     return {
