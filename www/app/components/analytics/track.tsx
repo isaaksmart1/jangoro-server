@@ -6,7 +6,7 @@ export function useTagTrackPageViews() {
 
   useEffect(() => {
     if (typeof window.gtag === "function") {
-      window.gtag("config", "G-C2JMQQ75FT", {
+      window.gtag("config", "G-K727R6YZS5", {
         page_path: location.pathname + location.search,
       });
     }
