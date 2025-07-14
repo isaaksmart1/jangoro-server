@@ -61,6 +61,20 @@ export default function App() {
         />
         <script
           async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-428437575"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'AW-428437575');
+            `,
+          }}
+        />
+        {/* <script
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-K727R6YZS5"
         ></script>
         <script
@@ -72,7 +86,7 @@ export default function App() {
                 gtag('config', 'G-K727R6YZS5');
             `,
           }}
-        />
+        /> */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
