@@ -210,7 +210,7 @@ export default function DocsContent() {
             <li>View Surveys and Reviews</li>
             <li>Check response analytics</li>
             <li>Create new surveys</li>
-            <li>Analyze sentiment and summarize</li>
+            <li>Analyze sentiment and summarise</li>
             <li>Access settings</li>
           </ul>
         </section>

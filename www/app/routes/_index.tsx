@@ -97,7 +97,7 @@ export default function Index() {
                 </h2>
                 <p className="text-white text-lg md:w-96 m-2">
                   Upload survey responses or feedback data. Engage with our
-                  in-built AI chatbot to summarize responses, extract key
+                  in-built AI chatbot to summarise responses, extract key
                   insights, and analyze sentiment.
                 </p>
                 <TryItButton />

@@ -97,7 +97,7 @@ def analyze_bulk_refinement():
 
 @app.route("/analyze-summary", methods=["POST"])
 def analyze_bulk_summary():
-    return analyze_feedback("summary", "Summarize the given text: {}.")
+    return analyze_feedback("summary", "Summarise the given text: {}.")
 
 
 @app.route("/analyze-sentiment", methods=["POST"])

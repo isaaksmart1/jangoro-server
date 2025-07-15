@@ -68,7 +68,7 @@ export const AIChatCard = () => {
             viewport={{ once: true }}
             className="bg-purple-500/20 rounded-lg p-3 mb-2 shadow-md shadow-blue-500/30"
           >
-            <p className="text-white">Can you help me summarize this survey?</p>
+            <p className="text-white">Can you help me summarise this survey?</p>
           </motion.div>
         </div>
 
