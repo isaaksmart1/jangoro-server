@@ -170,7 +170,7 @@ export default function Header({ user }) {
 
         <a
           href={ROUTES.demo}
-          className="button bg-blue-500 text-white mx-3 p-2 rounded-2xl "
+          className="button bg-jgo-secondary text-white mx-3 p-2 rounded-md "
           style={{
             fontWeight: "bolder",
           }}

@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import "../../css/styles.css";
 
+import { ROUTES } from "~/utils/utils";
+
 import hero from "../../assets/img/hero.png";
 
-export default function Hero({ user, emailRef, email, setEmail }) {
+export default function Hero() {
   return (
     <div className="hero-container w-full sm:overflow-hidden sm:rounded-b-[30px]">
       <div className="relative mx-auto w-full md:flex md:flex-row justify-center pb-8 pt-16 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-16">
@@ -13,12 +15,18 @@ export default function Hero({ user, emailRef, email, setEmail }) {
               Unlock Insights in Seconds.
             </h1>
             <br />
-            <p className="block text-jgo-white drop-shadow-md text-left text-xl">
+            <p className="block text-white drop-shadow-md text-left text-xl">
               Transform customer survey data into actionable results with our
               powerful analysis tool—fast, accurate, and effortless. Know what
               matters most, instantly.
             </p>
           </div>
+
+          <button className="bg-jgo-secondary w-[200px] md:w-[200px] my-4 p-4 rounded-lg">
+            <h1 className="text-white drop-shadow-md text-center text-xl">
+              <a href={`${ROUTES.free}`}>Get Started</a>
+            </h1>
+          </button>
         </div>
 
         <div className="relative overflow-hidden">
@@ -34,7 +42,7 @@ export default function Hero({ user, emailRef, email, setEmail }) {
                 stiffness: 80,
               },
             }}
-            className="relative inset-0 w-full h-full object-cover"
+            className="relative inset-0 w-full h-full object-cover z-0"
             src={hero}
             alt="OE App Phone"
           />

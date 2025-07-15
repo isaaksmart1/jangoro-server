@@ -45,7 +45,7 @@ const PricingTable = () => {
             <li>Analytics Dashboard</li>
           </ul>
           <button
-            className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
+            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
             onClick={() => GACTA("click_free_version", "Free Version")}
           >
             <a href={`${ROUTES.free}`}>Enter</a>
@@ -72,7 +72,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button
-            className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
+            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
             onClick={() =>
               GACTA("click_monthly_purchase", "Get Started $15/mo")
             }
@@ -101,7 +101,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button
-            className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
+            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
             onClick={() => GACTA("click_yearly_purchase", "Get Started $99/yr")}
           >
             <a href={`${ROUTES.register}?plan=year`}>Get Started</a>
@@ -147,7 +147,7 @@ const PricingTable = () => {
             <li>Custom Integrations</li>
           </ul>
           <button
-            className="w-full mt-6 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700"
+            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
             onClick={() =>
               GACTA("click_lifetime_purchase", "Purchase Lifetime Plan")
             }

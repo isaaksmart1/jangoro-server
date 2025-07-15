@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 
 import "~/css/styles.css";
 import spreadsheet from "~/assets/img/spreadsheet.jpg";
+import FAQ from "~/components/artifacts/faq";
 import { AIChatCard } from "~/components/artifacts/features";
 import PricingTable from "~/components/artifacts/pricing";
 import { Socials } from "~/components/artifacts/socials";
@@ -13,10 +14,11 @@ import Header from "~/components/layout/header";
 import Hero from "~/components/layout/hero";
 import Section from "~/components/layout/section";
 import { ROUTES, useOptionalUser } from "~/utils/utils";
-import FAQ from "~/components/artifacts/faq";
+
+import demo from "~/assets/video/demo.mp4";
 
 const TryItButton = () => (
-  <button className="w-1/4 mt-6 py-2 bg-blue-600 text-white rounded-full text-lg hover:bg-blue-700">
+  <button className="w-1/4 mt-6 py-2 bg-jgo-secondary text-white rounded-full text-lg hover:bg-blue-700">
     <a href={ROUTES.register}>Try It</a>
   </button>
 );
@@ -61,6 +63,23 @@ export default function Index() {
           email={email}
           setEmail={setEmail}
         />
+
+        <Section
+          title="See it in Action"
+          description="Play the video and get a feel for how our platform works"
+          emailRef={emailRef}
+          email={email}
+          setEmail={setEmail}
+        >
+          <div className="mx-auto my-8">
+            <video
+              className="w-[1024px] sm:w-[400px] md:w-[1024px] rounded-xl shadow-lg"
+              src={demo}
+              autoPlay
+              controls
+            />
+          </div>
+        </Section>
 
         <Section
           title="Features"
