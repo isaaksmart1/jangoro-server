@@ -16,6 +16,7 @@ import Section from "~/components/layout/section";
 import { ROUTES, useOptionalUser } from "~/utils/utils";
 
 import demo from "~/assets/video/demo.mp4";
+import banner from "~/assets/img/splash.png";
 
 const TryItButton = () => (
   <button className="w-1/4 mt-6 py-2 bg-jgo-secondary text-white rounded-full text-lg hover:bg-blue-700">
@@ -75,6 +76,7 @@ export default function Index() {
             <video
               className="w-[1024px] sm:w-[400px] md:w-[1024px] rounded-xl shadow-lg"
               src={demo}
+              poster={banner}
               autoPlay
               controls
             />
