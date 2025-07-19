@@ -73,13 +73,36 @@ export default function Index() {
           setEmail={setEmail}
         >
           <div className="mx-auto my-8">
-            <video
+            {/* <video
               className="w-[1024px] sm:w-[400px] md:w-[1024px] rounded-xl shadow-lg"
               src={demo}
               poster={banner}
               autoPlay
               controls
-            />
+            /> */}
+            <div
+              style={{
+                position: "relative",
+                boxSizing: "content-box",
+                maxHeight: "80vh",
+                width: "100%",
+                aspectRatio: "2.006269592476489",
+                padding: "40px 0",
+              }}
+            >
+              <iframe
+                src="https://app.supademo.com/embed/cmda2fe4u09am10ormos7bk0l?embed_v=2"
+                loading="lazy"
+                title="How to upload and analyse Survey data in Jangoro"
+                allow="clipboard-write"
+                frameBorder="0"
+                allowFullScreen
+                style={{
+                  width: 1024,
+                  height: "100%",
+                }}
+              ></iframe>
+            </div>
           </div>
         </Section>
 
