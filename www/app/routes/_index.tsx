@@ -91,16 +91,13 @@ export default function Index() {
               }}
             >
               <iframe
+                id="demo-iframe"
                 src="https://app.supademo.com/embed/cmda2fe4u09am10ormos7bk0l?embed_v=2"
                 loading="lazy"
                 title="How to upload and analyse Survey data in Jangoro"
                 allow="clipboard-write"
                 frameBorder="0"
                 allowFullScreen
-                style={{
-                  width: 1024,
-                  height: "100%",
-                }}
               ></iframe>
             </div>
           </div>

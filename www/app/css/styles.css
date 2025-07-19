@@ -72,6 +72,18 @@ html {
   padding-left: 25px;
 }
 
+#demo-iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 1024px;
+}
+
+@media (min-width: 768px) {
+  #demo-iframe {
+    width: 1024px;
+  }
+}
+
 @keyframes borderMove {
   0% {
     background-position: 0% 50%;
