@@ -29,6 +29,45 @@ const PricingTable = () => {
     }
   }
 
+  async function onCTA(type: string) {
+    if (type === "free") {
+      await GACTA(cta.free.action, cta.free.title);
+      window.location.href = cta.free.link;
+    } else if (type === "monthly") {
+      await GACTA(cta.monthly.action, cta.monthly.title);
+      window.location.href = cta.monthly.link;
+    } else if (type === "yearly") {
+      await GACTA(cta.yearly.action, cta.yearly.title);
+      window.location.href = cta.yearly.link;
+    } else if (type === "lifetime") {
+      await GACTA(cta.lifetime.action, cta.lifetime.title);
+      window.location.href = cta.lifetime.link;
+    }
+  }
+
+  const cta = {
+    free: {
+      title: "Free Version",
+      action: "click_free_version",
+      link: ROUTES.free,
+    },
+    monthly: {
+      title: "Get Started $15/mo",
+      action: "click_monthly_purchase",
+      link: `${ROUTES.register}?plan=month`,
+    },
+    yearly: {
+      title: "Get Started $99/yr",
+      action: "click_yearly_purchase",
+      link: `${ROUTES.register}?plan=year`,
+    },
+    lifetime: {
+      title: "Purchase Lifetime Plan",
+      action: "click_lifetime_purchase",
+      link: `${ROUTES.register}?plan=life`,
+    },
+  };
+
   return (
     <section id="pricing" className="py-20 bg-jgo-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +97,7 @@ const PricingTable = () => {
             <Button
               className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
               variant="secondary"
-              onClick={() => GACTA("click_free_version", "Free Version")}
+              onClick={() => onCTA("free")}
             >
               <a href={ROUTES.free}>Enter</a>
             </Button>
@@ -98,10 +137,8 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
-              onClick={() =>
-                GACTA("click_monthly_purchase", "Get Started $15/mo")
-              }
+              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
+              onClick={() => onCTA("monthly")}
             >
               <a href={`${ROUTES.register}?plan=month`}>Get Started</a>
             </Button>
@@ -134,12 +171,9 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-                          className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
-
+              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
               variant="secondary"
-              onClick={() =>
-                GACTA("click_yearly_purchase", "Get Started $99/yr")
-              }
+              onClick={() => onCTA("yearly")}
             >
               <a href={`${ROUTES.register}?plan=year`}>Get Started</a>
             </Button>
@@ -177,11 +211,8 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-            className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
-              
-              onClick={() =>
-                GACTA("click_lifetime_purchase", "Purchase Lifetime Plan")
-              }
+              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
+              onClick={() => onCTA("lifetime")}
             >
               <a href={`${ROUTES.register}?plan=life`}>Purchase</a>
             </Button>
