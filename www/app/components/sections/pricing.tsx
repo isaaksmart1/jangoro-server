@@ -20,27 +20,32 @@ const PricingTable = () => {
     else setSupply(`${count} codes left`);
   }
 
-  function GACTA(eventName: string, label: string) {
+  function GACTA(eventName: string, label: string, url: string) {
     if (window.gtag) {
       window.gtag("event", eventName, {
         event_category: "button",
         event_label: label,
       });
     }
+    if (typeof window.gtag_report_conversion === "function") {
+      window.gtag_report_conversion(url);
+    } else {
+      console.warn("gtag_report_conversion is not defined yet.");
+    }
   }
 
   async function onCTA(type: string) {
     if (type === "free") {
-      await GACTA(cta.free.action, cta.free.title);
+      await GACTA(cta.free.action, cta.free.title, cta.free.link);
       window.location.href = cta.free.link;
     } else if (type === "monthly") {
-      await GACTA(cta.monthly.action, cta.monthly.title);
+      await GACTA(cta.monthly.action, cta.monthly.title, cta.monthly.link);
       window.location.href = cta.monthly.link;
     } else if (type === "yearly") {
-      await GACTA(cta.yearly.action, cta.yearly.title);
+      await GACTA(cta.yearly.action, cta.yearly.title, cta.yearly.link);
       window.location.href = cta.yearly.link;
     } else if (type === "lifetime") {
-      await GACTA(cta.lifetime.action, cta.lifetime.title);
+      await GACTA(cta.lifetime.action, cta.lifetime.title, cta.lifetime.link);
       window.location.href = cta.lifetime.link;
     }
   }

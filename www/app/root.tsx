@@ -73,6 +73,27 @@ export default function App() {
             `,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-428437575/a1LWCIPV7_AaEMfgpcwB',
+                    'value': 1.0,
+                    'currency': 'GBP',
+                    'transaction_id': '',
+                    'event_callback': callback
+                });
+                return false;
+              }
+          `,
+          }}
+        ></script>
         {/* <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-K727R6YZS5"
