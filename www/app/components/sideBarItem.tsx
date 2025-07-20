@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Legal } from "./sidebar/legal";
-import { Company } from "./sidebar/company";
-import { Docs } from "./sidebar/docs";
+
+import { Company } from "./navigation/sidebar/company";
+import { Docs } from "./navigation/sidebar/docs";
+import { Legal } from "./navigation/sidebar/legal";
 
 export const SideBarItem = ({ title }) => {
   const [isExpanded, setExpand] = useState(false);
@@ -36,7 +37,7 @@ export const SideBarItem = ({ title }) => {
         </svg>
         <p className="ml-3">{title}</p>
       </button>
-      {isExpanded && menuItem}
+      {isExpanded ? menuItem : null}
     </div>
   );
 };

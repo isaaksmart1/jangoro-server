@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 
 import "~/css/styles.css";
 import spreadsheet from "~/assets/img/spreadsheet.jpg";
-import FAQ from "~/components/artifacts/faq";
-import { AIChatCard } from "~/components/artifacts/features";
-import PricingTable from "~/components/artifacts/pricing";
-import { Socials } from "~/components/artifacts/socials";
+import FAQ from "~/components/sections/faq";
+import { AIChatCard } from "~/components/sections/features";
+import PricingTable from "~/components/sections/pricing";
+import { Socials } from "~/components/sections/socials";
 import Cookies from "~/components/layout/cookies";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
@@ -148,8 +148,8 @@ export default function Index() {
           </div>
         </Section>
         <Section
-          title="Pricing"
-          description=""
+          title="Choose Your Plan"
+          description="Scale with confidence. Upgrade or downgrade at any time."
           emailRef={emailRef}
           email={email}
           setEmail={setEmail}
