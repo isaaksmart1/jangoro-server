@@ -122,7 +122,7 @@ export default function Index() {
                   in-built AI chatbot to summarise responses, extract key
                   insights, and analyze sentiment.
                 </p>
-                <TryItButton />
+                {/* <TryItButton /> */}
               </div>
             </div>
             <div className="flex flow-row flex-wrap justify-center m-2">
@@ -135,7 +135,7 @@ export default function Index() {
                   bulk, or to analyze user reviews, just upload your data as
                   CSV, then Jangoro will quickly give you the results.
                 </p>
-                <TryItButton />
+                {/* <TryItButton /> */}
               </div>
               <img
                 className="m-5 rounded-2xl"

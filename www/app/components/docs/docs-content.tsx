@@ -150,7 +150,10 @@ export default function DocsContent() {
               <li>
                 Click <strong>Forgot Password?</strong> on the login page
               </li>
-              <li>Enter your email and submit the request</li>
+              <li>
+                Alternatively you can send a password reset request to
+                team.jangoro@gmail.com
+              </li>
               <li>
                 Check your email for a reset link and follow the instructions
               </li>
