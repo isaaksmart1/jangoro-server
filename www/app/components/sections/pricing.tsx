@@ -109,9 +109,9 @@ const PricingTable = () => {
           </div>
 
           {/* Monthly Plan */}
-          <div className="bg-white p-8 rounded-xl shadow-lg border-2 border-primary relative">
+          <div className="bg-white p-8 rounded-xl shadow-lg border-4 border-jgo-secondary relative">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <span className="bg-jgo-primary text-white px-4 py-1 rounded-full text-sm font-medium">
+              <span className="bg-jgo-secondary text-white px-4 py-1 rounded-full text-sm font-medium">
                 Most Popular
               </span>
             </div>
