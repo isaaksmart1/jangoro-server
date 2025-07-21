@@ -76,7 +76,7 @@ const PricingTable = () => {
   return (
     <section id="pricing" className="py-20 bg-jgo-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Free Plan */}
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Basic</h3>
@@ -185,7 +185,7 @@ const PricingTable = () => {
           </div>
 
           {/* Lifetime Plan */}
-          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+          {/* <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
               Lifetime
             </h3>
@@ -221,7 +221,7 @@ const PricingTable = () => {
             >
               <a href={`${ROUTES.register}?plan=life`}>Purchase</a>
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
