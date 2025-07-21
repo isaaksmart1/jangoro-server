@@ -152,7 +152,7 @@ export default function DocsContent() {
               </li>
               <li>
                 Alternatively you can send a password reset request to
-                team.jangoro@gmail.com
+                team@jangoro.com
               </li>
               <li>
                 Check your email for a reset link and follow the instructions
@@ -364,10 +364,10 @@ export default function DocsContent() {
                   <div>
                     <p className="font-medium text-slate-900">Email Support</p>
                     <a
-                      href="mailto:team.jangoro@gmail.com"
+                      href="mailto:team@jangoro.com"
                       className="text-blue-500 hover:text-blue-700"
                     >
-                      team.jangoro@gmail.com
+                      team@jangoro.com
                     </a>
                   </div>
                 </div>
