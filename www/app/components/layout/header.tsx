@@ -218,6 +218,19 @@ export default function Header({ user }) {
                   <SideBarItem title="Company" />
                   <SideBarItem title="Legal" />
                   <SideBarItem title="Docs" />
+                  <div className="relative">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-start rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-gray hover:bg-gray-50"
+                      aria-expanded="false"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        scrollToSection("pricing");
+                      }}
+                    >
+                      Pricing
+                    </button>
+                  </div>
                 </div>
                 <div className="py-6">
                   <a

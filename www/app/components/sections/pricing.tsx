@@ -100,11 +100,11 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
+              className="w-full mt-6 py-2 bg-[#f5f5f4] text-black rounded-lg text-lg hover:bg-[#f1f1f1]"
               variant="secondary"
               onClick={() => onCTA("free")}
             >
-              <a href={ROUTES.free}>Enter</a>
+              <a href={ROUTES.free}>Get Started</a>
             </Button>
           </div>
 
@@ -145,7 +145,7 @@ const PricingTable = () => {
               className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
               onClick={() => onCTA("monthly")}
             >
-              <a href={`${ROUTES.register}?plan=month`}>Get Started</a>
+              <a href={`${ROUTES.register}?plan=month`}>Start Free Trial</a>
             </Button>
           </div>
 
@@ -176,11 +176,11 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
+              className="w-full mt-6 py-2 bg-[#f5f5f4] text-black rounded-lg text-lg hover:bg-[#f1f1f1]"
               variant="secondary"
               onClick={() => onCTA("yearly")}
             >
-              <a href={`${ROUTES.register}?plan=year`}>Get Started</a>
+              <a href={`${ROUTES.register}?plan=year`}>Start Free Trial</a>
             </Button>
           </div>
 
@@ -216,7 +216,7 @@ const PricingTable = () => {
               </li>
             </ul>
             <Button
-              className="w-full mt-6 py-2 bg-jgo-secondary text-white rounded-lg text-lg hover:bg-blue-700"
+              className="w-full mt-6 py-2 bg-[#f5f5f4] text-black rounded-lg text-lg hover:bg-[#f1f1f1]"
               onClick={() => onCTA("lifetime")}
             >
               <a href={`${ROUTES.register}?plan=life`}>Purchase</a>
