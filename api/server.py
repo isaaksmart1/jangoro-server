@@ -5,6 +5,7 @@ import csv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -60,6 +61,8 @@ def truncate_sentence(text):
 
 
 def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5):
+    id = request.form.get("id")
+    email = request.form.get("email")
     files = request.files.to_dict()
     if not files:
         return jsonify({"error": "No files uploaded."}), 400
@@ -82,6 +85,11 @@ def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5
             results.append({list(files.keys())[i]: truncate_sentence(response)})
         except RuntimeError as e:
             return jsonify({"error": str(e)}), 500
+
+    try: 
+        response = requests.post('https://api.jangoro.com/ai-queries/', json={"userId": id, "email": email})
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Request failed: {str(e)}"}), 500 
 
     return jsonify({process_type: results})
 

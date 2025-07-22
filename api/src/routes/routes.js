@@ -22,6 +22,8 @@ const {
   getRandomRedemptionCode,
   countActiveRedemptions,
 } = require("../services/auxilary.service");
+const { postAIQueries, getAIQueries } = require("../services/data.service");
+
 var routes = express();
 
 routes.get("/", defaultRoute);
@@ -58,6 +60,10 @@ routes.get("/get-transactions", getTransactions);
 routes.get("/user/redeem/get", getRedeemCode);
 routes.get("/redeem/total", countRedemptions);
 routes.post("/user/redeem", redeemCode);
+
+// Data API
+routes.get("/ai-queries/:userId", getAIQuery);
+routes.post("/ai-queries", postAIQuery);
 
 function defaultRoute(req, res) {
   const dt = new Date();
@@ -321,6 +327,28 @@ function getRedeemCode(req, res) {
     .catch((err) => {
       const status = err.statusCode || 400;
       res.status(status).send(err);
+    });
+}
+
+function postAIQuery(req, res) {
+  const { userId, email } = req.body;
+  postAIQueries(userId, email)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+}
+
+function getAIQuery(req, res) {
+  const { userId } = req.params;
+  getAIQueries(userId)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
     });
 }
 

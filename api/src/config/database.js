@@ -29,10 +29,16 @@ const dynamodb = new AWS.DynamoDB(ddbOptions);
 const documentClient = new AWS.DynamoDB.DocumentClient(ddbOptions);
 
 // const usersTable = "idfy-db-users-test";
-const usersTable = (DEVELOPMENT || USE_DEV_DB) ? "jgo-db-users-dev" : "jgo-db-users-prod";
-const redemptionTable = (DEVELOPMENT || USE_DEV_DB)
-  ? "jgo-db-redemptions-dev"
-  : "jgo-db-redemptions-prod";
+const usersTable =
+  DEVELOPMENT || USE_DEV_DB ? "jgo-db-users-dev" : "jgo-db-users-prod";
+const redemptionTable =
+  DEVELOPMENT || USE_DEV_DB
+    ? "jgo-db-redemptions-dev"
+    : "jgo-db-redemptions-prod";
+const aiQueriesTable =
+  DEVELOPMENT || USE_DEV_DB
+    ? "jgo-db-ai-queries-dev"
+    : "jgo-db-ai-queries-prod";
 
 function hash(password) {
   return bcrypt.hashSync(password, 10);
@@ -58,6 +64,7 @@ const userSchema = (id, data) => {
 module.exports = {
   usersTable,
   redemptionTable,
+  aiQueriesTable,
   s3,
   dynamodb,
   documentClient,
