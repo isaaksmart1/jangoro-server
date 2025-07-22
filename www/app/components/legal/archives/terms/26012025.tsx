@@ -4,6 +4,7 @@ export default function Terms() {
       <p className="text-md font-semibold italic my-2">
         Effective date: 26/01/2025
       </p>
+
       <p className="text-2xl my-4">1. Acceptance of Terms</p>
       <p className="text-md my-2">
         Welcome to Jangoro, a platform provided by Jangoro Ltd ("We," "Us,"
@@ -12,12 +13,14 @@ export default function Terms() {
         by these terms and conditions ("Terms"). If you do not agree to these
         Terms, please discontinue using Jangoro.
       </p>
+
       <p className="text-2xl my-4">2. Privacy Policy Integration</p>
       <p className="text-md my-2">
         These Terms are an integral part of the Jangoro Privacy Policy, which
         outlines how we collect, process, and safeguard your data. By accepting
         these Terms, you also agree to our Privacy Policy.
       </p>
+
       <p className="text-2xl my-4">3. User Responsibilities</p>
       <p className="text-md my-2">
         As a User ("You"), you are responsible for ensuring the accuracy and
@@ -32,6 +35,7 @@ export default function Terms() {
         and CCPA. You may not use Jangoro for any unlawful or unauthorized
         purpose.
       </p>
+
       <p className="text-2xl my-4">4. Ownership and Intellectual Property</p>
       <p className="text-md my-2">
         You retain ownership of the data you upload to Jangoro. By using our
@@ -44,6 +48,7 @@ export default function Terms() {
         used to analyze survey data. You may not copy, reverse-engineer, or
         reproduce any part of our platform without our express permission.
       </p>
+
       <p className="text-2xl my-4">5. Data Sharing and Compliance</p>
       <p className="text-md my-2">
         Jangoro may share data to comply with legal requirements or requests
@@ -51,6 +56,7 @@ export default function Terms() {
         suspected illegal activities. We do not share user data with third
         parties without explicit consent, except as required by law.
       </p>
+
       <p className="text-2xl my-4">6. Anonymity and Confidentiality</p>
       <p className="text-md my-2">
         Jangoro prioritizes data anonymity to protect survey participants'
@@ -58,6 +64,7 @@ export default function Terms() {
         when explicitly necessary and within the context of agreed-upon data
         analysis terms.
       </p>
+
       <p className="text-2xl my-4">7. Data Security</p>
       <p className="text-md my-2">
         We implement industry-standard security measures to safeguard your data
@@ -65,6 +72,7 @@ export default function Terms() {
         are encouraged to follow best practices for data security, such as using
         strong passwords and protecting sensitive information.
       </p>
+
       <p className="text-2xl my-4">8. User Choices and Rights</p>
       <p className="text-md my-2">
         Users can review, modify, or delete uploaded data and personal
@@ -72,6 +80,7 @@ export default function Terms() {
         Jangoro ensures compliance with the General Data Protection Regulation
         (GDPR) and similar laws.
       </p>
+
       <p className="text-2xl my-4">9. Limitation of Liability</p>
       <p className="text-md my-2">
         Jangoro is not responsible for inaccuracies or errors in the data
@@ -82,19 +91,15 @@ export default function Terms() {
         Jangoro is also not liable for any damages resulting from the misuse of
         data or insights generated through our platform.
       </p>
-      <p className="text-md my-2">
-        We reserve the right to modify, suspend, or discontinue any part of the
-        Service at any time without liability.
-      </p>
+
       <p className="text-2xl my-4">10. Contact Information</p>
       <p className="text-md my-2">
         For questions, concerns, or support regarding these Terms or our Privacy
         Policy, please contact us at{" "}
-        <a href="mailto:team@jangoro.com" className="text-blue-500">
-          team@jangoro.com
-        </a>
-        . We are committed to assisting you promptly.
+        <a href="mailto:team@jangoro.com" className="text-blue-500">team@jangoro.com</a>. We are
+        committed to assisting you promptly.
       </p>
+
       <p className="text-2xl my-4">11. Updates to Terms and Privacy Policy</p>
       <p className="text-md my-2">
         We may update these Terms and our Privacy Policy to reflect changes in
@@ -102,6 +107,7 @@ export default function Terms() {
         date at the top of this policy. Users are encouraged to review these
         terms periodically.
       </p>
+
       <p className="text-2xl my-4">12. Conclusion</p>
       <p className="text-md my-2">
         By using Jangoro, you agree to these Terms and our Privacy Policy. Thank
