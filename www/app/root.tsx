@@ -83,46 +83,19 @@ export default function App() {
                 }
               };
               gtag('event', 'conversion', {
-                  'send_to': 'AW-428437575/XwYeCJeKlfkaEMfgpcwB',
+                  'send_to': 'AW-428437575/IqMhCJ2KlfkaEMfgpcwB',
                   'value': 1.0,
                   'currency': 'GBP',
                   'event_callback': callback
               });
-              return false;
-            }
-          `,
-          }}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            function gtag_report_conversion(url) {
-              var callback = function () {
-                if (typeof(url) != 'undefined') {
-                  window.location = url;
-                }
-              };
               gtag('event', 'conversion', {
                   'send_to': 'AW-428437575/UkRSCJqKlfkaEMfgpcwB',
                   'value': 1.0,
                   'currency': 'GBP',
                   'event_callback': callback
               });
-              return false;
-            }`,
-          }}
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            function gtag_report_conversion(url) {
-              var callback = function () {
-                if (typeof(url) != 'undefined') {
-                  window.location = url;
-                }
-              };
               gtag('event', 'conversion', {
-                  'send_to': 'AW-428437575/IqMhCJ2KlfkaEMfgpcwB',
+                  'send_to': 'AW-428437575/XwYeCJeKlfkaEMfgpcwB',
                   'value': 1.0,
                   'currency': 'GBP',
                   'event_callback': callback
