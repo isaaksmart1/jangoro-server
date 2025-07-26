@@ -20,7 +20,7 @@ const PricingTable = () => {
     else setSupply(`${count} codes left`);
   }
 
-  function GACTA(eventName: string, label: string, url: string) {
+  function GACTA(eventName: string, label: string, url: string, type: string) {
     if (window.gtag) {
       window.gtag("event", eventName, {
         event_category: "button",
@@ -28,7 +28,9 @@ const PricingTable = () => {
       });
     }
     if (typeof window.gtag_report_conversion === "function") {
-      window.gtag_report_conversion(url);
+      if (type === "free") window.gtag_report_conversion_free(url);
+      else if (type === "monthly") window.gtag_report_conversion_month(url);
+      else if (type === "yearly") window.gtag_report_conversion_year(url);
     } else {
       console.warn("gtag_report_conversion is not defined yet.");
     }
@@ -36,16 +38,26 @@ const PricingTable = () => {
 
   async function onCTA(type: string) {
     if (type === "free") {
-      await GACTA(cta.free.action, cta.free.title, cta.free.link);
+      await GACTA(cta.free.action, cta.free.title, cta.free.link, type);
       window.location.href = cta.free.link;
     } else if (type === "monthly") {
-      await GACTA(cta.monthly.action, cta.monthly.title, cta.monthly.link);
+      await GACTA(
+        cta.monthly.action,
+        cta.monthly.title,
+        cta.monthly.link,
+        type,
+      );
       window.location.href = cta.monthly.link;
     } else if (type === "yearly") {
-      await GACTA(cta.yearly.action, cta.yearly.title, cta.yearly.link);
+      await GACTA(cta.yearly.action, cta.yearly.title, cta.yearly.link, type);
       window.location.href = cta.yearly.link;
     } else if (type === "lifetime") {
-      await GACTA(cta.lifetime.action, cta.lifetime.title, cta.lifetime.link);
+      await GACTA(
+        cta.lifetime.action,
+        cta.lifetime.title,
+        cta.lifetime.link,
+        type,
+      );
       window.location.href = cta.lifetime.link;
     }
   }

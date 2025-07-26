@@ -76,7 +76,46 @@ export default function App() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            function gtag_report_conversion(url) {
+            function gtag_report_conversion_free(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-428437575/XwYeCJeKlfkaEMfgpcwB',
+                  'value': 1.0,
+                  'currency': 'GBP',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `,
+          }}
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            function gtag_report_conversion_month(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-428437575/UkRSCJqKlfkaEMfgpcwB',
+                  'value': 1.0,
+                  'currency': 'GBP',
+                  'event_callback': callback
+              });
+              return false;
+            }`,
+          }}
+        ></script>
+                <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            function gtag_report_conversion_year(url) {
               var callback = function () {
                 if (typeof(url) != 'undefined') {
                   window.location = url;
@@ -84,18 +123,6 @@ export default function App() {
               };
               gtag('event', 'conversion', {
                   'send_to': 'AW-428437575/IqMhCJ2KlfkaEMfgpcwB',
-                  'value': 1.0,
-                  'currency': 'GBP',
-                  'event_callback': callback
-              });
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-428437575/UkRSCJqKlfkaEMfgpcwB',
-                  'value': 1.0,
-                  'currency': 'GBP',
-                  'event_callback': callback
-              });
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-428437575/XwYeCJeKlfkaEMfgpcwB',
                   'value': 1.0,
                   'currency': 'GBP',
                   'event_callback': callback
