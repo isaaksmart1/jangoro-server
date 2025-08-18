@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Company } from "./navigation/menu/company";
 import { Docs } from "./navigation/menu/docs";
 import { Legal } from "./navigation/menu/legal";
+import { Guides } from "./navigation/menu/guides";
 
 export const MenuItem = ({ content }) => {
   const [menuItem, setMenuItem] = useState(<></>);
@@ -11,6 +12,7 @@ export const MenuItem = ({ content }) => {
     if (content === "legal") setMenuItem(<Legal />);
     else if (content === "company") setMenuItem(<Company />);
     else if (content === "docs") setMenuItem(<Docs />);
+    else if (content === "guides") setMenuItem(<Guides />);
   }, []);
 
   return (

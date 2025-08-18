@@ -26,10 +26,16 @@ const { postAIQueries, getAIQueries } = require("../services/data.service");
 
 var routes = express();
 
+// Import guides routes
+const guidesRoutes = require("./guides");
+
 routes.get("/", defaultRoute);
 routes.get("/index", healthCheck);
 routes.post("/login", login);
 routes.post("/register", register);
+
+// Guides API
+routes.use("/api", guidesRoutes);
 
 // Accounts API
 routes.post("/user/reset-password/:token", resetPassword);

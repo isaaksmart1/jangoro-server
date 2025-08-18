@@ -27,6 +27,7 @@ const LINKS = {
   notes: "notes",
   company: "company",
   docs: "docs",
+  guides: "guides",
   demo: "demo",
   help: "help",
 };
@@ -53,6 +54,7 @@ export const ROUTES = {
   notes: `/${LINKS.notes}`,
   company: `/${LINKS.company}`,
   docs: `/${LINKS.docs}`,
+  guides: `/${LINKS.guides}`,
 };
 
 /**
