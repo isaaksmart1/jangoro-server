@@ -5,6 +5,7 @@ This directory contains downloadable PDF guides and e-books for visitors.
 ## Current Guides Available:
 
 1. **survey-mistakes-guide.pdf** - 5 Common Survey Mistakes SMEs Make
+2. **feedback-fortune-guide.pdf** - The SME Customer Feedback Playbook
 
 ## How It Works:
 1. **Email Capture**: Visitors provide their email address
