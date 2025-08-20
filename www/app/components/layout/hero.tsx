@@ -12,13 +12,13 @@ export default function Hero() {
         <div className="relative w-full">
           <div className="w-full md:w-1/2 my-8">
             <h1 className="block text-jgo-accent drop-shadow-md text-left text-4xl">
-              Unlock Insights in Seconds.
+              Turn Survey Data Into Decisions That Drive Growth
             </h1>
             <br />
             <p className="block text-white drop-shadow-md text-left text-xl">
-              Transform customer survey data into actionable results with our
-              powerful analysis tool—fast, accurate, and effortless. Know what
-              matters most, instantly.
+              Unlock insights in minutes with our fast, accurate, and effortless
+              analysis tool. Discover what truly matters to your customers —
+              instantly.
             </p>
           </div>
 
