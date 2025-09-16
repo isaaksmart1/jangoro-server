@@ -1,7 +1,16 @@
 import { ROUTES } from "~/utils/utils";
+import { setCookieConsent } from "~/utils/cookieConsent";
 
-export default function Cookies({ isAcceptCookies, setIsAcceptCookies }) {
+interface CookiesProps {
+  isAcceptCookies: boolean;
+  setIsAcceptCookies: (accepted: boolean) => void;
+}
+
+export default function Cookies({ isAcceptCookies, setIsAcceptCookies }: CookiesProps) {
   const acceptCookies = () => {
+    // Persist the consent in localStorage
+    setCookieConsent(true);
+    // Update the local state
     setIsAcceptCookies(true);
   };
 

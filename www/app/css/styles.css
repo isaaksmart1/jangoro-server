@@ -33,6 +33,7 @@ html {
   margin-left: auto;
   margin-right: auto;
   position: relative;
+  background: linear-gradient(135deg, #4d195c 0%, rgba(59, 193, 246, 0.1) 100%);
 }
 
 .section {
@@ -55,6 +56,10 @@ html {
 
 .section-custom-styles {
   opacity: 1;
+}
+
+.section-accent {
+  background-color: #3b1446;
 }
 
 /* sections */
@@ -99,4 +104,12 @@ html {
 .animate-border-move {
   background-size: 200% 200%;
   animation: borderMove 2s linear infinite;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .hero-container {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
 }

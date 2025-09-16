@@ -1,6 +1,6 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import "~/css/styles.css";
 import spreadsheet from "~/assets/img/spreadsheet.jpg";
@@ -14,6 +14,7 @@ import Header from "~/components/layout/header";
 import Hero from "~/components/layout/hero";
 import Section from "~/components/layout/section";
 import { ROUTES, useOptionalUser } from "~/utils/utils";
+import { initializeCookieConsent } from "~/utils/cookieConsent";
 
 import demo from "~/assets/video/demo.mp4";
 import banner from "~/assets/img/splash.png";
@@ -54,9 +55,16 @@ export default function Index() {
   const [isAcceptCookies, setIsAcceptCookies] = useState(false);
   const [email, setEmail] = useState(emailRef.current);
 
+  // Initialize cookie consent on component mount
+  useEffect(() => {
+    const hasAccepted = initializeCookieConsent();
+    setIsAcceptCookies(hasAccepted);
+  }, []);
+
   return (
-    <main className="relative bg-jgo-primary w-full sm:flex sm:items-center sm:justify-center">
-      <div className="relative w-full">
+    <main className="relative bg-jgo-primary w-full sm:flex sm:items-center sm:justify-center min-h-screen">
+
+      <div className="relative w-full z-10">
         <Header user={user} />
         <Hero
           user={user}
@@ -68,9 +76,6 @@ export default function Index() {
         <Section
           title="See it in Action"
           description="Play the video and get a feel for how our platform works"
-          emailRef={emailRef}
-          email={email}
-          setEmail={setEmail}
         >
           <div className="mx-auto my-8">
             {/* <video
@@ -106,9 +111,7 @@ export default function Index() {
         <Section
           title="Features"
           description="No more handling survey responses one at a time"
-          emailRef={emailRef}
-          email={email}
-          setEmail={setEmail}
+          customCSSStyles="section-accent"
         >
           <div className="flex flex-col justify-center mx-auto">
             <div className="flex flow-row flex-wrap justify-center m-2">
@@ -150,18 +153,13 @@ export default function Index() {
         <Section
           title="Choose Your Plan"
           description="Scale with confidence. Upgrade or downgrade at any time."
-          emailRef={emailRef}
-          email={email}
-          setEmail={setEmail}
         >
           <PricingTable />
         </Section>
         <Section
           title="Frequently Asked Questions"
           description=""
-          emailRef={emailRef}
-          email={email}
-          setEmail={setEmail}
+          customCSSStyles="section-accent"
         >
           <FAQ />
         </Section>
@@ -169,9 +167,6 @@ export default function Index() {
           title="Join our growing community"
           description=""
           backgroundColor="transparent"
-          emailRef={emailRef}
-          email={email}
-          setEmail={setEmail}
           customVerticalPadding="pt-0 pb-16"
         >
           <Socials />
