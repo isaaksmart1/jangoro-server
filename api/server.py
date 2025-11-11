@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "sk-proj-wByn21XgxyR6cGFy1FGJT3BlbkFJT7lRyYFFlKbnOKUl8mom"
+    "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"
 )
 
 
@@ -98,7 +98,7 @@ def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5
 def analyze_bulk_refinement():
     return analyze_feedback(
         "refinement",
-        "You are an expert at creating sophisticated surveys from the given input: {}. Build me a complete survey.",
+        "You are an expert at creating sophisticated surveys from the given input: {}. Build me a complete survey in markdown format.",
         max_tokens=2048,
     )
 
