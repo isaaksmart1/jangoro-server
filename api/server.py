@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -122,6 +123,43 @@ def analyze_action_plan():
         "actionPlan", "Provide a strategic business action plan for the given text: {}."
     )
 
+
+@app.route("/analyze-engagement", methods=["POST"])
+def analyze_engagement():
+    if 'file' in request.files:
+        uploaded_file = request.files['file']
+
+    if not request.files:
+        return jsonify({"error": "No files uploaded."}), 400
+
+    if len(request.files) > 1:
+        return jsonify({"error": "Please upload only one file for engagement analysis."}), 400
+
+    file = next(iter(request.files.values()))
+    file.stream.seek(0)
+    try:
+        # Use DictReader to handle headers automatically
+        reader = csv.reader(file.stream.read().decode("utf-8-sig").splitlines())
+        rows = list(reader)
+    except Exception as e:
+        return jsonify({"error": f"Failed to parse CSV: {e}"}), 400
+
+    if len(rows) <= 1: # Header only or empty
+        return jsonify({"error": "CSV file is empty."}), 400
+
+    header = rows[0]
+    data_rows = rows[1:]
+    total_surveys = len(data_rows)
+    completed_surveys = 0
+
+    for row in data_rows:
+        # A survey is considered completed if all its cells have non-empty values.
+        if all(cell.strip() for cell in row):
+            completed_surveys += 1
+
+    completion_rate = (completed_surveys / total_surveys) * 100 if total_surveys > 0 else 0
+
+    return jsonify({"engagement": {"completionRate": completion_rate, "totalSurveys": total_surveys, "completedSurveys": completed_surveys}})
 
 @app.route("/analyze-query", methods=["POST"])
 def analyze_ai_query():
