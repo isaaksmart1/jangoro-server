@@ -9,7 +9,6 @@ const {
 } = require("@aws-sdk/lib-dynamodb");
 const { v4: uuidv4 } = require("uuid");
 const dayjs = require("dayjs");
-const { socialTokensTable, schedulePostsTable } = require("../config/database");
 
 const {
   INSTAGRAM_CLIENT_ID,
@@ -29,6 +28,8 @@ const {
 // Initialize DynamoDB client
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
+
+const { schedulePostsTable, socialTokensTable } = require("../config/database");
 
 // Table names - configure these via environment variables
 const SOCIAL_TOKENS_TABLE = socialTokensTable;
@@ -80,6 +81,7 @@ const PLATFORM_CONFIG = {
     redirectUri: LINKEDIN_REDIRECT_URI,
     authUrl: "https://www.linkedin.com/oauth/v2/authorization",
     tokenUrl: "https://www.linkedin.com/oauth/v2/accessToken",
+    scope: "profile email w_member_social",
   },
   tiktok: {
     clientId: TIKTOK_CLIENT_ID,
@@ -101,7 +103,7 @@ const socialService = {
       client_id: cfg.clientId,
       redirect_uri: cfg.redirectUri,
       state,
-      scope: cfg.scope || "r_liteprofile%20r_emailaddress%20w_member_social",
+      scope: cfg.scope || "profile email",
     });
     return `${cfg.authUrl}?${params.toString()}`;
   },
