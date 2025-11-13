@@ -18,7 +18,6 @@ router.get("/:platform/status", (req, res) => {
   let userConnections = fs.readFileSync("./database/socialConnections.json");
   userConnections = JSON.parse(userConnections);
   const idx = userConnections.indexOf(platform);
-  console.log(idx);
   if (idx > -1) {
     res.json({ connected: true });
   } else {

@@ -10,7 +10,6 @@ async function oauthRedirectHandler(req, res) {
   let userConnections = fs.readFileSync("./database/socialConnections.json");
   userConnections = JSON.parse(userConnections);
   userConnections.push(platform);
-  console.log(userConnections);
   fs.writeFileSync(
     "./database/socialConnections.json",
     JSON.stringify(userConnections)
