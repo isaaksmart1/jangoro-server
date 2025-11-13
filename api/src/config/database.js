@@ -39,6 +39,12 @@ const aiQueriesTable =
   DEVELOPMENT || USE_DEV_DB
     ? "jgo-db-ai-queries-dev"
     : "jgo-db-ai-queries-prod";
+const schedulePostsTable =
+  DEVELOPMENT || USE_DEV_DB ? "jgo-db-scheduled-dev" : "jgo-db-scheduled-prod";
+const socialTokensTable =
+  DEVELOPMENT || USE_DEV_DB
+    ? "jgo-db-social-tokens-dev"
+    : "jgo-db-social-tokens-prod";
 
 function hash(password) {
   return bcrypt.hashSync(password, 10);
@@ -65,6 +71,8 @@ module.exports = {
   usersTable,
   redemptionTable,
   aiQueriesTable,
+  socialTokensTable,
+  schedulePostsTable,
   s3,
   dynamodb,
   documentClient,
