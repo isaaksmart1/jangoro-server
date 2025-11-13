@@ -1,4 +1,5 @@
 const socialService = require("../services/social.service");
+const fs = require("fs");
 
 /**
  * Redirects the client to a provider-specific OAuth URL;
@@ -6,6 +7,15 @@ const socialService = require("../services/social.service");
  */
 async function oauthRedirectHandler(req, res) {
   const platform = req.params.platform;
+  let userConnections = fs.readFileSync("./database/socialConnections.json");
+  userConnections = JSON.parse(userConnections);
+  userConnections.push(platform);
+  console.log(userConnections);
+  fs.writeFileSync(
+    "./database/socialConnections.json",
+    JSON.stringify(userConnections)
+  );
+
   try {
     const url = socialService.buildOAuthRedirect(platform);
     if (!url) return res.status(400).json({ error: "Unsupported platform" });

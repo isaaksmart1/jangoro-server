@@ -8,23 +8,25 @@ const {
   createScheduledPostHandler,
   listScheduledPostsHandler,
 } = require("../controllers/socialController");
+const fs = require("fs");
 
 const router = express.Router();
 const upload = multer({ limits: { fileSize: 20 * 1024 * 1024 } }); // 20MB
-const userConnections = new Set();
 
 router.get("/:platform/status", (req, res) => {
   const { platform } = req.params;
-  const connected = userConnections.has(platform);
-  res.json({ connected });
+  let userConnections = fs.readFileSync("./database/socialConnections.json");
+  userConnections = JSON.parse(userConnections);
+  const idx = userConnections.indexOf(platform);
+  console.log(idx);
+  if (idx > -1) {
+    res.json({ connected: true });
+  } else {
+    res.json({ connected: false });
+  }
 });
 
-// Build provider OAuth redirect and send user
-router.get("/:platform/oauth/redirect", async () => {
-  const { platform } = req.params;
-  await oauthRedirectHandler;
-  userConnections.add(platform);
-});
+router.get("/:platform/oauth/redirect", oauthRedirectHandler);
 
 // Exchange code for tokens (server-side)
 router.post("/:platform/oauth/exchange", oauthExchangeHandler);
