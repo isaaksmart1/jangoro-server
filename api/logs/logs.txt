@@ -1,1 +1,1 @@
-{"logGroupName":"/aws/jgo/log","logStreamName":"accounts","logEvents":[{"message":"{\"code\":\"NetworkingError\",\"message\":null,\"region\":\"eu-west-2\",\"hostname\":\"localhost\",\"retryable\":true,\"time\":\"2025-11-13T09:30:39.149Z\"}","timestamp":1763026239149}]}
+{"logGroupName":"/aws/jgo/log","logStreamName":"accounts","logEvents":[{"message":"{\"code\":\"NetworkingError\",\"message\":null,\"region\":\"eu-west-2\",\"hostname\":\"localhost\",\"retryable\":true,\"time\":\"2025-11-13T16:15:08.649Z\"}","timestamp":1763050508650}]}
