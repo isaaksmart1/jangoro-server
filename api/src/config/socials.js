@@ -16,8 +16,8 @@ const FACEBOOK_CLIENT_SECRET = "your_facebook_app_secret_here";
 const FACEBOOK_REDIRECT_URI = "http://localhost:4173/auth/facebook/callback";
 
 // # LinkedIn OAuth
-const LINKEDIN_CLIENT_ID = "784emjw21fm3ry";
-const LINKEDIN_CLIENT_SECRET = "WPL_AP1.nAfo1B0QRW7sZaB0.HLE1Mg==";
+const LINKEDIN_CLIENT_ID = "78jbume9qcbc12";
+const LINKEDIN_CLIENT_SECRET = "WPL_AP1.iWxQThop5GxuxmxV.kNZ1Vw==";
 const LINKEDIN_REDIRECT_URI = "https://app.jangoro.com/social/linkedin";
 
 // # TikTok OAuth

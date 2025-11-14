@@ -81,7 +81,7 @@ const PLATFORM_CONFIG = {
     redirectUri: LINKEDIN_REDIRECT_URI,
     authUrl: "https://www.linkedin.com/oauth/v2/authorization",
     tokenUrl: "https://www.linkedin.com/oauth/v2/accessToken",
-    scope: "profile email w_member_social",
+    scope: "openid profile email w_member_social",
   },
   tiktok: {
     clientId: TIKTOK_CLIENT_ID,
@@ -108,7 +108,7 @@ const socialService = {
     return `${cfg.authUrl}?${params.toString()}`;
   },
 
-  async exchangeCodeAndSave(platform, { code, userId }) {
+  async exchangeCodeAndSave(platform, { code, state, userId }) {
     const cfg = PLATFORM_CONFIG[platform];
     if (!cfg) throw new Error("Unsupported platform");
 
@@ -121,14 +121,22 @@ const socialService = {
       code,
     });
 
+    console.log(cfg);
+
     const res = await fetch(cfg.tokenUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        Accept: "*/*",
+        Connection: "keep-alive",
+      },
       body: params.toString(),
     });
 
     if (!res.ok) {
       const text = await res.text();
+      console.log("Token exchange failed:", text);
       throw new Error("Token exchange failed: " + text);
     }
 
