@@ -7,7 +7,7 @@ const router = express.Router();
 // Function to save email to CSV
 const saveEmailToCSV = (email, guideId, timestamp) => {
   const csvLine = `${email},${guideId},${timestamp}\n`;
-  const csvPath = path.join(__dirname, "../data/guide-downloads.csv");
+  const csvPath = path.join(__dirname, "../csv/guide-downloads.csv");
 
   try {
     // Create data directory if it doesn't exist

@@ -27,6 +27,7 @@ const { postAIQueries, getAIQueries } = require("../services/data.service");
 var routes = express();
 
 // Import routes
+const mailingRoutes = require("./mailing");
 const guidesRoutes = require("./guides");
 const socialRoutes = require("./social");
 
@@ -38,6 +39,7 @@ routes.post("/register", register);
 // Routes API
 routes.use("/api", guidesRoutes);
 routes.use("/api/social", socialRoutes);
+routes.use("/api/subscribe", mailingRoutes);
 
 // Accounts API
 routes.post("/user/reset-password/:token", resetPassword);
