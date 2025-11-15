@@ -207,12 +207,23 @@ export default function EbookPage() {
           {/* RIGHT SECTION (Form + CTA) */}
           <div className="bg-white rounded-xl shadow-xl border p-8 h-fit">
             <button
-              className="bg-sky-400 hover:bg-sky-500 text-white rounded-lg p-4 m-4"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg p-4 mb-4"
               onClick={() => handleGuideSelect(book as any)}
             >
-              <h2 className="text-2xl font-bold">
-                Get Instant Access to the eBook
-              </h2>
+              <h2 className="font-bold">Get Instant Access to the eBook</h2>
+            </button>
+
+            <p className="text-lg text-slate-600 my-4">
+              Get exclusive news and updates by subscribing to our email list.
+              Don't miss out on important information & perks as you come with
+              us on this journey.
+            </p>
+
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-4"
+              onClick={() => window.location.href = "/mailing"}
+            >
+              <h2 className="font-bold">Subscribe</h2>
             </button>
 
             {/* Success/Error Messages */}
@@ -326,13 +337,14 @@ export default function EbookPage() {
             )}
 
             {/* Additional CTA Section */}
-            <div className="mt-10 p-6 bg-gray-100 rounded-lg border">
+            <div className="mt-6 p-6 bg-gray-100 rounded-lg border">
               <h3 className="text-xl text-jgo-primary font-bold mb-2">
                 Ready to Go Further?
               </h3>
               <p className="text-gray-600 mb-4">
                 Unlock the full Jangoro data analytics suite and start analysing
-                customer feedback, survey data, and product reviews faster than ever.
+                customer feedback, survey data, and product reviews faster than
+                ever.
               </p>
               <a
                 href="https://app.jangoro.com/register?plan=month"
