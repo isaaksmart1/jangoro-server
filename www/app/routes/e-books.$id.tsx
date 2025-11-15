@@ -220,7 +220,7 @@ export default function EbookPage() {
             </p>
 
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-4"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg p-4"
               onClick={() => window.location.href = "/mailing"}
             >
               <h2 className="font-bold">Subscribe</h2>
