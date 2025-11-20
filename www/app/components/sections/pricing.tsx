@@ -107,8 +107,8 @@ const PricingTable = () => {
                 <span>Charting</span>
               </li>
               <li className="flex items-center">
-                <Check className="h-5 w-5 text-gray-400 mr-3" />
-                <span className="text-gray-400">Community Support</span>
+                <Check className="h-5 w-5 text-success mr-3" />
+                <span>Community Support</span>
               </li>
             </ul>
             <Button
