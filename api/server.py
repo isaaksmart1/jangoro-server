@@ -7,14 +7,25 @@ from flask_cors import CORS
 from openai import OpenAI
 import requests
 from datetime import datetime
+import imaplib
+import email
+import uuid
 
 app = Flask(__name__)
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "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"
+    "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"
 )
 
+# Sessions stored in-memory
+SESSIONS = {}
+
+IMAP_PROVIDERS = {
+    "gmail": {"host": "imap.gmail.com", "port": 993},
+    "outlook": {"host": "outlook.office365.com", "port": 993},
+    "yahoo": {"host": "imap.mail.yahoo.com", "port": 993}
+}
 
 def generate_response(prompt, agent_text, max_tokens=256, temperature=0.7):
     system_prompt = (
@@ -38,17 +49,32 @@ def generate_response(prompt, agent_text, max_tokens=256, temperature=0.7):
     except Exception as e:
         raise RuntimeError(f"OpenAI API call failed: {e}")
 
-
-def collect_feedback(files):
+def collect_feedback(files, uploadType="csv"):
     feedbacks = []
 
-    for key, file in files.items():
-        file.stream.seek(0)
-        reader = csv.reader(file.stream.read().decode("utf-8").splitlines())
-        feedback = [", ".join(row) for row in reader]
+    if uploadType == "email":
+        raw_data = files
+        # Try JSON first
+        try:
+            parsed = json.loads(raw_data)
+        except Exception:
+            parsed = raw_data
+        feedback = ["", parsed] if isinstance(parsed, str) else []
+    else:
+        # Fallback → treat as CSV
+        for key, file in files.items():
+            file.stream.seek(0)
+            raw_data = file.stream.read().decode("utf-8")
+            parsed = None
+            reader = csv.reader(raw_data.splitlines())
+            feedback = [", ".join(row) for row in reader]
 
-        if feedback:
-            feedbacks.append({"header": feedback[0], "data": feedback[1:]})
+    # Build final structured feedback
+    if feedback:
+        feedbacks.append({
+            "header": feedback[0],
+            "data": feedback[1:]
+        })
 
     if not feedbacks:
         return None, {"error": "No feedback found in the uploaded files."}, 400
@@ -61,14 +87,24 @@ def truncate_sentence(text):
     return " ".join(sentences)
 
 
-def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5):
+def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5, source="csv"):
     id = request.form.get("id")
     email = request.form.get("email")
     files = request.files.to_dict()
-    if not files:
-        return jsonify({"error": "No files uploaded."}), 400
+    
+    email_subject = request.form.get("emailSubject", "")
+    email_body_text = request.form.get("emailBody", "")
 
-    feedbacks, error_response, error_code = collect_feedback(files)
+    if not files and email_body_text.strip() == "":
+        return jsonify({"error": "No files uploaded."}), 400
+    
+    if source == "email":
+        payload = email_body_text
+    elif source == "csv":
+        payload = files
+    
+    feedbacks, error_response, error_code = collect_feedback(payload, uploadType=source)
+
     if error_response:
         return jsonify(error_response), error_code
 
@@ -83,7 +119,12 @@ def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5
             response = generate_response(
                 combined_feedback, system_prompt, max_tokens, temperature
             )
-            results.append({list(files.keys())[i]: truncate_sentence(response)})
+
+            if source == "email":
+                results.append({ email_subject: truncate_sentence(response) })
+            elif source == "csv":
+                results.append({list(files.keys())[i]: truncate_sentence(response)})
+
         except RuntimeError as e:
             return jsonify({"error": str(e)}), 500
 
@@ -101,12 +142,13 @@ def analyze_bulk_refinement():
         "refinement",
         "You are an expert at creating sophisticated surveys from the given input: {}. Build me a complete survey in markdown format.",
         max_tokens=2048,
+        source=request.form.get("source", "csv"),
     )
 
 
 @app.route("/analyze-summary", methods=["POST"])
 def analyze_bulk_summary():
-    return analyze_feedback("summary", "Summarise the given text: {}.")
+    return analyze_feedback("summary", "Summarise the given text: {}.", source=request.form.get("source", "csv"))
 
 
 @app.route("/analyze-sentiment", methods=["POST"])
@@ -114,13 +156,14 @@ def analyze_bulk_sentiment():
     return analyze_feedback(
         "sentiments",
         "Provide a detailed sentiment analysis of the given text and score in words - POSITIVE or NEGATIVE: {}.",
+        source=request.form.get("source", "csv"),
     )
 
 
 @app.route("/analyze-action-plan", methods=["POST"])
 def analyze_action_plan():
     return analyze_feedback(
-        "actionPlan", "Provide a strategic business action plan for the given text: {}."
+        "actionPlan", "Provide a strategic business action plan for the given text: {}.", source=request.form.get("source", "csv")
     )
 
 
@@ -182,6 +225,79 @@ def analyze_ai_query():
         "general", system_prompt
     )  # Ensure analyze_feedback() is properly defined
 
+@app.route("/login-email", methods=["POST"])
+def login_email():
+    data = request.json
+    email_addr = data["email"]
+    password = data["password"]
+    provider = data["provider"]
+
+    if provider != "imap":
+        host = IMAP_PROVIDERS[provider]["host"]
+        port = IMAP_PROVIDERS[provider]["port"]
+    else:
+        return jsonify({"error": "Custom IMAP not configured"}), 400
+
+    # Try logging in to IMAP
+    try:
+        m = imaplib.IMAP4_SSL(host, port)
+        m.login(email_addr, password)
+        m.logout()
+    except Exception as e:
+        return jsonify({"error": f"Login failed: {str(e)}"}), 401
+
+    # Create user session
+    session_id = str(uuid.uuid4())
+    SESSIONS[session_id] = {
+        "email": email_addr,
+        "password": password,
+        "host": host,
+        "port": port
+    }
+
+    return jsonify({"session_id": session_id})
+
+@app.route("/email-feedback", methods=["GET"])
+def get_feedback():
+    session_id = request.headers.get("X-Session")
+    if not session_id or session_id not in SESSIONS:
+        return jsonify({"error": "Invalid session"}), 403
+
+    session = SESSIONS[session_id]
+
+    # Connect to mailbox
+    m = imaplib.IMAP4_SSL(session["host"], session["port"])
+    m.login(session["email"], session["password"])
+    m.select("INBOX")
+
+    # Find emails with "feedback" in the subject
+    # _, search_data = m.search(None, '(HEADER Subject "feedback")')
+    _, search_data = m.search(None, '(HEADER Subject "Freedom")')
+    email_ids = search_data[0].split()
+
+    results = []
+
+    for eid in email_ids:
+        _, msg_data = m.fetch(eid, "(RFC822)")
+        raw = msg_data[0][1]
+        msg = email.message_from_bytes(raw)
+
+        # Extract body
+        if msg.is_multipart():
+            part = msg.get_payload(0)
+            body = part.get_payload(decode=True).decode(errors="ignore")
+        else:
+            body = msg.get_payload(decode=True).decode(errors="ignore")
+
+        results.append({
+            "id": eid.decode(),
+            "subject": msg.get("Subject"),
+            "from": msg.get("From"),
+            "body": body
+        })
+
+    m.logout()
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
