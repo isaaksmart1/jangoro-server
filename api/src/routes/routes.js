@@ -1,5 +1,6 @@
 var express = require("express");
 const jwt = require("jsonwebtoken");
+const LZString = require("lz-string");
 var config = require("../config.json");
 var {
   forgotPasswordLimiter,
@@ -22,7 +23,12 @@ const {
   getRandomRedemptionCode,
   countActiveRedemptions,
 } = require("../services/auxilary.service");
-const { postAIQueries, getAIQueries } = require("../services/data.service");
+const {
+  postAIQueries,
+  getAIQueries,
+  saveEncodedData,
+  getEncodedData,
+} = require("../services/data.service");
 
 var routes = express();
 
@@ -73,7 +79,9 @@ routes.post("/user/redeem", redeemCode);
 
 // Data API
 routes.get("/ai-queries/:userId", getAIQuery);
+routes.get("/survey-fill", getEncodedSurveyData);
 routes.post("/ai-queries", postAIQuery);
+routes.post("/survey-fill", saveEncodedSurveyData);
 
 function defaultRoute(req, res) {
   const dt = new Date();
@@ -354,6 +362,34 @@ function postAIQuery(req, res) {
 function getAIQuery(req, res) {
   const { userId } = req.params;
   getAIQueries(userId)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+}
+
+function saveEncodedSurveyData(req, res) {
+  const { compressed } = req.body;
+  const decompressed = LZString.decompressFromEncodedURIComponent(compressed);
+  if (!decompressed) {
+    return res.status(400).json({ error: "Failed to decompress payload" });
+  }
+  const data = JSON.parse(decompressed);
+  const { customerName, customerEmail, surveyTitle, encodedData } = data;
+  saveEncodedData(customerName, customerEmail, surveyTitle, encodedData)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+}
+
+function getEncodedSurveyData(req, res) {
+  const { customerName, customerEmail, surveyTitle } = req.query;
+  getEncodedData(customerName, customerEmail, surveyTitle)
     .then((result) => {
       res.json(result);
     })

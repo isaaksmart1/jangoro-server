@@ -1,4 +1,6 @@
 const { aiQueriesTable, documentClient } = require("../config/database");
+const fs = require("fs");
+const path = require("path");
 
 const postAIQueries = async (id, email) => {
   if (!id || !email) {
@@ -105,7 +107,93 @@ const getAIQueries = async (id) => {
   }
 };
 
+const getEncodedData = async (customerName, customerEmail, surveyTitle) => {
+  if (!customerName || !customerEmail || !surveyTitle) {
+    throw { error: "Missing required fields" };
+  }
+
+  try {
+    const fills = fs.readFileSync(
+      path.join(__dirname, "../csv/survey-fill.csv"),
+      "utf8"
+    );
+    const rows = fills.split("\n");
+    const matchingRow = rows.find((row) => {
+      const [name, email, title] = row.split(",");
+      return (
+        name === customerName &&
+        email === customerEmail &&
+        title === surveyTitle
+      );
+    });
+    if (matchingRow) {
+      const [, , , encodedData] = matchingRow.split(",");
+      return { encodedData };
+    } else {
+      throw { error: "Survey data not found" };
+    }
+  } catch (error) {
+    console.error("Error reading survey data:", error);
+    throw { error: "Failed to retrieve survey data" };
+  }
+};
+
+const saveEncodedData = async (
+  customerName,
+  customerEmail,
+  surveyTitle,
+  encodedData
+) => {
+  if (!customerName || !customerEmail || !surveyTitle || !encodedData) {
+    throw { error: "Missing required fields" };
+  }
+
+  const filePath = path.join(__dirname, "../csv/survey-fill.csv");
+
+  // Read CSV
+  let fileContent = fs.readFileSync(filePath, "utf8").trim();
+
+  // Split into rows
+  let rows = fileContent.split("\n");
+
+  // First row = header
+  const headers = rows[0].split(",");
+
+  // Find existing row (matching name + email + title)
+  const existingIndex = rows.findIndex((row, index) => {
+    if (index === 0) return false; // skip header
+    const cols = row.split(",");
+    return (
+      cols[0] === customerName &&
+      cols[1] === customerEmail &&
+      cols[2] === surveyTitle
+    );
+  });
+
+  // New row data
+  const newRow = `${customerName},${customerEmail},${surveyTitle},${encodedData}`;
+
+  // Overwrite if exists, otherwise append
+  if (existingIndex !== -1) {
+    rows[existingIndex] = newRow;
+  } else {
+    rows.push(newRow);
+  }
+
+  // Write back to CSV
+  try {
+    fs.writeFileSync(filePath, rows.join("\n"));
+  } catch (error) {
+    console.error("Error writing survey data:", error);
+    throw { error: "Failed to save survey data" };
+  }
+
+  return { message: "Survey fill data saved successfully" };
+};
+
 module.exports = {
   postAIQueries,
   getAIQueries,
+  saveEncodedData,
+  getEncodedData,
 };

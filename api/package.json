@@ -27,6 +27,7 @@
     "graphql": "^15.10.1",
     "http": "0.0.1-security",
     "jsonwebtoken": "^9.0.1",
+    "lz-string": "^1.5.0",
     "multer": "^2.0.2",
     "nodemailer": "^6.10.0",
     "stripe": "^15.8.0",
