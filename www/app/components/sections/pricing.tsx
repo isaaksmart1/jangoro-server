@@ -100,15 +100,15 @@ const PricingTable = () => {
             <ul className="space-y-3 mb-8">
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>Summarise</span>
+                <span>AI Summarise</span>
               </li>
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>Analytics Dashboard</span>
+                <span>Charting</span>
               </li>
               <li className="flex items-center">
                 <X className="h-5 w-5 text-gray-400 mr-3" />
-                <span className="text-gray-400">Priority Support</span>
+                <span className="text-gray-400">Community Support</span>
               </li>
             </ul>
             <Button
@@ -138,19 +138,27 @@ const PricingTable = () => {
             <ul className="space-y-3 mb-8">
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>All tools unlocked</span>
+                <span>Everything in basic</span>
               </li>
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>Priority Support</span>
+                <span>AI Sentiment Analysis</span>
               </li>
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>Free Updates</span>
+                <span>AI Strategy Analysis</span>
               </li>
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>Custom Integrations</span>
+                <span>AI Ask Me Anything</span>
+              </li>
+              <li className="flex items-center">
+                <Check className="h-5 w-5 text-success mr-3" />
+                <span>AI Survey Builder</span>
+              </li>
+              <li className="flex items-center">
+                <Check className="h-5 w-5 text-success mr-3" />
+                <span>Future Updates</span>
               </li>
             </ul>
             <Button
@@ -172,19 +180,11 @@ const PricingTable = () => {
             <ul className="space-y-3 mb-8">
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
-                <span>All tools unlocked</span>
+                <span>Everything in monthly</span>
               </li>
               <li className="flex items-center">
                 <Check className="h-5 w-5 text-success mr-3" />
                 <span>Priority Support</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="h-5 w-5 text-success mr-3" />
-                <span>Free Updates</span>
-              </li>
-              <li className="flex items-center">
-                <Check className="h-5 w-5 text-success mr-3" />
-                <span>Analytics Dashboard</span>
               </li>
             </ul>
             <Button
