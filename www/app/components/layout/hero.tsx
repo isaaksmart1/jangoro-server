@@ -12,7 +12,7 @@ export default function Hero() {
         <div className="relative w-full">
           <div className="w-full md:w-1/2 my-8">
             <h1 className="block text-jgo-accent drop-shadow-md text-left text-4xl">
-              Turn Survey Data Into Decisions That Drive Growth
+              Turn Customer Feedback Into Decisions That Drive Growth
             </h1>
             <br />
             <p className="block text-white drop-shadow-md text-left text-xl">
