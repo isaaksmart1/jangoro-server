@@ -10,12 +10,13 @@ from datetime import datetime
 import imaplib
 import email
 import uuid
+import base64
 
 app = Flask(__name__)
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "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"
+    "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"
 )
 
 # Sessions stored in-memory
@@ -100,7 +101,7 @@ def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5
     
     if source == "email":
         payload = email_body_text
-    elif source == "csv":
+    else:
         payload = files
     
     feedbacks, error_response, error_code = collect_feedback(payload, uploadType=source)
@@ -122,7 +123,7 @@ def analyze_feedback(process_type, instruction, max_tokens=1024, temperature=0.5
 
             if source == "email":
                 results.append({ email_subject: truncate_sentence(response) })
-            elif source == "csv":
+            else:
                 results.append({list(files.keys())[i]: truncate_sentence(response)})
 
         except RuntimeError as e:
@@ -298,6 +299,94 @@ def get_feedback():
 
     m.logout()
     return jsonify(results)
+
+import os
+import csv
+from flask import request, jsonify
+
+@app.route("/survey-submit", methods=["POST"])
+def survey_submit():
+    data = request.json
+    print("Received survey submission:", data)
+
+    # Extract fields
+    customer_name = data.get("customerName", "unknown_name")
+    customer_email = data.get("customerEmail", "unknown_email")
+    survey_title = data.get("surveyTitle", "untitled_survey")
+    responses = data.get("responses", {})  # dict: { "question": "answer" }
+
+    # Create save directory
+    base_dir = "src/database/survey_responses"
+    os.makedirs(base_dir, exist_ok=True)
+
+    # Clean text for filenames
+    def clean(text):
+        return "".join(c for c in text if c.isalnum() or c in ("_", "-")).strip()
+
+    filename = f"{clean(customer_name)}_{clean(customer_email)}_{clean(survey_title)}.csv"
+    filepath = os.path.join(base_dir, filename)
+
+    # Write or append to CSV
+    file_exists = os.path.isfile(filepath)
+
+    with open(filepath, "a", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+
+        # If file doesn't exist, write header first
+        if not file_exists:
+            header = list(responses.keys())
+            writer.writerow(header)
+
+        # Always append a new row of answers
+        row = [responses[q] for q in header]
+        writer.writerow(row)
+
+    return jsonify({
+        "message": "Survey submitted successfully!",
+        "file_saved": filepath
+    })
+
+@app.route("/survey-builder/responses", methods=["GET"])
+def survey_list():
+    base_dir = "src/database/survey_responses"
+    os.makedirs(base_dir, exist_ok=True)
+
+    # Get email filter
+    email = request.args.get("email")
+    if not email:
+        return jsonify({"error": "Missing 'email' query parameter"}), 400
+
+    def clean(text):
+        return "".join(c for c in text if c.isalnum() or c in ("_", "-", "@", "."))
+
+    clean_email = clean(email)
+
+    # Filter CSV files by matching customer email
+    file_list = []
+    for filename in os.listdir(base_dir):
+        if filename.endswith(".csv") and clean_email in filename:
+            filepath = os.path.join(base_dir, filename)
+
+            # Build metadata object
+            file_info = {
+                "name": filename,
+                "type": "text/csv",
+                "size": os.path.getsize(filepath),
+                "lastModified": int(os.path.getmtime(filepath) * 1000),  # ms like browser
+                "path": filepath  # optional, useful for backend
+            }
+
+            # Read file contents + encode as base64
+            with open(filepath, "rb") as f:
+                file_info["base64"] = base64.b64encode(f.read()).decode("utf-8")
+
+            file_list.append(file_info)
+
+    return jsonify({
+        "email": email,
+        "surveys": file_list
+    })
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
