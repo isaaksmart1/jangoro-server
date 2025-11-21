@@ -321,7 +321,7 @@ def survey_submit():
 
     # Clean text for filenames
     def clean(text):
-        return "".join(c for c in text if c.isalnum() or c in ("_", "-")).strip()
+        return "".join(c for c in text if c.isalnum() or c in ("_", "-", "@", ".")).strip()
 
     filename = f"{clean(customer_name)}_{clean(customer_email)}_{clean(survey_title)}.csv"
     filepath = os.path.join(base_dir, filename)
