@@ -300,10 +300,6 @@ def get_feedback():
     m.logout()
     return jsonify(results)
 
-import os
-import csv
-from flask import request, jsonify
-
 @app.route("/survey-submit", methods=["POST"])
 def survey_submit():
     data = request.json
@@ -336,6 +332,11 @@ def survey_submit():
         if not file_exists:
             header = list(responses.keys())
             writer.writerow(header)
+        else:
+            # Read existing header
+            with open(filepath, "r", encoding="utf-8") as readfile:
+                reader = csv.reader(readfile)
+                header = next(reader)
 
         # Always append a new row of answers
         row = [responses[q] for q in header]
