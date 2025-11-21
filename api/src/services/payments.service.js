@@ -153,7 +153,7 @@ const retrieveSession = async (params) => {
 };
 
 const createPaymentIntent = async (params) => {
-  const { subscription, email, amount } = params;
+  const { subscription, email, amount, seats } = params;
   try {
     if (!subscription || !subscription.plan) {
       throw new Error("Subscription plan is required");
@@ -206,7 +206,7 @@ const createPaymentIntent = async (params) => {
       payload.line_items = [
         {
           price,
-          quantity: 1,
+          quantity: seats || 1,
         },
       ];
 
