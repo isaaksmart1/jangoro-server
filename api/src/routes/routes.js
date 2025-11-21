@@ -36,11 +36,17 @@ var routes = express();
 const mailingRoutes = require("./mailing");
 const guidesRoutes = require("./guides");
 const socialRoutes = require("./social");
+const { encryptionSecretKey } = require("../config/database");
 
 routes.get("/", defaultRoute);
 routes.get("/index", healthCheck);
 routes.post("/login", login);
 routes.post("/register", register);
+
+// Routes Configuration
+// routes.get("/config/encryption-key", (req, res) => {
+//   res.send({ encryptionSecretKey });
+// });
 
 // Routes API
 routes.use("/api", guidesRoutes);

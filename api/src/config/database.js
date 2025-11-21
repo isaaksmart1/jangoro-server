@@ -46,6 +46,10 @@ const socialTokensTable =
     ? "jgo-db-social-tokens-dev"
     : "jgo-db-social-tokens-prod";
 
+const encryptionSecretKey =
+  process.env.ENCRYPTION_SECRET_KEY ||
+  "amdhodKdpqwdpoalpdlldkdpvkA4950cPmOSNDIFGgpeDsft03948JDJSK";
+
 function hash(password) {
   return bcrypt.hashSync(password, 10);
 }
@@ -68,6 +72,7 @@ const userSchema = (id, data) => {
 };
 
 module.exports = {
+  encryptionSecretKey,
   usersTable,
   redemptionTable,
   aiQueriesTable,
