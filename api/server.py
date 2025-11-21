@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 os.environ["OPENAI_API_KEY"] = (
-    "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"    
+    "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"    
 )
 
 # Sessions stored in-memory
